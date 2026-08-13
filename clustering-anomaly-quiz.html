@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clustering &amp; Anomaly Detection — 150 Practice Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120; --panel:#121B2E; --panel-2:#0F1729; --line:#22304A;
+    --text:#E5E9F0; --muted:#8B95AC;
+    --teal:#2DD4BF; --violet:#A78BFA; --amber:#FBBF24; --rose:#FB7185;
+    --good:#34D399; --bad:#F87171;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(45,212,191,0.10), transparent 40%),
+      radial-gradient(circle at 88% 18%, rgba(167,139,250,0.10), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(251,191,36,0.06), transparent 45%),
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px 100px;}
+
+  .hero{padding:60px 20px 36px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(45,212,191,.18);}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.6vw,46px);line-height:1.1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;}
+  h1 span{color:var(--teal);}
+  .lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:660px;margin:0 0 26px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:var(--panel);color:var(--muted);}
+
+  /* PART TABS */
+  .parts-nav{position:sticky;top:0;z-index:30;background:rgba(11,17,32,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .parts-nav-inner{max-width:940px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+  .part-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .part-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;padding:9px 14px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-weight:600;
+    transition:all .15s ease;
+  }
+  .part-tab:hover{color:var(--text);}
+  .part-tab.active{color:#06121b;}
+  .score-box{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:100px;white-space:nowrap;}
+  .score-box b{color:var(--teal);}
+
+  .topic-controls{padding:18px 0 0;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
+  .chip:hover{color:var(--text);}
+  .chip.active{font-weight:700;}
+
+  .coverage{margin:26px 0 6px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;}
+  .coverage h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 14px;font-weight:600;}
+  .cov-row{display:grid;grid-template-columns:220px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
+  .cov-label{font-size:12.5px;color:var(--text);}
+  .cov-bar-track{height:7px;border-radius:6px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line);}
+  .cov-bar-fill{height:100%;border-radius:6px;}
+  .cov-count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;}
+
+  section.topic-block{margin-top:44px;}
+  .topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap;}
+  .topic-heading .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0;}
+  .topic-heading .count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-left:auto;}
+
+  .qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin-bottom:14px;}
+  .qtop{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .qnum{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#06121b;min-width:40px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .qmeta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:5px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:100px;letter-spacing:.02em;}
+  .tag-topic{border:1px solid var(--line);color:var(--muted);}
+  .tag-type{border:1px solid var(--line);}
+  .qtext{font-size:15px;line-height:1.6;font-weight:500;margin:2px 0 14px;white-space:pre-line;}
+  .options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:13.5px;line-height:1.5;transition:all .12s ease;background:var(--panel-2);}
+  .opt:hover{border-color:var(--violet);}
+  .opt .letter{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--violet);flex-shrink:0;}
+  .opt.selected{border-color:var(--violet);background:rgba(167,139,250,0.09);}
+  .opt.correct{border-color:var(--good);background:rgba(52,211,153,0.10);}
+  .opt.incorrect{border-color:var(--bad);background:rgba(248,113,113,0.10);}
+  .opt.missed{border-color:var(--good);background:rgba(52,211,153,0.05);border-style:dashed;}
+  .opt.correct .letter,.opt.missed .letter{color:var(--good);}
+  .opt.incorrect .letter{color:var(--bad);}
+  .opt.disabled{cursor:default;}
+  .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .reveal-btn,.check-btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer;}
+  .reveal-btn:hover,.check-btn:hover{color:var(--text);border-color:var(--teal);}
+  .check-btn.primary{background:var(--teal);color:#06251f;border-color:var(--teal);font-weight:700;}
+  .result-note{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 0;}
+  .result-note.ok{color:var(--good);}
+  .result-note.bad{color:var(--bad);}
+  .explain{display:none;margin-top:10px;padding:13px 15px;background:var(--panel-2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:#C9D1E5;}
+  .explain.show{display:block;}
+  .explain b{color:var(--teal);}
+
+  footer{text-align:center;padding:50px 20px 20px;color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace;}
+
+  @media (max-width:640px){
+    .cov-row{grid-template-columns:130px 1fr 26px;}
+    .parts-nav-inner{flex-direction:column;align-items:stretch;}
+    .score-box{align-self:flex-end;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Learn AIML with Nitish</div>
+    <h1>Clustering &amp; Anomaly Detection<br><span>— 150 practice questions.</span></h1>
+    <p class="lede">Three sets in one place: Clustering Part 1 (fundamentals through RFM), Clustering Part 2 (centroids through Dunn Index), and Anomaly Detection (Z-score, IQR, Isolation Forest &amp; more). Single-answer and multiple-correct questions are both supported — click to check yourself, then reveal the explanation.</p>
+    <div class="meta-row" id="heroMeta"></div>
+  </div>
+</div>
+
+<div class="parts-nav">
+  <div class="parts-nav-inner">
+    <div class="part-tabs" id="partTabs"></div>
+    <div class="score-box">Checked: <b id="scoreDone">0</b>/150 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="topic-controls">
+    <div class="coverage" id="coverage">
+      <h2 id="coverageTitle">Topic coverage</h2>
+      <div id="covGrid"></div>
+    </div>
+    <div class="chip-row" id="chipRow" style="margin-top:18px;"></div>
+  </div>
+
+  <div id="quizRoot"></div>
+</div>
+
+<footer>
+  Practice set compiled from course notes on Clustering (K-Means · DBSCAN · Hierarchical) and Anomaly Detection.<br>
+  Self-study only — nothing is pre-revealed. Answer, then use "Show explanation" to check your reasoning.
+</footer>
+
+<script>
+/* ============================================================
+   PARTS + TOPICS
+============================================================ */
+const PARTS = [
+  { id:"p1", name:"Clustering — Part 1", color:"#2DD4BF",
+    topics:[
+      {id:"fund", name:"Supervised vs Unsupervised / Clustering"},
+      {id:"dist", name:"Distance & Preprocessing"},
+      {id:"kmeans", name:"K-Means Fundamentals"},
+      {id:"kpp", name:"K-Means++"},
+      {id:"wcss", name:"WCSS & Elbow"},
+      {id:"sil", name:"Silhouette Score"},
+      {id:"lim", name:"K-Means Assumptions & Limitations"},
+      {id:"dbscan", name:"DBSCAN"},
+      {id:"hier", name:"Hierarchical Clustering"},
+      {id:"rfm", name:"Customer Segmentation / RFM"},
+    ]
+  },
+  { id:"p2", name:"Clustering — Part 2", color:"#A78BFA",
+    topics:[
+      {id:"unsup", name:"Clustering & Unsupervised Learning"},
+      {id:"stddist", name:"Standardization & Distance"},
+      {id:"algo", name:"K-Means Algorithm & Centroids"},
+      {id:"conv", name:"Convergence & Iterations"},
+      {id:"intrainter", name:"Intra/Inter-Cluster Distance"},
+      {id:"wcss2", name:"WCSS"},
+      {id:"elbow2", name:"Elbow Method"},
+      {id:"dunn", name:"Dunn Index"},
+      {id:"choosek", name:"Choosing K / Practical Scenarios"},
+    ]
+  },
+  { id:"an", name:"Anomaly Detection", color:"#FBBF24",
+    topics:[
+      {id:"afund", name:"Anomaly Detection Fundamentals"},
+      {id:"normal", name:"Normal Distribution & 3-Sigma Rule"},
+      {id:"zscore", name:"Z-Score"},
+      {id:"iqr", name:"IQR"},
+      {id:"zvsiqr", name:"Z-Score vs IQR"},
+      {id:"isof", name:"Isolation Forest"},
+      {id:"fitpred", name:"fit_predict(), Contamination & random_state"},
+      {id:"thresh", name:"Thresholds, FP/FN & Practical Decisions"},
+      {id:"auto", name:"Autoencoders & Method Selection"},
+    ]
+  },
+];
+const partMap = Object.fromEntries(PARTS.map(p=>[p.id,p]));
+function topicOf(partId, topicId){ return partMap[partId].topics.find(t=>t.id===topicId); }
+
+/* ============================================================
+   QUESTION BANK — correct: array of option indices (0=A..3=D)
+============================================================ */
+const Q = [];
+
+/* ---------------- PART 1 ---------------- */
+Q.push(
+{part:"p1",topic:"fund",type:"single",q:"A data scientist receives a dataset containing customer information but there is no predefined customer category for any customer. The goal is to discover naturally occurring customer groups based on their behavior. Which approach best fits this problem?",
+ options:["Supervised classification","Unsupervised clustering","Supervised regression","Reinforcement learning"],correct:[1],
+ exp:"Supervised learning uses labeled data; clustering is unsupervised and discovers structure without predefined labels."},
+
+{part:"p1",topic:"fund",type:"single",q:"A company has historical emails labeled \"spam\" and \"not spam\" and wants to predict the label of a new email. Why is this different from clustering?",
+ options:["Classification discovers unknown groups while clustering predicts known labels","Classification uses labeled examples while clustering works without predefined labels","Clustering always requires more features than classification","Classification can only work with numerical data"],correct:[1],
+ exp:"Spam classification has known labels, while clustering discovers groups without labels."},
+
+{part:"p1",topic:"fund",type:"multi",q:"Which statements correctly describe clustering?",
+ options:["It discovers groupings without predefined class labels","It always produces the same clusters regardless of the algorithm used","Similar data points are generally grouped together","Accuracy can always be calculated because clustering produces labels"],correct:[0,2],
+ exp:"Clustering discovers groups and places similar points together. It does not guarantee identical results across algorithms, nor does it allow ordinary accuracy calculation without ground-truth labels."},
+
+{part:"p1",topic:"fund",type:"single",q:"A clustering algorithm groups news articles into several topics, but nobody tells the algorithm what the topics should be beforehand. What is the main objective?",
+ options:["Predict a known topic label","Discover hidden structure in the articles","Minimize classification error","Predict the probability of each predefined topic"],correct:[1],
+ exp:"The purpose is to discover hidden group structure, not predict predefined labels."},
+
+{part:"p1",topic:"fund",type:"multi",q:"Which are examples of unsupervised learning according to the provided material?",
+ options:["Grouping customers based on purchasing behavior without labels","Predicting house prices from houses with known prices","Grouping news articles by topic without predefined categories","Detecting unusual customer behavior by identifying points far from dense groups"],correct:[0,2,3],
+ exp:"All three involve discovering structure without predefined labels. House-price prediction is supervised regression."},
+
+{part:"p1",topic:"dist",type:"single",q:"Two customers are represented as points in a feature space. The clustering algorithm measures their straight-line distance using the differences between every coordinate. Which distance is being described?",
+ options:["Euclidean distance","Manhattan distance","Hamming distance","Cosine similarity"],correct:[0],
+ exp:"Euclidean distance is the standard straight-line distance described in the notes."},
+
+{part:"p1",topic:"dist",type:"single",q:"Consider two points: P1 = (2, 3), P2 = (5, 7). What is their Euclidean distance?",
+ options:["4","5","6","7"],correct:[1],
+ exp:"√((5−2)² + (7−3)²) = √(9+16) = √25 = 5."},
+
+{part:"p1",topic:"dist",type:"single",q:"Why should numerical features generally be standardized before applying distance-based clustering?",
+ options:["Standardization automatically determines the number of clusters","Large-scale features can otherwise dominate distance calculations","Standardization converts clustering into supervised learning","It guarantees that all clusters will be spherical"],correct:[1],
+ exp:"Large numerical ranges can dominate distance calculations if left unstandardized."},
+
+{part:"p1",topic:"dist",type:"single",q:"A dataset contains Recency values between 1 and 500, Frequency values between 1 and 30, and Monetary values between ₹100 and ₹100,000. Without standardization, which feature is most likely to dominate Euclidean distance?",
+ options:["Recency","Frequency","Monetary","All three contribute equally"],correct:[2],
+ exp:"Monetary values are much larger in scale and can dominate Euclidean distance."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"Which statement best describes K-Means clustering?",
+ options:["It creates a hierarchy of nested clusters","It identifies dense regions and automatically labels isolated points as noise","It partitions data into K groups using centroids","It requires every cluster to contain exactly the same number of points"],correct:[2],
+ exp:"K-Means partitions data into exactly K clusters represented by centroids."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"In K-Means, what does the letter K represent?",
+ options:["Number of features","Number of iterations","Number of centroids/clusters","Number of distance calculations"],correct:[2],
+ exp:"K represents the number of clusters/centroids."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"A K-Means model is configured with K = 5. What is guaranteed?",
+ options:["Exactly 5 clusters will be produced","Exactly 5 points will be treated as centroids permanently","Each cluster will contain 5 points","The algorithm will perform exactly 5 iterations"],correct:[0],
+ exp:"K-Means is explicitly configured to produce K clusters."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"What is the correct sequence of the main K-Means operations?",
+ options:["Update → Assignment → Initialize → Stop","Initialize → Assignment → Update → Repeat until convergence","Assignment → Initialize → Update → Delete","Initialize → Update → Classification → Regression"],correct:[1],
+ exp:"Initialize → assign → update → repeat until convergence."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"During the assignment step of K-Means, what happens?",
+ options:["Each centroid is replaced by a random point","Each point is assigned to its nearest centroid","Each cluster is split into two clusters","Noise points are removed"],correct:[1],
+ exp:"Each point goes to its nearest centroid."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"During the update step of K-Means, how is a new centroid calculated?",
+ options:["By selecting the farthest point in the cluster","By selecting the first point in the cluster","By calculating the mean of points assigned to that cluster","By calculating the median of all points in the dataset"],correct:[2],
+ exp:"The centroid is the mean of the currently assigned points."},
+
+{part:"p1",topic:"kmeans",type:"single",q:"Suppose a cluster contains the following one-dimensional points: 2, 4, 6, 8. What will be the new centroid after the K-Means update step?",
+ options:["4","5","6","8"],correct:[1],
+ exp:"(2+4+6+8)/4 = 5."},
+
+{part:"p1",topic:"kpp",type:"single",q:"Why can random initialization produce a poor K-Means solution?",
+ options:["K-Means cannot calculate Euclidean distance from random points","Two or more initial centroids may accidentally start inside the same natural group","Random initialization prevents K-Means from calculating means","Random initialization automatically creates too many clusters"],correct:[1],
+ exp:"Poor initialization can place multiple centroids inside the same natural cluster."},
+
+{part:"p1",topic:"kpp",type:"single",q:"What is the main idea behind K-Means++ initialization?",
+ options:["Start all centroids at the origin","Select centroids so that they tend to be spread across the data","Always select the points with the smallest feature values","Randomly select all centroids without considering distances"],correct:[1],
+ exp:"K-Means++ encourages centroids to be spread across the data."},
+
+{part:"p1",topic:"kpp",type:"single",q:"In K-Means++, after selecting the first centroid, which points have a higher probability of becoming the next centroid?",
+ options:["Points closest to the existing centroid","Points farthest from their nearest already-selected centroid","Points with the smallest feature values","Points belonging to the largest existing cluster"],correct:[1],
+ exp:"Points farther from existing centroids receive greater probability."},
+
+{part:"p1",topic:"wcss",type:"single",q:"What does WCSS stand for?",
+ options:["Within-Cluster Sum of Squares","Weighted Cluster Separation Score","Within-Class Standardized Score","Weighted Centroid Separation Sum"],correct:[0],
+ exp:"WCSS means Within-Cluster Sum of Squares."},
+
+{part:"p1",topic:"wcss",type:"single",q:"What does WCSS primarily measure in K-Means?",
+ options:["How far clusters are from one another","The total squared distance of points from their cluster centroids","The number of clusters containing outliers","The average distance between different clusters"],correct:[1],
+ exp:"WCSS sums squared point-to-centroid distances."},
+
+{part:"p1",topic:"wcss",type:"single",q:"A K-Means clustering produces very compact clusters, with points close to their respective centroids. What would you generally expect?",
+ options:["High WCSS","Low WCSS","WCSS must equal zero","WCSS cannot be calculated"],correct:[1],
+ exp:"Compact clusters have smaller point-to-centroid distances and therefore lower WCSS."},
+
+{part:"p1",topic:"wcss",type:"single",q:"Suppose the following WCSS values are obtained:\nK=2 → 800\nK=3 → 500\nK=4 → 300\nK=5 → 280\nK=6 → 270\nWhich K is the strongest candidate from the Elbow Method?",
+ options:["K = 2","K = 3","K = 4","K = 6"],correct:[2],
+ exp:"The major improvement occurs through K=4; afterward the reduction becomes much smaller."},
+
+{part:"p1",topic:"wcss",type:"single",q:"Why does WCSS always decrease or stay the same when K increases?",
+ options:["More clusters allow points to be represented by closer centroids","More clusters always make the data more spherical","WCSS ignores the centroid locations","Increasing K removes all outliers"],correct:[0],
+ exp:"Increasing K gives points more/finer centroid choices, so within-cluster variation cannot increase."},
+
+{part:"p1",topic:"sil",type:"single",q:"What is the main purpose of the Elbow Method?",
+ options:["To determine whether the data is supervised","To determine a reasonable number of clusters","To identify DBSCAN noise points","To select the linkage strategy for hierarchical clustering"],correct:[1],
+ exp:"The Elbow Method helps select a reasonable K."},
+
+{part:"p1",topic:"sil",type:"single",q:"What does the silhouette score compare for an individual point?",
+ options:["Its distance from the origin and its centroid","Its average distance within its own cluster versus its distance from the nearest other cluster","Its distance from every centroid and the number of features","Its WCSS and number of iterations"],correct:[1],
+ exp:"Silhouette compares cohesion within the assigned cluster with separation from the nearest other cluster."},
+
+{part:"p1",topic:"sil",type:"single",q:"The silhouette score ranges between:",
+ options:["0 and 1","-1 and +1","-100 and +100","1 and 10"],correct:[1],
+ exp:"Silhouette ranges from -1 to +1."},
+
+{part:"p1",topic:"sil",type:"single",q:"A point has a silhouette score close to +1. What does this indicate?",
+ options:["It is likely poorly assigned","It lies exactly between two clusters","It is well matched to its own cluster and far from other clusters","It must be a DBSCAN noise point"],correct:[2],
+ exp:"+1 indicates strong cohesion and separation."},
+
+{part:"p1",topic:"lim",type:"single",q:"A point has a silhouette score close to -1. What is the most likely interpretation?",
+ options:["It is tightly packed within its own cluster","It may be closer to another cluster than its assigned cluster","It is guaranteed to be a centroid","It indicates that WCSS is zero"],correct:[1],
+ exp:"A negative score suggests the point may be closer to another cluster."},
+
+{part:"p1",topic:"lim",type:"single",q:"Suppose you run K-Means for K = 2 through K = 10. The silhouette scores are highest at K = 4. What does this suggest?",
+ options:["K = 4 provides the strongest separation/cohesion according to silhouette score","K = 4 must have the highest WCSS","K = 4 contains exactly four points","K = 4 is automatically the global optimum in every sense"],correct:[0],
+ exp:"Highest silhouette indicates the strongest clustering quality among the tested K values according to this metric."},
+
+{part:"p1",topic:"lim",type:"single",q:"Which type of cluster is generally most suitable for K-Means?",
+ options:["Long chains and crescent-shaped clusters","Roughly spherical clusters with similar size and density","Clusters containing only isolated outliers","Arbitrarily shaped clusters with highly varying density"],correct:[1],
+ exp:"K-Means works best with roughly spherical clusters of similar size/density."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"Why can K-Means struggle with ring-shaped or crescent-shaped clusters?",
+ options:["K-Means cannot calculate means","K-Means uses Euclidean distance and produces centroid-based boundaries that are not suitable for such shapes","K-Means requires labeled data","K-Means automatically removes all non-spherical points"],correct:[1],
+ exp:"Centroid-based Euclidean boundaries do not handle rings, crescents, and interleaved spirals well."},
+
+{part:"p1",topic:"dbscan",type:"multi",q:"Which are limitations or assumptions of K-Means described in the notes?",
+ options:["It works best with roughly spherical clusters","It requires K to be specified","It naturally identifies noise points as a separate class","It works best when clusters have similar density"],correct:[0,1,3],
+ exp:"These are explicitly described assumptions/limitations. DBSCAN, not K-Means, naturally identifies noise."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"Which characteristic most clearly distinguishes DBSCAN from K-Means?",
+ options:["DBSCAN requires K to be specified before training","DBSCAN can discover clusters without specifying the number of clusters upfront","DBSCAN can only find spherical clusters","DBSCAN requires labeled training data"],correct:[1],
+ exp:"DBSCAN discovers the number of clusters based on density rather than requiring K."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"What does eps represent in DBSCAN?",
+ options:["The maximum number of clusters","The radius of the neighborhood around a point","The number of features","The number of iterations"],correct:[1],
+ exp:"eps defines the neighborhood radius."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"What does min_samples control in DBSCAN?",
+ options:["The minimum number of points required within eps for a point to be considered a core point","The maximum number of clusters","The number of centroids","The minimum number of dimensions"],correct:[0],
+ exp:"min_samples determines the minimum neighborhood population for a core point."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"A DBSCAN point has at least min_samples points within its eps neighborhood, including itself. How should the point be classified?",
+ options:["Noise point","Border point","Core point","Centroid"],correct:[2],
+ exp:"At least min_samples points within eps makes it a core point."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"A point does not have enough neighbors to be a core point, but it lies within eps of a core point. What type of point is it?",
+ options:["Border point","Noise point","Centroid","Hierarchical point"],correct:[0],
+ exp:"It is near a core point but isn't dense enough itself, making it a border point."},
+
+{part:"p1",topic:"dbscan",type:"single",q:"A point is not within eps of any core point. How does DBSCAN classify it?",
+ options:["Core point","Border point","Noise point","Centroid"],correct:[2],
+ exp:"A point not reached by any core region is noise."},
+
+{part:"p1",topic:"hier",type:"single",q:"In sklearn's DBSCAN implementation, what cluster label is typically assigned to noise points?",
+ options:["0","1","K","-1"],correct:[3],
+ exp:"sklearn uses -1 for DBSCAN noise."},
+
+{part:"p1",topic:"hier",type:"single",q:"Which situation is particularly suitable for DBSCAN?",
+ options:["Data contains arbitrarily shaped clusters and possible outliers","Data must be divided into exactly five spherical clusters","Every point must belong to a cluster","The number of clusters is already fixed and all clusters have identical sizes"],correct:[0],
+ exp:"DBSCAN is particularly useful for irregular shapes and outlier detection."},
+
+{part:"p1",topic:"hier",type:"single",q:"Suppose min_samples is increased substantially while keeping eps unchanged. According to the notes, what can happen?",
+ options:["More points may be treated as noise","Every point automatically becomes a core point","The number of dimensions decreases","K-Means is automatically applied"],correct:[0],
+ exp:"Increasing the density requirement can cause more points to fail the core-point condition and become noise."},
+
+{part:"p1",topic:"hier",type:"single",q:"Why can DBSCAN struggle when different clusters have very different densities?",
+ options:["One eps value may not work well for both dense and sparse clusters","DBSCAN cannot identify noise","DBSCAN requires exactly K clusters","DBSCAN always produces spherical clusters"],correct:[0],
+ exp:"A single eps value can be unsuitable when different clusters have substantially different densities."},
+
+{part:"p1",topic:"hier",type:"single",q:"What is the main output structure of hierarchical clustering?",
+ options:["A centroid table","A dendrogram","A confusion matrix","An ROC curve"],correct:[1],
+ exp:"Hierarchical clustering produces a dendrogram representing the cluster hierarchy."},
+
+{part:"p1",topic:"hier",type:"single",q:"In agglomerative hierarchical clustering, what happens first?",
+ options:["All points begin in one cluster and are split","Each point starts as its own cluster","K centroids are randomly initialized","All noise points are removed"],correct:[1],
+ exp:"Agglomerative starts with every point as its own cluster and merges upward."},
+
+{part:"p1",topic:"rfm",type:"single",q:"Which statement correctly describes divisive hierarchical clustering?",
+ options:["It starts with individual clusters and repeatedly merges them","It starts with one large cluster and repeatedly splits it","It requires K-Means centroids","It identifies only dense regions"],correct:[1],
+ exp:"Divisive starts with one cluster and splits downward."},
+
+{part:"p1",topic:"rfm",type:"single",q:"Which linkage defines the distance between two clusters using the nearest pair of points between them?",
+ options:["Complete linkage","Average linkage","Single linkage","Ward linkage"],correct:[2],
+ exp:"Single linkage uses the nearest pair of points."},
+
+{part:"p1",topic:"rfm",type:"single",q:"Which linkage defines cluster distance using the farthest pair of points between the two clusters?",
+ options:["Single linkage","Complete linkage","Average linkage","Ward linkage"],correct:[1],
+ exp:"Complete linkage uses the farthest pair."},
+
+{part:"p1",topic:"rfm",type:"single",q:"A dendrogram contains a very large vertical jump in merge height. What can this suggest?",
+ options:["The clusters being merged are relatively dissimilar, potentially indicating a natural cluster boundary","The algorithm has reached K = 1","All points are identical","The data must be standardized again"],correct:[0],
+ exp:"A large height jump means substantially dissimilar groups are being merged, suggesting a possible natural boundary."},
+
+{part:"p1",topic:"rfm",type:"single",q:"An e-commerce company wants to segment customers using Recency, Frequency, and Monetary behavior. Which interpretation is correct?",
+ options:["Recency = number of orders, Frequency = days since purchase, Monetary = number of customers","Recency = days since last purchase, Frequency = number of purchases, Monetary = total spend","Recency = total spend, Frequency = days since purchase, Monetary = number of orders","Recency = customer age, Frequency = average order size, Monetary = number of products"],correct:[1],
+ exp:"Recency is days since last purchase, Frequency is purchase count, and Monetary is total spending."}
+);
+
+/* ---------------- PART 2 ---------------- */
+Q.push(
+{part:"p2",topic:"unsup",type:"single",q:"A retail company has customer data containing monthly spending and weekly app visits, but no predefined customer segments. The company wants to discover naturally occurring groups of customers. Which approach best matches this requirement?",
+ options:["Regression","Classification","Clustering","Supervised dimensionality reduction"],correct:[2],
+ exp:"Clustering is used to discover natural groups without predefined labels."},
+
+{part:"p2",topic:"unsup",type:"single",q:"Which statement best explains why clustering is considered an unsupervised learning technique?",
+ options:["It predicts a predefined target variable","It learns from labeled examples and predicts their classes","It discovers structure without requiring predefined labels","It requires a human to assign every data point to a group"],correct:[2],
+ exp:"Unsupervised learning works without labeled target values."},
+
+{part:"p2",topic:"unsup",type:"multi",q:"Which of the following are characteristics of clustering described in the notes?",
+ options:["Similar data points are grouped together","It requires a correct label for every observation","It can help reduce operational complexity by designing one strategy per group","It discovers structure directly from raw observations"],correct:[0,2,3],
+ exp:"Clustering groups similar observations, can simplify business strategies, and discovers structure from raw data."},
+
+{part:"p2",topic:"unsup",type:"single",q:"A course coordinator has attendance data for students but no existing student categories. The coordinator wants to identify groups of students with similar attendance patterns. Which ML approach is most appropriate?",
+ options:["Clustering","Regression","Classification","Supervised forecasting"],correct:[0],
+ exp:"Student attendance groups are being discovered without labels."},
+
+{part:"p2",topic:"unsup",type:"single",q:"Which of the following is NOT one of the three broad clustering families mentioned in the notes?",
+ options:["Centroid-based clustering","Hierarchical clustering","Density-based clustering","Gradient-based clustering"],correct:[3],
+ exp:"The notes identify centroid-based, hierarchical, and density-based clustering."},
+
+{part:"p2",topic:"stddist",type:"single",q:"A dataset contains two features:\nMonthly spend: ₹500 – ₹200,000\nWeekly visits: 1 – 15\nWhy can applying K-Means directly to these features produce misleading clusters?",
+ options:["K-Means cannot work with two features","The larger-scale feature can dominate the distance calculation","K-Means requires categorical variables","The smaller-scale feature will always be ignored by the algorithm"],correct:[1],
+ exp:"The large numerical range of monthly spend can dominate distance calculations."},
+
+{part:"p2",topic:"stddist",type:"single",q:"What should generally be done before K-Means computes distances between observations?",
+ options:["Sort all rows by their first feature","Remove the largest values from every feature","Standardize the features","Convert all numerical values to categorical values"],correct:[2],
+ exp:"Standardization brings features onto comparable scales."},
+
+{part:"p2",topic:"stddist",type:"multi",q:"Which statements correctly describe standardization in the context of K-Means?",
+ options:["It brings features onto comparable scales","It prevents a large-scale feature from dominating distance calculations","It guarantees that the optimal K will be known beforehand","It helps prevent misleading clusters caused by differences in feature magnitude"],correct:[0,1,3],
+ exp:"These are the purposes of standardization described in the notes."},
+
+{part:"p2",topic:"stddist",type:"single",q:"A grocery dataset has two features measured on similar numerical scales, while a third feature is measured in lakhs. If the third feature is not standardized, what is the most likely consequence?",
+ options:["It may have disproportionate influence on the distance calculations","It will automatically become the target variable","K-Means will stop after one iteration","WCSS will always become zero"],correct:[0],
+ exp:"A feature with a much larger scale can disproportionately influence distance."},
+
+{part:"p2",topic:"algo",type:"single",q:"Which principle lies at the heart of the K-Means algorithm?",
+ options:["Every point belongs to the cluster whose centroid is nearest","Every cluster must contain exactly the same number of points","Every point must be assigned to the farthest centroid","Every cluster must contain one outlier"],correct:[0],
+ exp:"K-Means assigns each point to its nearest centroid."},
+
+{part:"p2",topic:"algo",type:"single",q:"A K-Means model is configured with K = 4. How many initial centroids are created?",
+ options:["2","3","4","8"],correct:[2],
+ exp:"K = 4 means four centroids/clusters."},
+
+{part:"p2",topic:"algo",type:"single",q:"What is the first major preparation step mentioned before choosing K and initializing centroids?",
+ options:["Calculate WCSS","Standardize the data","Calculate the Dunn Index","Build a dendrogram"],correct:[1],
+ exp:"The notes specify standardization as the first step."},
+
+{part:"p2",topic:"algo",type:"single",q:"After standardizing the data and choosing K, what happens next in the basic K-Means process?",
+ options:["The algorithm calculates the Dunn Index","K centroids are initialized randomly","All points are declared noise","The data is converted into categorical variables"],correct:[1],
+ exp:"After choosing K, K centroids are initialized."},
+
+{part:"p2",topic:"algo",type:"single",q:"Suppose K-Means has three centroids: C1, C2, and C3. For a particular point P, the calculated distances are:\nDistance to C1 = 4.7\nDistance to C2 = 2.1\nDistance to C3 = 5.3\nTo which cluster will P initially be assigned?",
+ options:["Cluster 1","Cluster 2","Cluster 3","It remains unassigned until convergence"],correct:[1],
+ exp:"2.1 is the smallest distance."},
+
+{part:"p2",topic:"algo",type:"single",q:"During the K-Means update step, a cluster contains the following points:\n(2, 2)\n(4, 6)\n(6, 4)\nWhat is the new centroid?",
+ options:["(3, 4)","(4, 4)","(4, 5)","(12, 12)"],correct:[1],
+ exp:"X mean = (2+4+6)/3 = 4; Y mean = (2+6+4)/3 = 4."},
+
+{part:"p2",topic:"algo",type:"single",q:"A cluster contains the points:\n(1, 5)\n(3, 7)\n(5, 9)\n(7, 11)\nWhat is the updated centroid?",
+ options:["(4, 8)","(5, 8)","(4, 9)","(16, 32)"],correct:[0],
+ exp:"X mean = 4 and Y mean = 8."},
+
+{part:"p2",topic:"algo",type:"multi",q:"Which statements correctly describe the K-Means update step?",
+ options:["Each centroid is recalculated after the assignment step","The new centroid is the arithmetic mean of the cluster's current members","The centroid is always the point closest to all other points","The word \"means\" in K-Means refers to this averaging operation"],correct:[0,1,3],
+ exp:"These describe the update step and the meaning of \"means.\""},
+
+{part:"p2",topic:"algo",type:"single",q:"Why are centroids initialized before the first assignment step?",
+ options:["The algorithm needs initial reference points to determine which centroid is nearest to each observation","Centroids permanently determine the final clusters","Random centroids eliminate the need for distance calculations","Centroids are used to label the training data before clustering starts"],correct:[0],
+ exp:"Initial centroids provide the reference points required for the first assignment."},
+
+{part:"p2",topic:"conv",type:"single",q:"What does convergence mean in K-Means?",
+ options:["All clusters contain exactly the same number of observations","Consecutive iterations produce only negligible shifts in centroid positions","WCSS becomes exactly zero","K automatically becomes equal to the number of observations"],correct:[1],
+ exp:"Convergence occurs when centroid movement becomes negligible."},
+
+{part:"p2",topic:"conv",type:"multi",q:"Which statements about K-Means convergence are supported by the notes?",
+ options:["Well-separated data can converge very quickly","Complex data may require several iterations","A point can change clusters after centroids are updated","Convergence means every cluster must contain the same number of points"],correct:[0,1,2],
+ exp:"These are all supported by the notes."},
+
+{part:"p2",topic:"conv",type:"single",q:"After the update step, a centroid moves significantly. What should K-Means do next?",
+ options:["Stop immediately","Delete the centroid","Perform another assignment step using the updated centroids","Increase K by one"],correct:[2],
+ exp:"Updated centroids require another assignment step."},
+
+{part:"p2",topic:"conv",type:"single",q:"Consider the following simplified sequence:\nIteration 1 → centroids move significantly\nIteration 2 → centroids move moderately\nIteration 3 → centroids barely move\nIteration 4 → centroids barely move\nWhat is the most appropriate interpretation?",
+ options:["The algorithm is approaching convergence","K must be increased","The data must be relabeled","WCSS has necessarily become zero"],correct:[0],
+ exp:"The increasingly small shifts indicate the algorithm is approaching convergence."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"What does intra-cluster distance measure according to the notes?",
+ options:["Distance between two different cluster centroids","Average distance from points in a cluster to that cluster's centroid","Distance between the farthest two clusters","Number of observations in each cluster"],correct:[1],
+ exp:"Intra-cluster distance is the average distance from points to their own centroid."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"Which value of intra-cluster distance generally indicates a more compact cluster?",
+ options:["Higher","Lower","Exactly equal to inter-cluster distance","It does not matter"],correct:[1],
+ exp:"Low intra-distance means points are tightly packed."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"What does inter-cluster distance measure in the K-Means notes?",
+ options:["Distance between the centroids of two different clusters","Average distance between points within one cluster","Distance between a point and its own centroid","Number of iterations required for convergence"],correct:[0],
+ exp:"Inter-cluster distance is measured between different cluster centroids."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"Which combination generally indicates better clustering?",
+ options:["High intra-distance and low inter-distance","Low intra-distance and high inter-distance","High intra-distance and high inter-distance","Low intra-distance and low inter-distance"],correct:[1],
+ exp:"Good clustering means compact clusters and strong separation."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"A clustering result has:\nAverage intra-cluster distance = 2\nInter-cluster distance = 15\nWhat does this generally suggest?",
+ options:["The clusters are relatively compact and well separated","The clusters are very spread out and overlapping","All observations belong to one cluster","WCSS must equal zero"],correct:[0],
+ exp:"Small intra-distance combined with large inter-distance is desirable."},
+
+{part:"p2",topic:"intrainter",type:"single",q:"For K = 4, how many pairwise inter-cluster distances must be calculated?",
+ options:["4","5","6","8"],correct:[2],
+ exp:"Four clusters produce 4C2 = 6 pairwise comparisons."},
+
+{part:"p2",topic:"wcss2",type:"single",q:"What is the main objective that K-Means tries to minimize?",
+ options:["Inter-cluster distance","WCSS","Dunn Index","Number of observations"],correct:[1],
+ exp:"WCSS is the formal objective K-Means minimizes."},
+
+{part:"p2",topic:"wcss2",type:"single",q:"What does WCSS calculate?",
+ options:["The sum of squared distances between each point and its assigned centroid","The average distance between all pairs of clusters","The number of points in the largest cluster","The ratio between inter-cluster and intra-cluster distance"],correct:[0],
+ exp:"WCSS sums squared point-to-own-centroid distances."},
+
+{part:"p2",topic:"wcss2",type:"single",q:"Suppose a cluster contains three points whose distances from their centroid are:\n1, 2, 3\nWhat is this cluster's contribution to WCSS?",
+ options:["6","10","14","36"],correct:[2],
+ exp:"1² + 2² + 3² = 1 + 4 + 9 = 14. (Note: the source material's own answer key initially listed a different option here, but flagged and corrected this exact calculation to 14 — we use the corrected value.)"},
+
+{part:"p2",topic:"wcss2",type:"single",q:"Why are the distances squared when calculating WCSS?",
+ options:["To make WCSS negative for poorly separated clusters","Because squared distance is used in the formal K-Means objective and avoids repeatedly computing square roots","To make all clusters contain equal numbers of points","To determine K automatically"],correct:[1],
+ exp:"The notes explain that squared distance is the formal objective and avoids repeatedly computing square roots."},
+
+{part:"p2",topic:"wcss2",type:"multi",q:"Which statements about WCSS are correct?",
+ options:["WCSS is always non-negative","WCSS can theoretically equal zero","WCSS equals zero when every point forms its own cluster","The objective should always be to maximize WCSS"],correct:[0,1,2],
+ exp:"WCSS cannot be negative (it's a sum of squares) and reaches zero when every point is its own cluster, since each point has zero distance from itself."},
+
+{part:"p2",topic:"wcss2",type:"single",q:"A dataset contains 100 observations. What would happen to WCSS if K is increased all the way to 100, assuming every observation becomes its own cluster?",
+ options:["WCSS becomes extremely large","WCSS becomes exactly zero","WCSS becomes negative","WCSS becomes undefined"],correct:[1],
+ exp:"Each point has distance zero from its own centroid, so total WCSS is zero."},
+
+{part:"p2",topic:"elbow2",type:"single",q:"Why is simply selecting the largest possible K not a useful strategy?",
+ options:["WCSS increases as K increases","Increasing K reduces WCSS, but eventually the improvement becomes marginal and model complexity increases","K cannot be larger than 2","Larger K always makes clustering worse"],correct:[1],
+ exp:"More clusters reduce WCSS, but eventually the improvement becomes marginal while complexity rises."},
+
+{part:"p2",topic:"elbow2",type:"single",q:"A data scientist obtains:\nK=1 → 9000\nK=2 → 4500\nK=3 → 2200\nK=4 → 1200\nK=5 → 1100\nK=6 → 1040\nWhich K is the most reasonable candidate using the Elbow Method?",
+ options:["2","3","4","6"],correct:[2],
+ exp:"The major reductions occur through K = 4; after that the reductions are relatively small."},
+
+{part:"p2",topic:"elbow2",type:"single",q:"What is plotted when using the Elbow Method?",
+ options:["Dunn Index against intra-cluster distance","WCSS against K","Inter-cluster distance against sample size","Centroid coordinates against iteration number"],correct:[1],
+ exp:"Elbow plots WCSS against K."},
+
+{part:"p2",topic:"elbow2",type:"multi",q:"Which statements correctly describe the Elbow Method?",
+ options:["WCSS generally decreases as K increases","The elbow represents a point after which additional reductions become marginal","The method attempts to balance clustering quality with model complexity","The optimal K is always the largest K tested"],correct:[0,1,2],
+ exp:"These describe the purpose and behavior of the Elbow Method."},
+
+{part:"p2",topic:"elbow2",type:"single",q:"A WCSS curve decreases sharply from K = 1 through K = 3 and then becomes almost flat. What does the bend around K = 3 represent?",
+ options:["A likely candidate for K","A guaranteed indication that K = 1 is optimal","The point where WCSS becomes negative","The point where all observations become noise"],correct:[0],
+ exp:"The bend where reductions become marginal is the candidate K."},
+
+{part:"p2",topic:"dunn",type:"single",q:"Which formula correctly represents the Dunn Index described in the notes?",
+ options:["Maximum inter-cluster distance / minimum intra-cluster distance","Minimum inter-cluster distance / maximum intra-cluster distance","WCSS / K","K / WCSS"],correct:[1],
+ exp:"Dunn = minimum inter-cluster distance / maximum intra-cluster distance."},
+
+{part:"p2",topic:"dunn",type:"single",q:"A clustering has:\nMinimum inter-cluster distance = 18\nMaximum intra-cluster distance = 6\nWhat is its Dunn Index?",
+ options:["0.33","2","3","108"],correct:[2],
+ exp:"18 / 6 = 3."},
+
+{part:"p2",topic:"dunn",type:"single",q:"A Dunn Index is calculated as:\n0.75\nAccording to the notes, what does this indicate?",
+ options:["The clustering satisfies the desired ≥1 condition","The worst-case inter-cluster distance is smaller than the maximum intra-cluster distance, indicating poor separation","WCSS must be zero","Every point belongs to its own cluster"],correct:[1],
+ exp:"A value below 1 indicates the worst-case inter-cluster separation is smaller than the maximum intra-cluster distance."},
+
+{part:"p2",topic:"dunn",type:"single",q:"A clustering produces a Dunn Index of 1.4. Which interpretation is supported by the notes?",
+ options:["Inter-cluster distance dominates intra-cluster distance, indicating well-separated and compact clusters","The clustering must contain exactly 1.4 clusters","1.4% of points are correctly classified","WCSS must be greater than 1.4"],correct:[0],
+ exp:"A Dunn Index ≥ 1 indicates the desired relationship between separation and compactness."},
+
+{part:"p2",topic:"dunn",type:"multi",q:"Which statements correctly describe how the Dunn Index is constructed?",
+ options:["It uses the minimum inter-cluster distance","It uses the maximum intra-cluster distance","It focuses on the weakest separation and loosest cluster","It uses the average intra-cluster distance across all clusters"],correct:[0,1,2],
+ exp:"Dunn deliberately focuses on the weakest separation and least compact cluster."},
+
+{part:"p2",topic:"dunn",type:"single",q:"Suppose the following Dunn Index values are obtained:\nK=2 → 0.62\nK=3 → 0.91\nK=4 → 1.18\nK=5 → 1.07\nK=6 → 0.99\nWhich K would the Dunn Index method select?",
+ options:["K = 2","K = 3","K = 4","K = 6"],correct:[2],
+ exp:"K = 4 has the highest Dunn Index of 1.18."},
+
+{part:"p2",topic:"dunn",type:"single",q:"Why does the Dunn Index use the minimum inter-cluster distance rather than the maximum?",
+ options:["It focuses on the pair of clusters that are closest together, representing the weakest separation","It always produces the smallest possible number of clusters","It eliminates the need for intra-cluster distance","It guarantees that WCSS equals zero"],correct:[0],
+ exp:"The minimum inter-cluster distance identifies the closest/most problematic pair of clusters."},
+
+{part:"p2",topic:"choosek",type:"multi",q:"A data scientist is comparing possible K values using both Elbow and Dunn Index methods. Which statements are correct?",
+ options:["Elbow examines where WCSS reduction becomes marginal","Dunn Index selects the K with the highest Dunn value","Both methods help avoid blindly choosing a very large K","Both methods require WCSS to equal zero"],correct:[0,1,2],
+ exp:"Both methods provide principled ways of avoiding unnecessarily large K."},
+
+{part:"p2",topic:"choosek",type:"single",q:"A clothing company already knows that its customer strategy must distinguish customers into four size-related categories: Small, Medium, Large, and Extra Large. Which method of selecting K does this represent?",
+ options:["Qualitative/domain knowledge approach","Elbow method","Dunn Index","WCSS minimization"],correct:[0],
+ exp:"This is domain knowledge determining the desired grouping."},
+
+{part:"p2",topic:"choosek",type:"single",q:"Two candidate clusterings are being compared:\nModel A → K=3, WCSS=1200, Dunn=1.25\nModel B → K=5, WCSS=800, Dunn=0.92\nWhich conclusion is most consistent with the notes?",
+ options:["Model B is automatically better because its WCSS is lower","Model A has stronger Dunn Index evidence for compactness and separation, while Model B has lower WCSS","Model B must be selected because K = 5 is larger","Model A must have WCSS = 0 because its Dunn Index is above 1"],correct:[1],
+ exp:"Model B has lower WCSS, but Model A has stronger Dunn evidence. The notes do not say to choose solely from WCSS."},
+
+{part:"p2",topic:"choosek",type:"multi",q:"A team is deciding between K = 3, K = 4, and K = 5 for customer segmentation. Their results are:\nK=3 → WCSS=1500, Dunn=0.90\nK=4 → WCSS=950, Dunn=1.30\nK=5 → WCSS=850, Dunn=1.05\nWhich conclusions are supported by the notes?",
+ options:["K = 5 has the lowest WCSS among the three choices","K = 4 has the highest Dunn Index","The Elbow Method could favor K = 4 if the WCSS reduction beyond K = 4 becomes marginal","K = 5 must automatically be selected because it has lower WCSS than K = 4"],correct:[0,1,2],
+ exp:"K=5 has lower WCSS, K=4 has the highest Dunn, and K=4 could be the elbow. Lower WCSS alone does not automatically make K=5 the best choice."}
+);
+
+/* ---------------- ANOMALY DETECTION ---------------- */
+Q.push(
+{part:"an",topic:"afund",type:"single",q:"A data scientist observes that most API requests take between 100 and 140 milliseconds, but one request takes 5,000 milliseconds. How should this observation primarily be described?",
+ options:["A normal observation","An anomaly","A centroid","A classification label"],correct:[1],
+ exp:"The 5,000 ms response is extremely unusual compared with the normal 100–140 ms range."},
+
+{part:"an",topic:"afund",type:"multi",q:"Which characteristics generally describe an anomaly?",
+ options:["It occurs very rarely","It sits far outside the typical range","It stands apart from the bulk of the data","It must always be caused by an error in data collection"],correct:[0,1,2],
+ exp:"These are the characteristics of an anomaly. An anomaly does not necessarily mean an error."},
+
+{part:"an",topic:"afund",type:"single",q:"A bank has millions of historical transactions, but a completely new type of fraudulent behavior appears that was never present in the training data. Why might a dedicated anomaly detection method be useful?",
+ options:["It requires labeled examples of every possible fraud pattern","It can identify observations that are statistically unusual without requiring labels for that exact anomaly type","It guarantees that every fraud transaction will be detected","It only works when fraud labels are available"],correct:[1],
+ exp:"Dedicated anomaly detection can identify unusual patterns without needing labeled examples of every possible anomaly."},
+
+{part:"an",topic:"afund",type:"single",q:"Which statement best captures the fundamental purpose of anomaly detection?",
+ options:["Find the most common observations","Identify observations that differ significantly from the majority","Divide data into exactly K clusters","Predict a predefined target variable"],correct:[1],
+ exp:"Anomaly detection focuses on identifying unusual observations."},
+
+{part:"an",topic:"afund",type:"multi",q:"Which are realistic applications of anomaly detection from the notes?",
+ options:["Fraudulent financial transactions","Unusual network traffic","Abnormal machine vibration","Unusual patient vital signs"],correct:[0,1,2,3],
+ exp:"All four are examples given in the notes."},
+
+{part:"an",topic:"afund",type:"single",q:"A manufacturing sensor normally records vibration values within a narrow range. Suddenly, one reading is dramatically different from the normal pattern. What is the primary reason to investigate it?",
+ options:["It may indicate an unusual event such as equipment failure or wear","It automatically proves the machine is defective","It must be removed from the dataset immediately","It means the dataset is supervised"],correct:[0],
+ exp:"An unusual sensor reading could indicate equipment wear, failure, or another abnormal condition."},
+
+{part:"an",topic:"afund",type:"multi",q:"Why can standard supervised models miss novel anomalies?",
+ options:["They learn patterns from historical training data","Completely new anomaly patterns may not resemble anything learned during training","They automatically detect every statistically unusual point","Their predictions depend on the patterns available during training"],correct:[0,1,3],
+ exp:"Standard models learn from historical patterns and can struggle with completely novel patterns."},
+
+{part:"an",topic:"normal",type:"single",q:"For an approximately normal distribution, approximately what percentage of observations fall within 1 standard deviation of the mean?",
+ options:["50%","68%","95%","99.73%"],correct:[1],
+ exp:"Approximately 68% lie within ±1σ."},
+
+{part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations fall within 2 standard deviations of the mean in a normal distribution?",
+ options:["68%","90%","95%","99.73%"],correct:[2],
+ exp:"Approximately 95% lie within ±2σ."},
+
+{part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations fall within 3 standard deviations of the mean?",
+ options:["68%","95%","97%","99.73%"],correct:[3],
+ exp:"Approximately 99.73% lie within ±3σ."},
+
+{part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations lie outside the ±3σ range in a normal distribution?",
+ options:["0.27%","2.7%","5%","32%"],correct:[0],
+ exp:"100% − 99.73% = approximately 0.27%."},
+
+{part:"an",topic:"normal",type:"single",q:"A normally distributed feature has:\nMean = 100\nStandard deviation = 10\nWhich interval represents approximately 95% of observations?",
+ options:["90 to 110","80 to 120","70 to 130","60 to 140"],correct:[1],
+ exp:"100 ± 2(10) = 80 to 120."},
+
+{part:"an",topic:"zscore",type:"single",q:"What does a Z-score measure?",
+ options:["The number of clusters in the dataset","How many standard deviations a value is from the mean","The percentage of missing values","The distance between two cluster centroids"],correct:[1],
+ exp:"Z-score tells us how many standard deviations a point is from the mean."},
+
+{part:"an",topic:"zscore",type:"single",q:"Which formula correctly represents the Z-score?",
+ options:["Z = (X + μ) / σ","Z = (X − μ) / σ","Z = (X − σ) / μ","Z = μ / (X − σ)"],correct:[1],
+ exp:"Z = (X − μ) / σ."},
+
+{part:"an",topic:"zscore",type:"single",q:"A dataset has:\nMean = 50\nStandard deviation = 5\nX = 65\nWhat is the Z-score?",
+ options:["2","3","4","5"],correct:[1],
+ exp:"(65 − 50) / 5 = 3."},
+
+{part:"an",topic:"zscore",type:"single",q:"Using the standard Z-score anomaly rule, when is a point generally flagged?",
+ options:["|Z| > 1","|Z| > 2","|Z| > 3","Z = 0"],correct:[2],
+ exp:"The standard threshold is |Z| > 3."},
+
+{part:"an",topic:"zscore",type:"single",q:"A point has a Z-score of -3.8. Would it be flagged using the standard rule?",
+ options:["No, because the Z-score is negative","Yes, because its absolute Z-score is greater than 3","No, because only positive Z-scores can be anomalies","Yes, but only if the mean is positive"],correct:[1],
+ exp:"The absolute value is 3.8, which is greater than 3."},
+
+{part:"an",topic:"zscore",type:"single",q:"Consider:\ndf[\"z_score\"] = (df[\"response_time\"] - mean) / std\ndf[\"is_anomaly\"] = df[\"z_score\"].abs() > 3\nWhat does abs() accomplish here?",
+ options:["It converts the Z-score to a percentage","It considers both unusually high and unusually low values","It removes negative values from the dataset","It calculates the standard deviation"],correct:[1],
+ exp:"abs() allows both positive and negative extreme Z-scores to be detected."},
+
+{part:"an",topic:"zscore",type:"single",q:"A dataset has:\nMean = 200 ms\nStandard deviation = 50 ms\nResponse time = 365 ms\nWhat is the Z-score?",
+ options:["2.3","2.7","3.3","4.3"],correct:[2],
+ exp:"(365 − 200) / 50 = 165 / 50 = 3.3."},
+
+{part:"an",topic:"zscore",type:"single",q:"Using the standard |Z| > 3 rule, what should happen to the observation from the previous question (Z = 3.3)?",
+ options:["It is flagged because Z = 3.3","It is not flagged because Z must be negative","It is flagged only if Z = 4","It is automatically considered normal"],correct:[0],
+ exp:"3.3 > 3, so it is flagged."},
+
+{part:"an",topic:"zscore",type:"multi",q:"Which are limitations of the Z-score method mentioned in the notes?",
+ options:["It works on one feature at a time","It assumes an approximately normal distribution","Extreme values can distort the mean and standard deviation","It naturally captures unusual combinations of multiple features"],correct:[0,1,2],
+ exp:"These are the important limitations of Z-score. It does not naturally capture multi-feature combinations."},
+
+{part:"an",topic:"iqr",type:"single",q:"What does IQR stand for?",
+ options:["Internal Quantile Ratio","Interquartile Range","Individual Quality Range","Inter-Quantile Regression"],correct:[1],
+ exp:"IQR = Interquartile Range."},
+
+{part:"an",topic:"iqr",type:"single",q:"Which percentiles define the IQR?",
+ options:["10th and 90th","25th and 75th","50th and 100th","1st and 99th"],correct:[1],
+ exp:"Q1 = 25th percentile and Q3 = 75th percentile."},
+
+{part:"an",topic:"iqr",type:"single",q:"If Q1 = 20 and Q3 = 50, what is the IQR?",
+ options:["20","30","50","70"],correct:[1],
+ exp:"50 − 20 = 30."},
+
+{part:"an",topic:"iqr",type:"single",q:"If Q1 = 20, Q3 = 50, IQR = 30, what is the upper outlier bound?",
+ options:["65","80","95","100"],correct:[2],
+ exp:"Upper bound = 50 + 1.5(30) = 50 + 45 = 95."},
+
+{part:"an",topic:"iqr",type:"single",q:"Using the same values — Q1 = 20, Q3 = 50, IQR = 30 — what is the lower outlier bound?",
+ options:["-25","-10","5","10"],correct:[0],
+ exp:"Lower bound = 20 − 1.5(30) = 20 − 45 = −25."},
+
+{part:"an",topic:"iqr",type:"single",q:"Given: Q1 = 100, Q3 = 140. Which value would be classified as an upper outlier using the standard IQR rule?",
+ options:["150","180","200","205"],correct:[3],
+ exp:"IQR = 140 − 100 = 40; upper bound = 140 + 1.5(40) = 200. A value of 200 sits exactly at the boundary rather than strictly above it, so 205 is the value that qualifies as an outlier."},
+
+{part:"an",topic:"iqr",type:"single",q:"Which Python expression correctly calculates the IQR?",
+ options:["Q1 + Q3","Q3 - Q1","Q3 / Q1","Q1 - Q3"],correct:[1],
+ exp:"IQR = Q3 − Q1."},
+
+{part:"an",topic:"iqr",type:"multi",q:"Which statements correctly describe the IQR method?",
+ options:["It uses Q1 and Q3","It uses percentile/rank information","It is generally more robust than Z-score for skewed data","It requires the data to follow a normal distribution"],correct:[0,1,2],
+ exp:"IQR uses quartiles, is rank-based, and is more robust for skewed data. It does not require normality."},
+
+{part:"an",topic:"zvsiqr",type:"single",q:"A customer's income dataset is heavily right-skewed because a small number of customers have extremely high incomes. Which single-feature method is generally more appropriate?",
+ options:["Z-score","IQR","K-Means","Classification"],correct:[1],
+ exp:"IQR is generally preferred for heavily skewed single-feature data."},
+
+{part:"an",topic:"zvsiqr",type:"single",q:"Why can IQR handle skewed data better than Z-score?",
+ options:["IQR uses the mean, which is unaffected by extreme values","Q1 and Q3 are based on rank and are less affected by extreme magnitudes","IQR automatically transforms skewed data into a normal distribution","IQR uses a neural network"],correct:[1],
+ exp:"Extreme magnitudes have less influence on percentile positions than on mean and standard deviation."},
+
+{part:"an",topic:"zvsiqr",type:"multi",q:"Which comparison between Z-score and IQR is correct?",
+ options:["Z-score uses mean and standard deviation","IQR uses quartiles","Z-score is more sensitive to extreme values","Both methods naturally analyze multiple features simultaneously"],correct:[0,1,2],
+ exp:"These correctly distinguish the two methods."},
+
+{part:"an",topic:"zvsiqr",type:"single",q:"A fraud pattern occurs only when transaction amount is unusually high AND login attempts are unusually high simultaneously. Neither feature individually looks particularly unusual. Why might both Z-score and IQR fail to detect this pattern?",
+ options:["Both methods analyze one feature at a time","Both methods require K to be specified","Both methods only work with categorical data","Both methods always remove anomalies before analysis"],correct:[0],
+ exp:"Both are univariate methods and analyze features independently."},
+
+{part:"an",topic:"isof",type:"single",q:"What is the key idea behind Isolation Forest?",
+ options:["Anomalies require more random splits to isolate than normal observations","Anomalies are easier to isolate because they are rare and different from most observations","Every anomaly is manually labeled before training","The algorithm calculates only the mean and standard deviation"],correct:[1],
+ exp:"Isolation Forest exploits the fact that unusual points tend to be easier to isolate."},
+
+{part:"an",topic:"isof",type:"single",q:"What happens when Isolation Forest repeatedly builds its random trees?",
+ options:["It randomly selects features and split values to partition the data","It calculates quartiles for every feature","It creates K centroids","It requires predefined anomaly labels"],correct:[0],
+ exp:"Random feature and random split selection is central to Isolation Forest."},
+
+{part:"an",topic:"isof",type:"single",q:"Suppose an observation becomes isolated after only a few random splits, while another requires many splits. Which is more likely to be anomalous?",
+ options:["The point requiring many splits","The point requiring fewer splits","Both must be equally anomalous","Neither can be evaluated"],correct:[1],
+ exp:"Fewer splits/path length means easier isolation and therefore stronger anomaly evidence."},
+
+{part:"an",topic:"isof",type:"single",q:"In Isolation Forest, what does a shorter average path length generally indicate?",
+ options:["The observation is more anomalous","The observation is more normal","The observation is a centroid","The observation has missing values"],correct:[0],
+ exp:"Shorter average path length means more anomalous."},
+
+{part:"an",topic:"isof",type:"single",q:"Why does Isolation Forest work well for multi-dimensional anomaly detection?",
+ options:["It processes multiple features simultaneously","It analyzes only one feature at a time","It requires every feature to follow a normal distribution","It removes all correlated features"],correct:[0],
+ exp:"Isolation Forest can work with multiple features simultaneously."},
+
+{part:"an",topic:"isof",type:"multi",q:"Which are advantages of Isolation Forest mentioned in the notes?",
+ options:["It can handle multiple features simultaneously","It does not require an assumption about the underlying distribution","It can be computationally efficient for large datasets","It requires labeled examples of every anomaly type"],correct:[0,1,2],
+ exp:"These are key advantages. It does not require labeled examples of each anomaly."},
+
+{part:"an",topic:"isof",type:"single",q:"A fraud dataset contains 12 transaction and behavioral features. Which method from the notes is most appropriate when the fraud pattern may involve unusual combinations of these features?",
+ options:["Z-score applied independently to one feature","IQR applied independently to one feature","Isolation Forest","Median calculation"],correct:[2],
+ exp:"Isolation Forest is designed to process multiple features simultaneously."},
+
+{part:"an",topic:"isof",type:"single",q:"Which statement about Isolation Forest's splitting mechanism is correct?",
+ options:["It randomly selects a feature and then randomly chooses a split value between that feature's minimum and maximum","It always chooses the feature with the largest variance","It always splits at the mean","It chooses the target variable before splitting"],correct:[0],
+ exp:"Both the feature and split value are randomly selected."},
+
+{part:"an",topic:"isof",type:"single",q:"Which statement about Isolation Forest is incorrect according to the notes?",
+ options:["It uses an ensemble of random trees","Anomalies tend to have shorter average path lengths","It assumes the input data follows a normal distribution","It can process multiple features together"],correct:[2],
+ exp:"Isolation Forest does not require a normal-distribution assumption — that's the false statement here."},
+
+{part:"an",topic:"fitpred",type:"single",q:"An Isolation Forest model is used as follows:\ndf[\"prediction\"] = model.fit_predict(df[features])\nWhat value does sklearn's Isolation Forest return for an anomaly?",
+ options:["0","1","-1","True"],correct:[2],
+ exp:"sklearn Isolation Forest uses -1 for anomalies."},
+
+{part:"an",topic:"fitpred",type:"single",q:"What value does fit_predict() return for a normal observation in Isolation Forest?",
+ options:["-1","0","+1","False"],correct:[2],
+ exp:"+1 represents normal observations."},
+
+{part:"an",topic:"fitpred",type:"single",q:"A dataset contains approximately 3% known fraudulent transactions. Which could be a reasonable starting point for the Isolation Forest contamination parameter?",
+ options:["0.003","0.03","0.30","3.0"],correct:[1],
+ exp:"3% = 0.03. It is a reasonable starting point, not a guaranteed correct value."},
+
+{part:"an",topic:"fitpred",type:"single",q:"What is the purpose of random_state=42 in an Isolation Forest model?",
+ options:["It sets the contamination to 42%","It guarantees 42 anomalies","It fixes the random seed to improve reproducibility","It determines the number of trees"],correct:[2],
+ exp:"random_state fixes randomness so repeated runs can be reproducible."},
+
+{part:"an",topic:"thresh",type:"multi",q:"Why is anomaly threshold selection also a business decision?",
+ options:["Lowering or raising the threshold changes the number of flagged observations","False positives may create unnecessary manual investigations or frustrate customers","False negatives may allow genuine fraud or other harmful anomalies to go undetected","There is one universally correct threshold for every business"],correct:[0,1,2],
+ exp:"Threshold selection creates a tradeoff between false positives and false negatives."},
+
+{part:"an",topic:"thresh",type:"single",q:"A bank's fraud detection system is generating too many alerts for legitimate customers. What is the most likely problem?",
+ options:["Too many false positives","Too many true negatives","Too many true positives","Too few false negatives"],correct:[0],
+ exp:"Legitimate customers being flagged means false positives are too high."},
+
+{part:"an",topic:"auto",type:"single",q:"What is the basic anomaly detection idea behind an autoencoder?",
+ options:["It learns to reconstruct normal data, and unusually high reconstruction error can indicate an anomaly","It calculates Q1 and Q3","It isolates points using random decision-tree splits","It calculates the number of standard deviations from the mean"],correct:[0],
+ exp:"Autoencoders learn to reconstruct normal patterns; anomalies can produce high reconstruction error."},
+
+{part:"an",topic:"auto",type:"multi",q:"A data scientist is choosing between Z-score, IQR, and Isolation Forest. Which statements are correct?",
+ options:["Z-score is simple and useful for single-feature data that is approximately normally distributed","IQR is generally more robust than Z-score for skewed single-feature data","Isolation Forest is suitable for complex multi-feature anomaly detection","There is no need to manually review flagged anomalies because anomaly algorithms are guaranteed to be correct"],correct:[0,1,2],
+ exp:"These accurately summarize the three methods. Manual review remains important because anomaly detection is not guaranteed to be correct."}
+);
+
+/* ============================================================
+   STATE
+============================================================ */
+let activePart = "p1";
+let activeTopic = "all";
+const state = {}; // idx -> {selected:Set, checked:bool}
+Q.forEach((q,i)=>{ state[i] = {selected:new Set(), checked:false}; });
+
+/* ============================================================
+   RENDER: hero meta + part tabs
+============================================================ */
+const heroMeta = document.getElementById('heroMeta');
+heroMeta.innerHTML = PARTS.map(p=>{
+  const n = Q.filter(q=>q.part===p.id).length;
+  return `<span class="pill" style="border-color:${p.color}55;color:${p.color}">${p.name} · ${n}</span>`;
+}).join('') + `<span class="pill">click an option to check yourself</span>`;
+
+const partTabs = document.getElementById('partTabs');
+function renderPartTabs(){
+  partTabs.innerHTML = '';
+  PARTS.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'part-tab' + (activePart===p.id ? ' active':'');
+    if(activePart===p.id){ btn.style.background = p.color; btn.style.borderColor = p.color; }
+    btn.textContent = p.name;
+    btn.onclick = ()=>{ activePart = p.id; activeTopic='all'; renderPartTabs(); renderCoverage(); renderChips(); renderQuestions(); window.scrollTo({top:0,behavior:'smooth'}); };
+    partTabs.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   RENDER: coverage bars for active part
+============================================================ */
+function renderCoverage(){
+  const p = partMap[activePart];
+  document.getElementById('coverageTitle').textContent = p.name + ' — topic coverage';
+  const grid = document.getElementById('covGrid');
+  grid.innerHTML = '';
+  const total = Q.filter(q=>q.part===activePart).length;
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const pct = Math.round((count/total)*100);
+    const hue = topicColor(activePart, i);
+    const row = document.createElement('div');
+    row.className = 'cov-row';
+    row.innerHTML = `
+      <div class="cov-label">${t.name}</div>
+      <div class="cov-bar-track"><div class="cov-bar-fill" style="width:${pct}%;background:${hue}"></div></div>
+      <div class="cov-count">${count}</div>`;
+    grid.appendChild(row);
+  });
+}
+
+const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8"];
+function topicColor(partId, idx){ return palette[idx % palette.length]; }
+function colorForTopic(partId, topicId){
+  const p = partMap[partId];
+  const idx = p.topics.findIndex(t=>t.id===topicId);
+  return topicColor(partId, idx);
+}
+
+/* ============================================================
+   RENDER: filter chips
+============================================================ */
+const chipRow = document.getElementById('chipRow');
+function renderChips(){
+  chipRow.innerHTML = '';
+  const p = partMap[activePart];
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (activeTopic==='all' ? ' active':'');
+  const totalCount = Q.filter(q=>q.part===activePart).length;
+  if(activeTopic==='all'){ allChip.style.background=p.color; allChip.style.color='#06121b'; allChip.style.borderColor=p.color; }
+  allChip.textContent = `All (${totalCount})`;
+  allChip.onclick = ()=>{ activeTopic='all'; renderChips(); renderQuestions(); };
+  chipRow.appendChild(allChip);
+
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (activeTopic===t.id ? ' active':'');
+    const c = topicColor(activePart, i);
+    if(activeTopic===t.id){ chip.style.background=c; chip.style.color='#06121b'; chip.style.borderColor=c; }
+    chip.textContent = `${t.name} (${count})`;
+    chip.onclick = ()=>{ activeTopic=t.id; renderChips(); renderQuestions(); };
+    chipRow.appendChild(chip);
+  });
+}
+
+/* ============================================================
+   RENDER: questions
+============================================================ */
+const quizRoot = document.getElementById('quizRoot');
+const letters = ['A','B','C','D'];
+
+function updateScore(){
+  let done=0, correct=0;
+  Object.entries(state).forEach(([idx,s])=>{
+    if(!s.checked) return;
+    done++;
+    const q = Q[idx];
+    const sel = [...s.selected].sort().join(',');
+    const cor = [...q.correct].sort().join(',');
+    if(sel===cor) correct++;
+  });
+  document.getElementById('scoreDone').textContent = done;
+  document.getElementById('scoreCorrect').textContent = correct;
+}
+
+function renderQuestions(){
+  quizRoot.innerHTML = '';
+  const p = partMap[activePart];
+
+  const withIdx = Q.map((q,i)=>({...q, gidx:i}));
+  const filtered = withIdx.filter(q=> q.part===activePart && (activeTopic==='all' || q.topic===activeTopic));
+
+  if(activeTopic==='all'){
+    p.topics.forEach((t,ti)=>{
+      const group = filtered.filter(q=>q.topic===t.id);
+      if(group.length===0) return;
+      const c = topicColor(activePart, ti);
+      const section = document.createElement('section');
+      section.className = 'topic-block';
+      section.innerHTML = `<div class="topic-heading">
+        <span class="dot" style="background:${c}"></span>
+        <h3>${t.name}</h3>
+        <span class="count">${group.length} question${group.length>1?'s':''}</span>
+      </div>`;
+      group.forEach(q=> section.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+      quizRoot.appendChild(section);
+    });
+  } else {
+    filtered.forEach(q=> quizRoot.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+  }
+}
+
+function buildCard(q, color){
+  const idx = q.gidx;
+  const t = topicOf(q.part, q.topic);
+  const card = document.createElement('div');
+  card.className = 'qcard';
+  card.id = q.part+'-q'+(idx+1);
+
+  const localNum = Q.slice(0, idx).filter(x=>x.part===q.part).length + 1;
+
+  const top = document.createElement('div');
+  top.className = 'qtop';
+  top.innerHTML = `<div class="qnum" style="background:${color}">Q${localNum}</div>
+    <div style="flex:1">
+      <div class="qmeta">
+        <span class="tag tag-topic" style="border-color:${color}66;color:${color}">${t.name}</span>
+        <span class="tag tag-type" style="border-color:#8B95AC66;color:${q.type==='multi'?'#FBBF24':'#8B95AC'}">${q.type==='multi' ? 'Multiple correct' : 'Single choice'}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+    </div>`;
+  card.appendChild(top);
+
+  const optWrap = document.createElement('div');
+  optWrap.className = 'options';
+  q.options.forEach((optText, i)=>{
+    const opt = document.createElement('div');
+    opt.className = 'opt';
+    opt.innerHTML = `<span class="letter">${letters[i]}.</span><span>${optText}</span>`;
+    opt.onclick = ()=> handleOptionClick(idx, i, card, q);
+    optWrap.appendChild(opt);
+  });
+  card.appendChild(optWrap);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+
+  if(q.type==='multi'){
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'check-btn primary';
+    checkBtn.textContent = 'Check answer';
+    checkBtn.onclick = ()=> checkMulti(idx, card, q);
+    btnRow.appendChild(checkBtn);
+  }
+
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'reveal-btn';
+  revealBtn.textContent = 'Show explanation';
+  const explain = document.createElement('div');
+  explain.className = 'explain';
+  explain.innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  revealBtn.onclick = ()=>{
+    explain.classList.toggle('show');
+    revealBtn.textContent = explain.classList.contains('show') ? 'Hide explanation' : 'Show explanation';
+  };
+  btnRow.appendChild(revealBtn);
+
+  const resultNote = document.createElement('div');
+  resultNote.className = 'result-note';
+  resultNote.id = 'result-'+idx;
+
+  card.appendChild(btnRow);
+  card.appendChild(resultNote);
+  card.appendChild(explain);
+
+  if(state[idx].checked) paintOptions(card, idx, q);
+
+  return card;
+}
+
+function handleOptionClick(idx, optIdx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(q.type==='single'){
+    s.selected = new Set([optIdx]);
+    s.checked = true;
+    paintOptions(card, idx, q);
+    updateScore();
+  } else {
+    // multi: toggle selection, don't lock yet
+    if(s.selected.has(optIdx)) s.selected.delete(optIdx);
+    else s.selected.add(optIdx);
+    const opts = card.querySelectorAll('.opt');
+    opts.forEach((el,i)=> el.classList.toggle('selected', s.selected.has(i)));
+  }
+}
+
+function checkMulti(idx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(s.selected.size===0) return; // require at least one pick
+  s.checked = true;
+  paintOptions(card, idx, q);
+  updateScore();
+}
+
+function paintOptions(card, idx, q){
+  const s = state[idx];
+  const opts = card.querySelectorAll('.opt');
+  const correctSet = new Set(q.correct);
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    el.classList.remove('selected');
+    if(correctSet.has(i) && s.selected.has(i)) el.classList.add('correct');
+    else if(!correctSet.has(i) && s.selected.has(i)) el.classList.add('incorrect');
+    else if(correctSet.has(i) && !s.selected.has(i)) el.classList.add('missed');
+  });
+  const sel = [...s.selected].sort().join(',');
+  const cor = [...correctSet].sort().join(',');
+  const note = document.getElementById('result-'+idx);
+  if(note){
+    if(sel===cor){ note.textContent = '✓ Correct'; note.className='result-note ok'; }
+    else { note.textContent = '✗ Not quite — correct answer highlighted in green'; note.className='result-note bad'; }
+  }
+  // hide the check button if present
+  const checkBtn = card.querySelector('.check-btn');
+  if(checkBtn) checkBtn.style.display = 'none';
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPartTabs();
+renderCoverage();
+renderChips();
+renderQuestions();
+updateScore();
+</script>
+</body>
+</html>
