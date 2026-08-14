@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clustering &amp; Anomaly Detection — 150 Practice Questions</title>
+<title>AIML Practice — 300 Questions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -37,12 +37,11 @@
   .meta-row{display:flex;flex-wrap:wrap;gap:10px;}
   .pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:var(--panel);color:var(--muted);}
 
-  /* PART TABS */
   .parts-nav{position:sticky;top:0;z-index:30;background:rgba(11,17,32,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
   .parts-nav-inner{max-width:940px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
   .part-tabs{display:flex;gap:8px;flex-wrap:wrap;}
   .part-tab{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;padding:9px 14px;border-radius:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 13px;border-radius:10px;
     border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-weight:600;
     transition:all .15s ease;
   }
@@ -53,14 +52,14 @@
 
   .topic-controls{padding:18px 0 0;}
   .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
-  .chip{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
   .chip:hover{color:var(--text);}
   .chip.active{font-weight:700;}
 
   .coverage{margin:26px 0 6px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;}
   .coverage h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 14px;font-weight:600;}
-  .cov-row{display:grid;grid-template-columns:220px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
-  .cov-label{font-size:12.5px;color:var(--text);}
+  .cov-row{display:grid;grid-template-columns:230px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
+  .cov-label{font-size:12px;color:var(--text);}
   .cov-bar-track{height:7px;border-radius:6px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line);}
   .cov-bar-fill{height:100%;border-radius:6px;}
   .cov-count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;}
@@ -68,7 +67,7 @@
   section.topic-block{margin-top:44px;}
   .topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap;}
   .topic-heading .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0;}
+  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0;}
   .topic-heading .count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-left:auto;}
 
   .qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin-bottom:14px;}
@@ -115,8 +114,8 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="eyebrow">Learn AIML with Nitish</div>
-    <h1>Clustering &amp; Anomaly Detection<br><span>— 150 practice questions.</span></h1>
-    <p class="lede">Three sets in one place: Clustering Part 1 (fundamentals through RFM), Clustering Part 2 (centroids through Dunn Index), and Anomaly Detection (Z-score, IQR, Isolation Forest &amp; more). Single-answer and multiple-correct questions are both supported — click to check yourself, then reveal the explanation.</p>
+    <h1>AI &amp; ML Practice Bank<br><span>— 300 questions across 6 topics.</span></h1>
+    <p class="lede">Clustering (Parts 1 &amp; 2), Anomaly Detection, Dimensionality Reduction, Neural Networks from First Principles, and PyTorch Essentials — all in one place. Single-answer and multiple-correct questions are both supported. Click an option to check yourself, then reveal the explanation.</p>
     <div class="meta-row" id="heroMeta"></div>
   </div>
 </div>
@@ -124,7 +123,7 @@
 <div class="parts-nav">
   <div class="parts-nav-inner">
     <div class="part-tabs" id="partTabs"></div>
-    <div class="score-box">Checked: <b id="scoreDone">0</b>/150 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
+    <div class="score-box">Checked: <b id="scoreDone">0</b>/300 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
   </div>
 </div>
 
@@ -141,7 +140,7 @@
 </div>
 
 <footer>
-  Practice set compiled from course notes on Clustering (K-Means · DBSCAN · Hierarchical) and Anomaly Detection.<br>
+  Practice bank compiled from course notes: Clustering (K-Means · DBSCAN · Hierarchical), Anomaly Detection, Dimensionality Reduction (PCA · t-SNE · UMAP), Neural Networks from First Principles, and PyTorch Essentials.<br>
   Self-study only — nothing is pre-revealed. Answer, then use "Show explanation" to check your reasoning.
 </footer>
 
@@ -190,622 +189,980 @@ const PARTS = [
       {id:"auto", name:"Autoencoders & Method Selection"},
     ]
   },
+  { id:"p4", name:"Dimensionality Reduction", color:"#FB7185",
+    topics:[
+      {id:"introdr", name:"Dimensionality Reduction Basics"},
+      {id:"variance", name:"Variance & Spread"},
+      {id:"pcafund", name:"PCA Fundamentals"},
+      {id:"evr", name:"Explained Variance & Choosing Components"},
+      {id:"pcasklearn", name:"PCA with sklearn & Limitations"},
+      {id:"tsne", name:"t-SNE"},
+      {id:"umap", name:"UMAP"},
+      {id:"workflow", name:"Workflow & Comparison"},
+    ]
+  },
+  { id:"p5", name:"Neural Networks", color:"#60A5FA",
+    topics:[
+      {id:"perceptron", name:"Perceptron & Neuron Basics"},
+      {id:"xor", name:"Linear Separability & XOR"},
+      {id:"pweights", name:"Perceptron Learning Rule"},
+      {id:"linlayers", name:"Linear Layers & Non-linearity"},
+      {id:"activations", name:"Sigmoid, Tanh & ReLU"},
+      {id:"outputact", name:"Output Layer Activations"},
+      {id:"architecture", name:"Network Architecture & Weight Shapes"},
+      {id:"forwardloss", name:"Forward Propagation & Loss"},
+      {id:"backprop", name:"Backpropagation & Gradient Descent"},
+      {id:"gradients", name:"Vanishing/Exploding Gradients & Initialization"},
+      {id:"uat", name:"Universal Approximation Theorem"},
+      {id:"fullnn", name:"Full Workflow / XOR Network"},
+    ]
+  },
+  { id:"p6", name:"PyTorch Essentials", color:"#C084FC",
+    topics:[
+      {id:"overview", name:"PyTorch Overview & Tensors"},
+      {id:"cuda", name:"CUDA & GPU Support"},
+      {id:"modules", name:"Core PyTorch Modules"},
+      {id:"autograd", name:"Autograd Fundamentals"},
+      {id:"gradaccum", name:"Gradient Accumulation"},
+      {id:"modelbuild", name:"Model Building: Sequential & nn.Module"},
+      {id:"linearparams", name:"Linear Layers & Parameters"},
+      {id:"dataloader", name:"DataLoader & Mini-batches"},
+      {id:"trainloop", name:"Training Loop & Optimizers"},
+      {id:"evalreg", name:"Evaluation & Regularization"},
+      {id:"checkpoint", name:"Checkpointing & Full Workflow"},
+    ]
+  },
 ];
 const partMap = Object.fromEntries(PARTS.map(p=>[p.id,p]));
 function topicOf(partId, topicId){ return partMap[partId].topics.find(t=>t.id===topicId); }
 
 /* ============================================================
-   QUESTION BANK — correct: array of option indices (0=A..3=D)
+   QUESTION BANK — correct: array of option indices (0=A..3/4=D/E)
 ============================================================ */
 const Q = [];
 
-/* ---------------- PART 1 ---------------- */
+/* ---------------- PART 1: Clustering — Part 1 ---------------- */
 Q.push(
 {part:"p1",topic:"fund",type:"single",q:"A data scientist receives a dataset containing customer information but there is no predefined customer category for any customer. The goal is to discover naturally occurring customer groups based on their behavior. Which approach best fits this problem?",
  options:["Supervised classification","Unsupervised clustering","Supervised regression","Reinforcement learning"],correct:[1],
  exp:"Supervised learning uses labeled data; clustering is unsupervised and discovers structure without predefined labels."},
-
 {part:"p1",topic:"fund",type:"single",q:"A company has historical emails labeled \"spam\" and \"not spam\" and wants to predict the label of a new email. Why is this different from clustering?",
  options:["Classification discovers unknown groups while clustering predicts known labels","Classification uses labeled examples while clustering works without predefined labels","Clustering always requires more features than classification","Classification can only work with numerical data"],correct:[1],
  exp:"Spam classification has known labels, while clustering discovers groups without labels."},
-
 {part:"p1",topic:"fund",type:"multi",q:"Which statements correctly describe clustering?",
  options:["It discovers groupings without predefined class labels","It always produces the same clusters regardless of the algorithm used","Similar data points are generally grouped together","Accuracy can always be calculated because clustering produces labels"],correct:[0,2],
  exp:"Clustering discovers groups and places similar points together. It does not guarantee identical results across algorithms, nor does it allow ordinary accuracy calculation without ground-truth labels."},
-
 {part:"p1",topic:"fund",type:"single",q:"A clustering algorithm groups news articles into several topics, but nobody tells the algorithm what the topics should be beforehand. What is the main objective?",
  options:["Predict a known topic label","Discover hidden structure in the articles","Minimize classification error","Predict the probability of each predefined topic"],correct:[1],
  exp:"The purpose is to discover hidden group structure, not predict predefined labels."},
-
 {part:"p1",topic:"fund",type:"multi",q:"Which are examples of unsupervised learning according to the provided material?",
  options:["Grouping customers based on purchasing behavior without labels","Predicting house prices from houses with known prices","Grouping news articles by topic without predefined categories","Detecting unusual customer behavior by identifying points far from dense groups"],correct:[0,2,3],
  exp:"All three involve discovering structure without predefined labels. House-price prediction is supervised regression."},
-
 {part:"p1",topic:"dist",type:"single",q:"Two customers are represented as points in a feature space. The clustering algorithm measures their straight-line distance using the differences between every coordinate. Which distance is being described?",
  options:["Euclidean distance","Manhattan distance","Hamming distance","Cosine similarity"],correct:[0],
  exp:"Euclidean distance is the standard straight-line distance described in the notes."},
-
 {part:"p1",topic:"dist",type:"single",q:"Consider two points: P1 = (2, 3), P2 = (5, 7). What is their Euclidean distance?",
  options:["4","5","6","7"],correct:[1],
  exp:"√((5−2)² + (7−3)²) = √(9+16) = √25 = 5."},
-
 {part:"p1",topic:"dist",type:"single",q:"Why should numerical features generally be standardized before applying distance-based clustering?",
  options:["Standardization automatically determines the number of clusters","Large-scale features can otherwise dominate distance calculations","Standardization converts clustering into supervised learning","It guarantees that all clusters will be spherical"],correct:[1],
  exp:"Large numerical ranges can dominate distance calculations if left unstandardized."},
-
 {part:"p1",topic:"dist",type:"single",q:"A dataset contains Recency values between 1 and 500, Frequency values between 1 and 30, and Monetary values between ₹100 and ₹100,000. Without standardization, which feature is most likely to dominate Euclidean distance?",
  options:["Recency","Frequency","Monetary","All three contribute equally"],correct:[2],
  exp:"Monetary values are much larger in scale and can dominate Euclidean distance."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"Which statement best describes K-Means clustering?",
  options:["It creates a hierarchy of nested clusters","It identifies dense regions and automatically labels isolated points as noise","It partitions data into K groups using centroids","It requires every cluster to contain exactly the same number of points"],correct:[2],
  exp:"K-Means partitions data into exactly K clusters represented by centroids."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"In K-Means, what does the letter K represent?",
  options:["Number of features","Number of iterations","Number of centroids/clusters","Number of distance calculations"],correct:[2],
  exp:"K represents the number of clusters/centroids."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"A K-Means model is configured with K = 5. What is guaranteed?",
  options:["Exactly 5 clusters will be produced","Exactly 5 points will be treated as centroids permanently","Each cluster will contain 5 points","The algorithm will perform exactly 5 iterations"],correct:[0],
  exp:"K-Means is explicitly configured to produce K clusters."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"What is the correct sequence of the main K-Means operations?",
  options:["Update → Assignment → Initialize → Stop","Initialize → Assignment → Update → Repeat until convergence","Assignment → Initialize → Update → Delete","Initialize → Update → Classification → Regression"],correct:[1],
  exp:"Initialize → assign → update → repeat until convergence."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"During the assignment step of K-Means, what happens?",
  options:["Each centroid is replaced by a random point","Each point is assigned to its nearest centroid","Each cluster is split into two clusters","Noise points are removed"],correct:[1],
  exp:"Each point goes to its nearest centroid."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"During the update step of K-Means, how is a new centroid calculated?",
  options:["By selecting the farthest point in the cluster","By selecting the first point in the cluster","By calculating the mean of points assigned to that cluster","By calculating the median of all points in the dataset"],correct:[2],
  exp:"The centroid is the mean of the currently assigned points."},
-
 {part:"p1",topic:"kmeans",type:"single",q:"Suppose a cluster contains the following one-dimensional points: 2, 4, 6, 8. What will be the new centroid after the K-Means update step?",
  options:["4","5","6","8"],correct:[1],
  exp:"(2+4+6+8)/4 = 5."},
-
 {part:"p1",topic:"kpp",type:"single",q:"Why can random initialization produce a poor K-Means solution?",
  options:["K-Means cannot calculate Euclidean distance from random points","Two or more initial centroids may accidentally start inside the same natural group","Random initialization prevents K-Means from calculating means","Random initialization automatically creates too many clusters"],correct:[1],
  exp:"Poor initialization can place multiple centroids inside the same natural cluster."},
-
 {part:"p1",topic:"kpp",type:"single",q:"What is the main idea behind K-Means++ initialization?",
  options:["Start all centroids at the origin","Select centroids so that they tend to be spread across the data","Always select the points with the smallest feature values","Randomly select all centroids without considering distances"],correct:[1],
  exp:"K-Means++ encourages centroids to be spread across the data."},
-
 {part:"p1",topic:"kpp",type:"single",q:"In K-Means++, after selecting the first centroid, which points have a higher probability of becoming the next centroid?",
  options:["Points closest to the existing centroid","Points farthest from their nearest already-selected centroid","Points with the smallest feature values","Points belonging to the largest existing cluster"],correct:[1],
  exp:"Points farther from existing centroids receive greater probability."},
-
 {part:"p1",topic:"wcss",type:"single",q:"What does WCSS stand for?",
  options:["Within-Cluster Sum of Squares","Weighted Cluster Separation Score","Within-Class Standardized Score","Weighted Centroid Separation Sum"],correct:[0],
  exp:"WCSS means Within-Cluster Sum of Squares."},
-
 {part:"p1",topic:"wcss",type:"single",q:"What does WCSS primarily measure in K-Means?",
  options:["How far clusters are from one another","The total squared distance of points from their cluster centroids","The number of clusters containing outliers","The average distance between different clusters"],correct:[1],
  exp:"WCSS sums squared point-to-centroid distances."},
-
 {part:"p1",topic:"wcss",type:"single",q:"A K-Means clustering produces very compact clusters, with points close to their respective centroids. What would you generally expect?",
  options:["High WCSS","Low WCSS","WCSS must equal zero","WCSS cannot be calculated"],correct:[1],
  exp:"Compact clusters have smaller point-to-centroid distances and therefore lower WCSS."},
-
 {part:"p1",topic:"wcss",type:"single",q:"Suppose the following WCSS values are obtained:\nK=2 → 800\nK=3 → 500\nK=4 → 300\nK=5 → 280\nK=6 → 270\nWhich K is the strongest candidate from the Elbow Method?",
  options:["K = 2","K = 3","K = 4","K = 6"],correct:[2],
  exp:"The major improvement occurs through K=4; afterward the reduction becomes much smaller."},
-
 {part:"p1",topic:"wcss",type:"single",q:"Why does WCSS always decrease or stay the same when K increases?",
  options:["More clusters allow points to be represented by closer centroids","More clusters always make the data more spherical","WCSS ignores the centroid locations","Increasing K removes all outliers"],correct:[0],
  exp:"Increasing K gives points more/finer centroid choices, so within-cluster variation cannot increase."},
-
 {part:"p1",topic:"sil",type:"single",q:"What is the main purpose of the Elbow Method?",
  options:["To determine whether the data is supervised","To determine a reasonable number of clusters","To identify DBSCAN noise points","To select the linkage strategy for hierarchical clustering"],correct:[1],
  exp:"The Elbow Method helps select a reasonable K."},
-
 {part:"p1",topic:"sil",type:"single",q:"What does the silhouette score compare for an individual point?",
  options:["Its distance from the origin and its centroid","Its average distance within its own cluster versus its distance from the nearest other cluster","Its distance from every centroid and the number of features","Its WCSS and number of iterations"],correct:[1],
  exp:"Silhouette compares cohesion within the assigned cluster with separation from the nearest other cluster."},
-
 {part:"p1",topic:"sil",type:"single",q:"The silhouette score ranges between:",
  options:["0 and 1","-1 and +1","-100 and +100","1 and 10"],correct:[1],
  exp:"Silhouette ranges from -1 to +1."},
-
 {part:"p1",topic:"sil",type:"single",q:"A point has a silhouette score close to +1. What does this indicate?",
  options:["It is likely poorly assigned","It lies exactly between two clusters","It is well matched to its own cluster and far from other clusters","It must be a DBSCAN noise point"],correct:[2],
  exp:"+1 indicates strong cohesion and separation."},
-
 {part:"p1",topic:"lim",type:"single",q:"A point has a silhouette score close to -1. What is the most likely interpretation?",
  options:["It is tightly packed within its own cluster","It may be closer to another cluster than its assigned cluster","It is guaranteed to be a centroid","It indicates that WCSS is zero"],correct:[1],
  exp:"A negative score suggests the point may be closer to another cluster."},
-
 {part:"p1",topic:"lim",type:"single",q:"Suppose you run K-Means for K = 2 through K = 10. The silhouette scores are highest at K = 4. What does this suggest?",
  options:["K = 4 provides the strongest separation/cohesion according to silhouette score","K = 4 must have the highest WCSS","K = 4 contains exactly four points","K = 4 is automatically the global optimum in every sense"],correct:[0],
  exp:"Highest silhouette indicates the strongest clustering quality among the tested K values according to this metric."},
-
 {part:"p1",topic:"lim",type:"single",q:"Which type of cluster is generally most suitable for K-Means?",
  options:["Long chains and crescent-shaped clusters","Roughly spherical clusters with similar size and density","Clusters containing only isolated outliers","Arbitrarily shaped clusters with highly varying density"],correct:[1],
  exp:"K-Means works best with roughly spherical clusters of similar size/density."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"Why can K-Means struggle with ring-shaped or crescent-shaped clusters?",
  options:["K-Means cannot calculate means","K-Means uses Euclidean distance and produces centroid-based boundaries that are not suitable for such shapes","K-Means requires labeled data","K-Means automatically removes all non-spherical points"],correct:[1],
  exp:"Centroid-based Euclidean boundaries do not handle rings, crescents, and interleaved spirals well."},
-
 {part:"p1",topic:"dbscan",type:"multi",q:"Which are limitations or assumptions of K-Means described in the notes?",
  options:["It works best with roughly spherical clusters","It requires K to be specified","It naturally identifies noise points as a separate class","It works best when clusters have similar density"],correct:[0,1,3],
  exp:"These are explicitly described assumptions/limitations. DBSCAN, not K-Means, naturally identifies noise."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"Which characteristic most clearly distinguishes DBSCAN from K-Means?",
  options:["DBSCAN requires K to be specified before training","DBSCAN can discover clusters without specifying the number of clusters upfront","DBSCAN can only find spherical clusters","DBSCAN requires labeled training data"],correct:[1],
  exp:"DBSCAN discovers the number of clusters based on density rather than requiring K."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"What does eps represent in DBSCAN?",
  options:["The maximum number of clusters","The radius of the neighborhood around a point","The number of features","The number of iterations"],correct:[1],
  exp:"eps defines the neighborhood radius."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"What does min_samples control in DBSCAN?",
  options:["The minimum number of points required within eps for a point to be considered a core point","The maximum number of clusters","The number of centroids","The minimum number of dimensions"],correct:[0],
  exp:"min_samples determines the minimum neighborhood population for a core point."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"A DBSCAN point has at least min_samples points within its eps neighborhood, including itself. How should the point be classified?",
  options:["Noise point","Border point","Core point","Centroid"],correct:[2],
  exp:"At least min_samples points within eps makes it a core point."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"A point does not have enough neighbors to be a core point, but it lies within eps of a core point. What type of point is it?",
  options:["Border point","Noise point","Centroid","Hierarchical point"],correct:[0],
  exp:"It is near a core point but isn't dense enough itself, making it a border point."},
-
 {part:"p1",topic:"dbscan",type:"single",q:"A point is not within eps of any core point. How does DBSCAN classify it?",
  options:["Core point","Border point","Noise point","Centroid"],correct:[2],
  exp:"A point not reached by any core region is noise."},
-
 {part:"p1",topic:"hier",type:"single",q:"In sklearn's DBSCAN implementation, what cluster label is typically assigned to noise points?",
  options:["0","1","K","-1"],correct:[3],
  exp:"sklearn uses -1 for DBSCAN noise."},
-
 {part:"p1",topic:"hier",type:"single",q:"Which situation is particularly suitable for DBSCAN?",
  options:["Data contains arbitrarily shaped clusters and possible outliers","Data must be divided into exactly five spherical clusters","Every point must belong to a cluster","The number of clusters is already fixed and all clusters have identical sizes"],correct:[0],
  exp:"DBSCAN is particularly useful for irregular shapes and outlier detection."},
-
 {part:"p1",topic:"hier",type:"single",q:"Suppose min_samples is increased substantially while keeping eps unchanged. According to the notes, what can happen?",
  options:["More points may be treated as noise","Every point automatically becomes a core point","The number of dimensions decreases","K-Means is automatically applied"],correct:[0],
  exp:"Increasing the density requirement can cause more points to fail the core-point condition and become noise."},
-
 {part:"p1",topic:"hier",type:"single",q:"Why can DBSCAN struggle when different clusters have very different densities?",
  options:["One eps value may not work well for both dense and sparse clusters","DBSCAN cannot identify noise","DBSCAN requires exactly K clusters","DBSCAN always produces spherical clusters"],correct:[0],
  exp:"A single eps value can be unsuitable when different clusters have substantially different densities."},
-
 {part:"p1",topic:"hier",type:"single",q:"What is the main output structure of hierarchical clustering?",
  options:["A centroid table","A dendrogram","A confusion matrix","An ROC curve"],correct:[1],
  exp:"Hierarchical clustering produces a dendrogram representing the cluster hierarchy."},
-
 {part:"p1",topic:"hier",type:"single",q:"In agglomerative hierarchical clustering, what happens first?",
  options:["All points begin in one cluster and are split","Each point starts as its own cluster","K centroids are randomly initialized","All noise points are removed"],correct:[1],
  exp:"Agglomerative starts with every point as its own cluster and merges upward."},
-
 {part:"p1",topic:"rfm",type:"single",q:"Which statement correctly describes divisive hierarchical clustering?",
  options:["It starts with individual clusters and repeatedly merges them","It starts with one large cluster and repeatedly splits it","It requires K-Means centroids","It identifies only dense regions"],correct:[1],
  exp:"Divisive starts with one cluster and splits downward."},
-
 {part:"p1",topic:"rfm",type:"single",q:"Which linkage defines the distance between two clusters using the nearest pair of points between them?",
  options:["Complete linkage","Average linkage","Single linkage","Ward linkage"],correct:[2],
  exp:"Single linkage uses the nearest pair of points."},
-
 {part:"p1",topic:"rfm",type:"single",q:"Which linkage defines cluster distance using the farthest pair of points between the two clusters?",
  options:["Single linkage","Complete linkage","Average linkage","Ward linkage"],correct:[1],
  exp:"Complete linkage uses the farthest pair."},
-
 {part:"p1",topic:"rfm",type:"single",q:"A dendrogram contains a very large vertical jump in merge height. What can this suggest?",
  options:["The clusters being merged are relatively dissimilar, potentially indicating a natural cluster boundary","The algorithm has reached K = 1","All points are identical","The data must be standardized again"],correct:[0],
  exp:"A large height jump means substantially dissimilar groups are being merged, suggesting a possible natural boundary."},
-
 {part:"p1",topic:"rfm",type:"single",q:"An e-commerce company wants to segment customers using Recency, Frequency, and Monetary behavior. Which interpretation is correct?",
  options:["Recency = number of orders, Frequency = days since purchase, Monetary = number of customers","Recency = days since last purchase, Frequency = number of purchases, Monetary = total spend","Recency = total spend, Frequency = days since purchase, Monetary = number of orders","Recency = customer age, Frequency = average order size, Monetary = number of products"],correct:[1],
  exp:"Recency is days since last purchase, Frequency is purchase count, and Monetary is total spending."}
 );
 
-/* ---------------- PART 2 ---------------- */
+/* ---------------- PART 2: Clustering — Part 2 ---------------- */
 Q.push(
 {part:"p2",topic:"unsup",type:"single",q:"A retail company has customer data containing monthly spending and weekly app visits, but no predefined customer segments. The company wants to discover naturally occurring groups of customers. Which approach best matches this requirement?",
  options:["Regression","Classification","Clustering","Supervised dimensionality reduction"],correct:[2],
  exp:"Clustering is used to discover natural groups without predefined labels."},
-
 {part:"p2",topic:"unsup",type:"single",q:"Which statement best explains why clustering is considered an unsupervised learning technique?",
  options:["It predicts a predefined target variable","It learns from labeled examples and predicts their classes","It discovers structure without requiring predefined labels","It requires a human to assign every data point to a group"],correct:[2],
  exp:"Unsupervised learning works without labeled target values."},
-
 {part:"p2",topic:"unsup",type:"multi",q:"Which of the following are characteristics of clustering described in the notes?",
  options:["Similar data points are grouped together","It requires a correct label for every observation","It can help reduce operational complexity by designing one strategy per group","It discovers structure directly from raw observations"],correct:[0,2,3],
  exp:"Clustering groups similar observations, can simplify business strategies, and discovers structure from raw data."},
-
 {part:"p2",topic:"unsup",type:"single",q:"A course coordinator has attendance data for students but no existing student categories. The coordinator wants to identify groups of students with similar attendance patterns. Which ML approach is most appropriate?",
  options:["Clustering","Regression","Classification","Supervised forecasting"],correct:[0],
  exp:"Student attendance groups are being discovered without labels."},
-
 {part:"p2",topic:"unsup",type:"single",q:"Which of the following is NOT one of the three broad clustering families mentioned in the notes?",
  options:["Centroid-based clustering","Hierarchical clustering","Density-based clustering","Gradient-based clustering"],correct:[3],
  exp:"The notes identify centroid-based, hierarchical, and density-based clustering."},
-
 {part:"p2",topic:"stddist",type:"single",q:"A dataset contains two features:\nMonthly spend: ₹500 – ₹200,000\nWeekly visits: 1 – 15\nWhy can applying K-Means directly to these features produce misleading clusters?",
  options:["K-Means cannot work with two features","The larger-scale feature can dominate the distance calculation","K-Means requires categorical variables","The smaller-scale feature will always be ignored by the algorithm"],correct:[1],
  exp:"The large numerical range of monthly spend can dominate distance calculations."},
-
 {part:"p2",topic:"stddist",type:"single",q:"What should generally be done before K-Means computes distances between observations?",
  options:["Sort all rows by their first feature","Remove the largest values from every feature","Standardize the features","Convert all numerical values to categorical values"],correct:[2],
  exp:"Standardization brings features onto comparable scales."},
-
 {part:"p2",topic:"stddist",type:"multi",q:"Which statements correctly describe standardization in the context of K-Means?",
  options:["It brings features onto comparable scales","It prevents a large-scale feature from dominating distance calculations","It guarantees that the optimal K will be known beforehand","It helps prevent misleading clusters caused by differences in feature magnitude"],correct:[0,1,3],
  exp:"These are the purposes of standardization described in the notes."},
-
 {part:"p2",topic:"stddist",type:"single",q:"A grocery dataset has two features measured on similar numerical scales, while a third feature is measured in lakhs. If the third feature is not standardized, what is the most likely consequence?",
  options:["It may have disproportionate influence on the distance calculations","It will automatically become the target variable","K-Means will stop after one iteration","WCSS will always become zero"],correct:[0],
  exp:"A feature with a much larger scale can disproportionately influence distance."},
-
 {part:"p2",topic:"algo",type:"single",q:"Which principle lies at the heart of the K-Means algorithm?",
  options:["Every point belongs to the cluster whose centroid is nearest","Every cluster must contain exactly the same number of points","Every point must be assigned to the farthest centroid","Every cluster must contain one outlier"],correct:[0],
  exp:"K-Means assigns each point to its nearest centroid."},
-
 {part:"p2",topic:"algo",type:"single",q:"A K-Means model is configured with K = 4. How many initial centroids are created?",
  options:["2","3","4","8"],correct:[2],
  exp:"K = 4 means four centroids/clusters."},
-
 {part:"p2",topic:"algo",type:"single",q:"What is the first major preparation step mentioned before choosing K and initializing centroids?",
  options:["Calculate WCSS","Standardize the data","Calculate the Dunn Index","Build a dendrogram"],correct:[1],
  exp:"The notes specify standardization as the first step."},
-
 {part:"p2",topic:"algo",type:"single",q:"After standardizing the data and choosing K, what happens next in the basic K-Means process?",
  options:["The algorithm calculates the Dunn Index","K centroids are initialized randomly","All points are declared noise","The data is converted into categorical variables"],correct:[1],
  exp:"After choosing K, K centroids are initialized."},
-
 {part:"p2",topic:"algo",type:"single",q:"Suppose K-Means has three centroids: C1, C2, and C3. For a particular point P, the calculated distances are:\nDistance to C1 = 4.7\nDistance to C2 = 2.1\nDistance to C3 = 5.3\nTo which cluster will P initially be assigned?",
  options:["Cluster 1","Cluster 2","Cluster 3","It remains unassigned until convergence"],correct:[1],
  exp:"2.1 is the smallest distance."},
-
 {part:"p2",topic:"algo",type:"single",q:"During the K-Means update step, a cluster contains the following points:\n(2, 2)\n(4, 6)\n(6, 4)\nWhat is the new centroid?",
  options:["(3, 4)","(4, 4)","(4, 5)","(12, 12)"],correct:[1],
  exp:"X mean = (2+4+6)/3 = 4; Y mean = (2+6+4)/3 = 4."},
-
 {part:"p2",topic:"algo",type:"single",q:"A cluster contains the points:\n(1, 5)\n(3, 7)\n(5, 9)\n(7, 11)\nWhat is the updated centroid?",
  options:["(4, 8)","(5, 8)","(4, 9)","(16, 32)"],correct:[0],
  exp:"X mean = 4 and Y mean = 8."},
-
 {part:"p2",topic:"algo",type:"multi",q:"Which statements correctly describe the K-Means update step?",
  options:["Each centroid is recalculated after the assignment step","The new centroid is the arithmetic mean of the cluster's current members","The centroid is always the point closest to all other points","The word \"means\" in K-Means refers to this averaging operation"],correct:[0,1,3],
  exp:"These describe the update step and the meaning of \"means.\""},
-
 {part:"p2",topic:"algo",type:"single",q:"Why are centroids initialized before the first assignment step?",
  options:["The algorithm needs initial reference points to determine which centroid is nearest to each observation","Centroids permanently determine the final clusters","Random centroids eliminate the need for distance calculations","Centroids are used to label the training data before clustering starts"],correct:[0],
  exp:"Initial centroids provide the reference points required for the first assignment."},
-
 {part:"p2",topic:"conv",type:"single",q:"What does convergence mean in K-Means?",
  options:["All clusters contain exactly the same number of observations","Consecutive iterations produce only negligible shifts in centroid positions","WCSS becomes exactly zero","K automatically becomes equal to the number of observations"],correct:[1],
  exp:"Convergence occurs when centroid movement becomes negligible."},
-
 {part:"p2",topic:"conv",type:"multi",q:"Which statements about K-Means convergence are supported by the notes?",
  options:["Well-separated data can converge very quickly","Complex data may require several iterations","A point can change clusters after centroids are updated","Convergence means every cluster must contain the same number of points"],correct:[0,1,2],
  exp:"These are all supported by the notes."},
-
 {part:"p2",topic:"conv",type:"single",q:"After the update step, a centroid moves significantly. What should K-Means do next?",
  options:["Stop immediately","Delete the centroid","Perform another assignment step using the updated centroids","Increase K by one"],correct:[2],
  exp:"Updated centroids require another assignment step."},
-
 {part:"p2",topic:"conv",type:"single",q:"Consider the following simplified sequence:\nIteration 1 → centroids move significantly\nIteration 2 → centroids move moderately\nIteration 3 → centroids barely move\nIteration 4 → centroids barely move\nWhat is the most appropriate interpretation?",
  options:["The algorithm is approaching convergence","K must be increased","The data must be relabeled","WCSS has necessarily become zero"],correct:[0],
  exp:"The increasingly small shifts indicate the algorithm is approaching convergence."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"What does intra-cluster distance measure according to the notes?",
  options:["Distance between two different cluster centroids","Average distance from points in a cluster to that cluster's centroid","Distance between the farthest two clusters","Number of observations in each cluster"],correct:[1],
  exp:"Intra-cluster distance is the average distance from points to their own centroid."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"Which value of intra-cluster distance generally indicates a more compact cluster?",
  options:["Higher","Lower","Exactly equal to inter-cluster distance","It does not matter"],correct:[1],
  exp:"Low intra-distance means points are tightly packed."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"What does inter-cluster distance measure in the K-Means notes?",
  options:["Distance between the centroids of two different clusters","Average distance between points within one cluster","Distance between a point and its own centroid","Number of iterations required for convergence"],correct:[0],
  exp:"Inter-cluster distance is measured between different cluster centroids."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"Which combination generally indicates better clustering?",
  options:["High intra-distance and low inter-distance","Low intra-distance and high inter-distance","High intra-distance and high inter-distance","Low intra-distance and low inter-distance"],correct:[1],
  exp:"Good clustering means compact clusters and strong separation."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"A clustering result has:\nAverage intra-cluster distance = 2\nInter-cluster distance = 15\nWhat does this generally suggest?",
  options:["The clusters are relatively compact and well separated","The clusters are very spread out and overlapping","All observations belong to one cluster","WCSS must equal zero"],correct:[0],
  exp:"Small intra-distance combined with large inter-distance is desirable."},
-
 {part:"p2",topic:"intrainter",type:"single",q:"For K = 4, how many pairwise inter-cluster distances must be calculated?",
  options:["4","5","6","8"],correct:[2],
  exp:"Four clusters produce 4C2 = 6 pairwise comparisons."},
-
 {part:"p2",topic:"wcss2",type:"single",q:"What is the main objective that K-Means tries to minimize?",
  options:["Inter-cluster distance","WCSS","Dunn Index","Number of observations"],correct:[1],
  exp:"WCSS is the formal objective K-Means minimizes."},
-
 {part:"p2",topic:"wcss2",type:"single",q:"What does WCSS calculate?",
  options:["The sum of squared distances between each point and its assigned centroid","The average distance between all pairs of clusters","The number of points in the largest cluster","The ratio between inter-cluster and intra-cluster distance"],correct:[0],
  exp:"WCSS sums squared point-to-own-centroid distances."},
-
 {part:"p2",topic:"wcss2",type:"single",q:"Suppose a cluster contains three points whose distances from their centroid are:\n1, 2, 3\nWhat is this cluster's contribution to WCSS?",
  options:["6","10","14","36"],correct:[2],
  exp:"1² + 2² + 3² = 1 + 4 + 9 = 14. (Note: the source material's own answer key initially listed a different option here, but flagged and corrected this exact calculation to 14 — we use the corrected value.)"},
-
 {part:"p2",topic:"wcss2",type:"single",q:"Why are the distances squared when calculating WCSS?",
  options:["To make WCSS negative for poorly separated clusters","Because squared distance is used in the formal K-Means objective and avoids repeatedly computing square roots","To make all clusters contain equal numbers of points","To determine K automatically"],correct:[1],
  exp:"The notes explain that squared distance is the formal objective and avoids repeatedly computing square roots."},
-
 {part:"p2",topic:"wcss2",type:"multi",q:"Which statements about WCSS are correct?",
  options:["WCSS is always non-negative","WCSS can theoretically equal zero","WCSS equals zero when every point forms its own cluster","The objective should always be to maximize WCSS"],correct:[0,1,2],
  exp:"WCSS cannot be negative (it's a sum of squares) and reaches zero when every point is its own cluster, since each point has zero distance from itself."},
-
 {part:"p2",topic:"wcss2",type:"single",q:"A dataset contains 100 observations. What would happen to WCSS if K is increased all the way to 100, assuming every observation becomes its own cluster?",
  options:["WCSS becomes extremely large","WCSS becomes exactly zero","WCSS becomes negative","WCSS becomes undefined"],correct:[1],
  exp:"Each point has distance zero from its own centroid, so total WCSS is zero."},
-
 {part:"p2",topic:"elbow2",type:"single",q:"Why is simply selecting the largest possible K not a useful strategy?",
  options:["WCSS increases as K increases","Increasing K reduces WCSS, but eventually the improvement becomes marginal and model complexity increases","K cannot be larger than 2","Larger K always makes clustering worse"],correct:[1],
  exp:"More clusters reduce WCSS, but eventually the improvement becomes marginal while complexity rises."},
-
 {part:"p2",topic:"elbow2",type:"single",q:"A data scientist obtains:\nK=1 → 9000\nK=2 → 4500\nK=3 → 2200\nK=4 → 1200\nK=5 → 1100\nK=6 → 1040\nWhich K is the most reasonable candidate using the Elbow Method?",
  options:["2","3","4","6"],correct:[2],
  exp:"The major reductions occur through K = 4; after that the reductions are relatively small."},
-
 {part:"p2",topic:"elbow2",type:"single",q:"What is plotted when using the Elbow Method?",
  options:["Dunn Index against intra-cluster distance","WCSS against K","Inter-cluster distance against sample size","Centroid coordinates against iteration number"],correct:[1],
  exp:"Elbow plots WCSS against K."},
-
 {part:"p2",topic:"elbow2",type:"multi",q:"Which statements correctly describe the Elbow Method?",
  options:["WCSS generally decreases as K increases","The elbow represents a point after which additional reductions become marginal","The method attempts to balance clustering quality with model complexity","The optimal K is always the largest K tested"],correct:[0,1,2],
  exp:"These describe the purpose and behavior of the Elbow Method."},
-
 {part:"p2",topic:"elbow2",type:"single",q:"A WCSS curve decreases sharply from K = 1 through K = 3 and then becomes almost flat. What does the bend around K = 3 represent?",
  options:["A likely candidate for K","A guaranteed indication that K = 1 is optimal","The point where WCSS becomes negative","The point where all observations become noise"],correct:[0],
  exp:"The bend where reductions become marginal is the candidate K."},
-
 {part:"p2",topic:"dunn",type:"single",q:"Which formula correctly represents the Dunn Index described in the notes?",
  options:["Maximum inter-cluster distance / minimum intra-cluster distance","Minimum inter-cluster distance / maximum intra-cluster distance","WCSS / K","K / WCSS"],correct:[1],
  exp:"Dunn = minimum inter-cluster distance / maximum intra-cluster distance."},
-
 {part:"p2",topic:"dunn",type:"single",q:"A clustering has:\nMinimum inter-cluster distance = 18\nMaximum intra-cluster distance = 6\nWhat is its Dunn Index?",
  options:["0.33","2","3","108"],correct:[2],
  exp:"18 / 6 = 3."},
-
 {part:"p2",topic:"dunn",type:"single",q:"A Dunn Index is calculated as:\n0.75\nAccording to the notes, what does this indicate?",
  options:["The clustering satisfies the desired ≥1 condition","The worst-case inter-cluster distance is smaller than the maximum intra-cluster distance, indicating poor separation","WCSS must be zero","Every point belongs to its own cluster"],correct:[1],
  exp:"A value below 1 indicates the worst-case inter-cluster separation is smaller than the maximum intra-cluster distance."},
-
 {part:"p2",topic:"dunn",type:"single",q:"A clustering produces a Dunn Index of 1.4. Which interpretation is supported by the notes?",
  options:["Inter-cluster distance dominates intra-cluster distance, indicating well-separated and compact clusters","The clustering must contain exactly 1.4 clusters","1.4% of points are correctly classified","WCSS must be greater than 1.4"],correct:[0],
  exp:"A Dunn Index ≥ 1 indicates the desired relationship between separation and compactness."},
-
 {part:"p2",topic:"dunn",type:"multi",q:"Which statements correctly describe how the Dunn Index is constructed?",
  options:["It uses the minimum inter-cluster distance","It uses the maximum intra-cluster distance","It focuses on the weakest separation and loosest cluster","It uses the average intra-cluster distance across all clusters"],correct:[0,1,2],
  exp:"Dunn deliberately focuses on the weakest separation and least compact cluster."},
-
 {part:"p2",topic:"dunn",type:"single",q:"Suppose the following Dunn Index values are obtained:\nK=2 → 0.62\nK=3 → 0.91\nK=4 → 1.18\nK=5 → 1.07\nK=6 → 0.99\nWhich K would the Dunn Index method select?",
  options:["K = 2","K = 3","K = 4","K = 6"],correct:[2],
  exp:"K = 4 has the highest Dunn Index of 1.18."},
-
 {part:"p2",topic:"dunn",type:"single",q:"Why does the Dunn Index use the minimum inter-cluster distance rather than the maximum?",
  options:["It focuses on the pair of clusters that are closest together, representing the weakest separation","It always produces the smallest possible number of clusters","It eliminates the need for intra-cluster distance","It guarantees that WCSS equals zero"],correct:[0],
  exp:"The minimum inter-cluster distance identifies the closest/most problematic pair of clusters."},
-
 {part:"p2",topic:"choosek",type:"multi",q:"A data scientist is comparing possible K values using both Elbow and Dunn Index methods. Which statements are correct?",
  options:["Elbow examines where WCSS reduction becomes marginal","Dunn Index selects the K with the highest Dunn value","Both methods help avoid blindly choosing a very large K","Both methods require WCSS to equal zero"],correct:[0,1,2],
  exp:"Both methods provide principled ways of avoiding unnecessarily large K."},
-
 {part:"p2",topic:"choosek",type:"single",q:"A clothing company already knows that its customer strategy must distinguish customers into four size-related categories: Small, Medium, Large, and Extra Large. Which method of selecting K does this represent?",
  options:["Qualitative/domain knowledge approach","Elbow method","Dunn Index","WCSS minimization"],correct:[0],
  exp:"This is domain knowledge determining the desired grouping."},
-
 {part:"p2",topic:"choosek",type:"single",q:"Two candidate clusterings are being compared:\nModel A → K=3, WCSS=1200, Dunn=1.25\nModel B → K=5, WCSS=800, Dunn=0.92\nWhich conclusion is most consistent with the notes?",
  options:["Model B is automatically better because its WCSS is lower","Model A has stronger Dunn Index evidence for compactness and separation, while Model B has lower WCSS","Model B must be selected because K = 5 is larger","Model A must have WCSS = 0 because its Dunn Index is above 1"],correct:[1],
  exp:"Model B has lower WCSS, but Model A has stronger Dunn evidence. The notes do not say to choose solely from WCSS."},
-
 {part:"p2",topic:"choosek",type:"multi",q:"A team is deciding between K = 3, K = 4, and K = 5 for customer segmentation. Their results are:\nK=3 → WCSS=1500, Dunn=0.90\nK=4 → WCSS=950, Dunn=1.30\nK=5 → WCSS=850, Dunn=1.05\nWhich conclusions are supported by the notes?",
  options:["K = 5 has the lowest WCSS among the three choices","K = 4 has the highest Dunn Index","The Elbow Method could favor K = 4 if the WCSS reduction beyond K = 4 becomes marginal","K = 5 must automatically be selected because it has lower WCSS than K = 4"],correct:[0,1,2],
  exp:"K=5 has lower WCSS, K=4 has the highest Dunn, and K=4 could be the elbow. Lower WCSS alone does not automatically make K=5 the best choice."}
 );
 
-/* ---------------- ANOMALY DETECTION ---------------- */
+/* ---------------- PART 3: Anomaly Detection ---------------- */
 Q.push(
 {part:"an",topic:"afund",type:"single",q:"A data scientist observes that most API requests take between 100 and 140 milliseconds, but one request takes 5,000 milliseconds. How should this observation primarily be described?",
  options:["A normal observation","An anomaly","A centroid","A classification label"],correct:[1],
  exp:"The 5,000 ms response is extremely unusual compared with the normal 100–140 ms range."},
-
 {part:"an",topic:"afund",type:"multi",q:"Which characteristics generally describe an anomaly?",
  options:["It occurs very rarely","It sits far outside the typical range","It stands apart from the bulk of the data","It must always be caused by an error in data collection"],correct:[0,1,2],
  exp:"These are the characteristics of an anomaly. An anomaly does not necessarily mean an error."},
-
 {part:"an",topic:"afund",type:"single",q:"A bank has millions of historical transactions, but a completely new type of fraudulent behavior appears that was never present in the training data. Why might a dedicated anomaly detection method be useful?",
  options:["It requires labeled examples of every possible fraud pattern","It can identify observations that are statistically unusual without requiring labels for that exact anomaly type","It guarantees that every fraud transaction will be detected","It only works when fraud labels are available"],correct:[1],
  exp:"Dedicated anomaly detection can identify unusual patterns without needing labeled examples of every possible anomaly."},
-
 {part:"an",topic:"afund",type:"single",q:"Which statement best captures the fundamental purpose of anomaly detection?",
  options:["Find the most common observations","Identify observations that differ significantly from the majority","Divide data into exactly K clusters","Predict a predefined target variable"],correct:[1],
  exp:"Anomaly detection focuses on identifying unusual observations."},
-
 {part:"an",topic:"afund",type:"multi",q:"Which are realistic applications of anomaly detection from the notes?",
  options:["Fraudulent financial transactions","Unusual network traffic","Abnormal machine vibration","Unusual patient vital signs"],correct:[0,1,2,3],
  exp:"All four are examples given in the notes."},
-
 {part:"an",topic:"afund",type:"single",q:"A manufacturing sensor normally records vibration values within a narrow range. Suddenly, one reading is dramatically different from the normal pattern. What is the primary reason to investigate it?",
  options:["It may indicate an unusual event such as equipment failure or wear","It automatically proves the machine is defective","It must be removed from the dataset immediately","It means the dataset is supervised"],correct:[0],
  exp:"An unusual sensor reading could indicate equipment wear, failure, or another abnormal condition."},
-
 {part:"an",topic:"afund",type:"multi",q:"Why can standard supervised models miss novel anomalies?",
  options:["They learn patterns from historical training data","Completely new anomaly patterns may not resemble anything learned during training","They automatically detect every statistically unusual point","Their predictions depend on the patterns available during training"],correct:[0,1,3],
  exp:"Standard models learn from historical patterns and can struggle with completely novel patterns."},
-
 {part:"an",topic:"normal",type:"single",q:"For an approximately normal distribution, approximately what percentage of observations fall within 1 standard deviation of the mean?",
  options:["50%","68%","95%","99.73%"],correct:[1],
  exp:"Approximately 68% lie within ±1σ."},
-
 {part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations fall within 2 standard deviations of the mean in a normal distribution?",
  options:["68%","90%","95%","99.73%"],correct:[2],
  exp:"Approximately 95% lie within ±2σ."},
-
 {part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations fall within 3 standard deviations of the mean?",
  options:["68%","95%","97%","99.73%"],correct:[3],
  exp:"Approximately 99.73% lie within ±3σ."},
-
 {part:"an",topic:"normal",type:"single",q:"Approximately what percentage of observations lie outside the ±3σ range in a normal distribution?",
  options:["0.27%","2.7%","5%","32%"],correct:[0],
  exp:"100% − 99.73% = approximately 0.27%."},
-
 {part:"an",topic:"normal",type:"single",q:"A normally distributed feature has:\nMean = 100\nStandard deviation = 10\nWhich interval represents approximately 95% of observations?",
  options:["90 to 110","80 to 120","70 to 130","60 to 140"],correct:[1],
  exp:"100 ± 2(10) = 80 to 120."},
-
 {part:"an",topic:"zscore",type:"single",q:"What does a Z-score measure?",
  options:["The number of clusters in the dataset","How many standard deviations a value is from the mean","The percentage of missing values","The distance between two cluster centroids"],correct:[1],
  exp:"Z-score tells us how many standard deviations a point is from the mean."},
-
 {part:"an",topic:"zscore",type:"single",q:"Which formula correctly represents the Z-score?",
  options:["Z = (X + μ) / σ","Z = (X − μ) / σ","Z = (X − σ) / μ","Z = μ / (X − σ)"],correct:[1],
  exp:"Z = (X − μ) / σ."},
-
 {part:"an",topic:"zscore",type:"single",q:"A dataset has:\nMean = 50\nStandard deviation = 5\nX = 65\nWhat is the Z-score?",
  options:["2","3","4","5"],correct:[1],
  exp:"(65 − 50) / 5 = 3."},
-
 {part:"an",topic:"zscore",type:"single",q:"Using the standard Z-score anomaly rule, when is a point generally flagged?",
  options:["|Z| > 1","|Z| > 2","|Z| > 3","Z = 0"],correct:[2],
  exp:"The standard threshold is |Z| > 3."},
-
 {part:"an",topic:"zscore",type:"single",q:"A point has a Z-score of -3.8. Would it be flagged using the standard rule?",
  options:["No, because the Z-score is negative","Yes, because its absolute Z-score is greater than 3","No, because only positive Z-scores can be anomalies","Yes, but only if the mean is positive"],correct:[1],
  exp:"The absolute value is 3.8, which is greater than 3."},
-
 {part:"an",topic:"zscore",type:"single",q:"Consider:\ndf[\"z_score\"] = (df[\"response_time\"] - mean) / std\ndf[\"is_anomaly\"] = df[\"z_score\"].abs() > 3\nWhat does abs() accomplish here?",
  options:["It converts the Z-score to a percentage","It considers both unusually high and unusually low values","It removes negative values from the dataset","It calculates the standard deviation"],correct:[1],
  exp:"abs() allows both positive and negative extreme Z-scores to be detected."},
-
 {part:"an",topic:"zscore",type:"single",q:"A dataset has:\nMean = 200 ms\nStandard deviation = 50 ms\nResponse time = 365 ms\nWhat is the Z-score?",
  options:["2.3","2.7","3.3","4.3"],correct:[2],
  exp:"(365 − 200) / 50 = 165 / 50 = 3.3."},
-
 {part:"an",topic:"zscore",type:"single",q:"Using the standard |Z| > 3 rule, what should happen to the observation from the previous question (Z = 3.3)?",
  options:["It is flagged because Z = 3.3","It is not flagged because Z must be negative","It is flagged only if Z = 4","It is automatically considered normal"],correct:[0],
  exp:"3.3 > 3, so it is flagged."},
-
 {part:"an",topic:"zscore",type:"multi",q:"Which are limitations of the Z-score method mentioned in the notes?",
  options:["It works on one feature at a time","It assumes an approximately normal distribution","Extreme values can distort the mean and standard deviation","It naturally captures unusual combinations of multiple features"],correct:[0,1,2],
  exp:"These are the important limitations of Z-score. It does not naturally capture multi-feature combinations."},
-
 {part:"an",topic:"iqr",type:"single",q:"What does IQR stand for?",
  options:["Internal Quantile Ratio","Interquartile Range","Individual Quality Range","Inter-Quantile Regression"],correct:[1],
  exp:"IQR = Interquartile Range."},
-
 {part:"an",topic:"iqr",type:"single",q:"Which percentiles define the IQR?",
  options:["10th and 90th","25th and 75th","50th and 100th","1st and 99th"],correct:[1],
  exp:"Q1 = 25th percentile and Q3 = 75th percentile."},
-
 {part:"an",topic:"iqr",type:"single",q:"If Q1 = 20 and Q3 = 50, what is the IQR?",
  options:["20","30","50","70"],correct:[1],
  exp:"50 − 20 = 30."},
-
 {part:"an",topic:"iqr",type:"single",q:"If Q1 = 20, Q3 = 50, IQR = 30, what is the upper outlier bound?",
  options:["65","80","95","100"],correct:[2],
  exp:"Upper bound = 50 + 1.5(30) = 50 + 45 = 95."},
-
 {part:"an",topic:"iqr",type:"single",q:"Using the same values — Q1 = 20, Q3 = 50, IQR = 30 — what is the lower outlier bound?",
  options:["-25","-10","5","10"],correct:[0],
  exp:"Lower bound = 20 − 1.5(30) = 20 − 45 = −25."},
-
 {part:"an",topic:"iqr",type:"single",q:"Given: Q1 = 100, Q3 = 140. Which value would be classified as an upper outlier using the standard IQR rule?",
  options:["150","180","200","205"],correct:[3],
  exp:"IQR = 140 − 100 = 40; upper bound = 140 + 1.5(40) = 200. A value of 200 sits exactly at the boundary rather than strictly above it, so 205 is the value that qualifies as an outlier."},
-
 {part:"an",topic:"iqr",type:"single",q:"Which Python expression correctly calculates the IQR?",
  options:["Q1 + Q3","Q3 - Q1","Q3 / Q1","Q1 - Q3"],correct:[1],
  exp:"IQR = Q3 − Q1."},
-
 {part:"an",topic:"iqr",type:"multi",q:"Which statements correctly describe the IQR method?",
  options:["It uses Q1 and Q3","It uses percentile/rank information","It is generally more robust than Z-score for skewed data","It requires the data to follow a normal distribution"],correct:[0,1,2],
  exp:"IQR uses quartiles, is rank-based, and is more robust for skewed data. It does not require normality."},
-
 {part:"an",topic:"zvsiqr",type:"single",q:"A customer's income dataset is heavily right-skewed because a small number of customers have extremely high incomes. Which single-feature method is generally more appropriate?",
  options:["Z-score","IQR","K-Means","Classification"],correct:[1],
  exp:"IQR is generally preferred for heavily skewed single-feature data."},
-
 {part:"an",topic:"zvsiqr",type:"single",q:"Why can IQR handle skewed data better than Z-score?",
  options:["IQR uses the mean, which is unaffected by extreme values","Q1 and Q3 are based on rank and are less affected by extreme magnitudes","IQR automatically transforms skewed data into a normal distribution","IQR uses a neural network"],correct:[1],
  exp:"Extreme magnitudes have less influence on percentile positions than on mean and standard deviation."},
-
 {part:"an",topic:"zvsiqr",type:"multi",q:"Which comparison between Z-score and IQR is correct?",
  options:["Z-score uses mean and standard deviation","IQR uses quartiles","Z-score is more sensitive to extreme values","Both methods naturally analyze multiple features simultaneously"],correct:[0,1,2],
  exp:"These correctly distinguish the two methods."},
-
 {part:"an",topic:"zvsiqr",type:"single",q:"A fraud pattern occurs only when transaction amount is unusually high AND login attempts are unusually high simultaneously. Neither feature individually looks particularly unusual. Why might both Z-score and IQR fail to detect this pattern?",
  options:["Both methods analyze one feature at a time","Both methods require K to be specified","Both methods only work with categorical data","Both methods always remove anomalies before analysis"],correct:[0],
  exp:"Both are univariate methods and analyze features independently."},
-
 {part:"an",topic:"isof",type:"single",q:"What is the key idea behind Isolation Forest?",
  options:["Anomalies require more random splits to isolate than normal observations","Anomalies are easier to isolate because they are rare and different from most observations","Every anomaly is manually labeled before training","The algorithm calculates only the mean and standard deviation"],correct:[1],
  exp:"Isolation Forest exploits the fact that unusual points tend to be easier to isolate."},
-
 {part:"an",topic:"isof",type:"single",q:"What happens when Isolation Forest repeatedly builds its random trees?",
  options:["It randomly selects features and split values to partition the data","It calculates quartiles for every feature","It creates K centroids","It requires predefined anomaly labels"],correct:[0],
  exp:"Random feature and random split selection is central to Isolation Forest."},
-
 {part:"an",topic:"isof",type:"single",q:"Suppose an observation becomes isolated after only a few random splits, while another requires many splits. Which is more likely to be anomalous?",
  options:["The point requiring many splits","The point requiring fewer splits","Both must be equally anomalous","Neither can be evaluated"],correct:[1],
  exp:"Fewer splits/path length means easier isolation and therefore stronger anomaly evidence."},
-
 {part:"an",topic:"isof",type:"single",q:"In Isolation Forest, what does a shorter average path length generally indicate?",
  options:["The observation is more anomalous","The observation is more normal","The observation is a centroid","The observation has missing values"],correct:[0],
  exp:"Shorter average path length means more anomalous."},
-
 {part:"an",topic:"isof",type:"single",q:"Why does Isolation Forest work well for multi-dimensional anomaly detection?",
  options:["It processes multiple features simultaneously","It analyzes only one feature at a time","It requires every feature to follow a normal distribution","It removes all correlated features"],correct:[0],
  exp:"Isolation Forest can work with multiple features simultaneously."},
-
 {part:"an",topic:"isof",type:"multi",q:"Which are advantages of Isolation Forest mentioned in the notes?",
  options:["It can handle multiple features simultaneously","It does not require an assumption about the underlying distribution","It can be computationally efficient for large datasets","It requires labeled examples of every anomaly type"],correct:[0,1,2],
  exp:"These are key advantages. It does not require labeled examples of each anomaly."},
-
 {part:"an",topic:"isof",type:"single",q:"A fraud dataset contains 12 transaction and behavioral features. Which method from the notes is most appropriate when the fraud pattern may involve unusual combinations of these features?",
  options:["Z-score applied independently to one feature","IQR applied independently to one feature","Isolation Forest","Median calculation"],correct:[2],
  exp:"Isolation Forest is designed to process multiple features simultaneously."},
-
 {part:"an",topic:"isof",type:"single",q:"Which statement about Isolation Forest's splitting mechanism is correct?",
  options:["It randomly selects a feature and then randomly chooses a split value between that feature's minimum and maximum","It always chooses the feature with the largest variance","It always splits at the mean","It chooses the target variable before splitting"],correct:[0],
  exp:"Both the feature and split value are randomly selected."},
-
 {part:"an",topic:"isof",type:"single",q:"Which statement about Isolation Forest is incorrect according to the notes?",
  options:["It uses an ensemble of random trees","Anomalies tend to have shorter average path lengths","It assumes the input data follows a normal distribution","It can process multiple features together"],correct:[2],
  exp:"Isolation Forest does not require a normal-distribution assumption — that's the false statement here."},
-
 {part:"an",topic:"fitpred",type:"single",q:"An Isolation Forest model is used as follows:\ndf[\"prediction\"] = model.fit_predict(df[features])\nWhat value does sklearn's Isolation Forest return for an anomaly?",
  options:["0","1","-1","True"],correct:[2],
  exp:"sklearn Isolation Forest uses -1 for anomalies."},
-
 {part:"an",topic:"fitpred",type:"single",q:"What value does fit_predict() return for a normal observation in Isolation Forest?",
  options:["-1","0","+1","False"],correct:[2],
  exp:"+1 represents normal observations."},
-
 {part:"an",topic:"fitpred",type:"single",q:"A dataset contains approximately 3% known fraudulent transactions. Which could be a reasonable starting point for the Isolation Forest contamination parameter?",
  options:["0.003","0.03","0.30","3.0"],correct:[1],
  exp:"3% = 0.03. It is a reasonable starting point, not a guaranteed correct value."},
-
 {part:"an",topic:"fitpred",type:"single",q:"What is the purpose of random_state=42 in an Isolation Forest model?",
  options:["It sets the contamination to 42%","It guarantees 42 anomalies","It fixes the random seed to improve reproducibility","It determines the number of trees"],correct:[2],
  exp:"random_state fixes randomness so repeated runs can be reproducible."},
-
 {part:"an",topic:"thresh",type:"multi",q:"Why is anomaly threshold selection also a business decision?",
  options:["Lowering or raising the threshold changes the number of flagged observations","False positives may create unnecessary manual investigations or frustrate customers","False negatives may allow genuine fraud or other harmful anomalies to go undetected","There is one universally correct threshold for every business"],correct:[0,1,2],
  exp:"Threshold selection creates a tradeoff between false positives and false negatives."},
-
 {part:"an",topic:"thresh",type:"single",q:"A bank's fraud detection system is generating too many alerts for legitimate customers. What is the most likely problem?",
  options:["Too many false positives","Too many true negatives","Too many true positives","Too few false negatives"],correct:[0],
  exp:"Legitimate customers being flagged means false positives are too high."},
-
 {part:"an",topic:"auto",type:"single",q:"What is the basic anomaly detection idea behind an autoencoder?",
  options:["It learns to reconstruct normal data, and unusually high reconstruction error can indicate an anomaly","It calculates Q1 and Q3","It isolates points using random decision-tree splits","It calculates the number of standard deviations from the mean"],correct:[0],
  exp:"Autoencoders learn to reconstruct normal patterns; anomalies can produce high reconstruction error."},
-
 {part:"an",topic:"auto",type:"multi",q:"A data scientist is choosing between Z-score, IQR, and Isolation Forest. Which statements are correct?",
  options:["Z-score is simple and useful for single-feature data that is approximately normally distributed","IQR is generally more robust than Z-score for skewed single-feature data","Isolation Forest is suitable for complex multi-feature anomaly detection","There is no need to manually review flagged anomalies because anomaly algorithms are guaranteed to be correct"],correct:[0,1,2],
  exp:"These accurately summarize the three methods. Manual review remains important because anomaly detection is not guaranteed to be correct."}
+);
+
+/* ---------------- PART 4: Dimensionality Reduction ---------------- */
+Q.push(
+{part:"p4",topic:"introdr",type:"multi",q:"A data scientist has a dataset containing 500 features per sample. The team wants to understand why dimensionality reduction might be useful before training a machine learning model. Which statements correctly describe practical problems associated with high-dimensional data?",
+ options:["High-dimensional data can require more computation and memory during model training.","Distance-based algorithms such as KNN can become less meaningful because points tend to become approximately equidistant.","Dimensionality reduction can help with visualization by converting high-dimensional data into 2D or 3D.","Increasing the number of dimensions always makes clusters easier to visualize."],correct:[0,1,2],
+ exp:"High dimensionality increases compute/memory cost, degrades distance-based methods via the curse of dimensionality, and reduction to 2D/3D aids visualization. More dimensions do not make clusters easier to see — the opposite is generally true."},
+{part:"p4",topic:"introdr",type:"single",q:"An ML engineer says, \"Dimensionality reduction simply means deleting unimportant columns from a dataset.\" Which response best describes the concept from the lesson?",
+ options:["Correct, because dimensionality reduction always removes features entirely.","Incorrect, because dimensionality reduction aims to reduce the number of dimensions while preserving as much useful information as possible.","Correct, because every feature that contributes less than 50% should be deleted.","Incorrect, because dimensionality reduction only changes the number of rows, not features."],correct:[1],
+ exp:"Dimensionality reduction isn't simply deleting columns — it aims to represent the data in fewer dimensions while retaining as much useful information/variance as possible."},
+{part:"p4",topic:"introdr",type:"single",q:"A machine learning dataset contains 10 input features. According to the definition used in the class notes, what is the dimensionality of the dataset?",
+ options:["10 dimensions","10 rows","Number of unique values across all features","Number of target classes"],correct:[0],
+ exp:"Dimensionality refers to the number of input features/columns — here, 10."},
+{part:"p4",topic:"introdr",type:"single",q:"An engineer has an MNIST-style grayscale image with dimensions 28 × 28. How many features does the image have when each pixel is treated as one feature?",
+ options:["28","56","784","1024"],correct:[2],
+ exp:"28 × 28 = 784 pixels, each treated as one feature."},
+{part:"p4",topic:"introdr",type:"single",q:"A developer converts a 28 × 28 image matrix into a one-dimensional array containing 784 pixel values. Which statement is correct?",
+ options:["Flattening reduces the image from 784 dimensions to fewer dimensions.","Flattening changes the shape but does not remove or alter the 784 pixel values.","Flattening is equivalent to PCA.","Flattening removes redundant pixel information automatically."],correct:[1],
+ exp:"Flattening just reshapes the 28×28 matrix into a 784-length vector; no information is removed or dimensionality actually reduced."},
+{part:"p4",topic:"introdr",type:"multi",q:"A data scientist explains why dimensionality reduction can be useful before model training. Which statements are valid?",
+ options:["It can reduce memory requirements.","It can make training faster by reducing the number of features.","It can sometimes reduce noise by removing dimensions with very little useful variance.","It guarantees that model accuracy will always increase."],correct:[0,1,2],
+ exp:"Dimensionality reduction can lower memory use, speed up training, and reduce noise — but it never guarantees improved accuracy."},
+{part:"p4",topic:"introdr",type:"single",q:"A team wants to visually inspect whether clusters exist in a dataset containing 500 features. Why might dimensionality reduction to 2D be useful?",
+ options:["Humans can directly visualize all 500 dimensions simultaneously.","A 2D representation can be plotted to visually inspect cluster structure.","Reducing to 2D guarantees that all original information is preserved.","2D automatically converts the problem into supervised learning."],correct:[1],
+ exp:"A 2D projection can be plotted and visually inspected for cluster structure, even though some information is inevitably lost."},
+{part:"p4",topic:"variance",type:"single",q:"A data scientist explains PCA using the idea of projecting points onto a new axis. What is PCA fundamentally trying to maximize?",
+ options:["Number of rows","Variance of the projected data","Number of target classes","Number of missing values"],correct:[1],
+ exp:"PCA seeks projection directions that maximize the variance of the projected data."},
+{part:"p4",topic:"variance",type:"single",q:"Consider two sets of points:\nSet A: -10, 0, 10\nSet B: -20, 0, 20\nBoth sets have the same mean. Why does PCA-related analysis use variance rather than mean to measure spread?",
+ options:["Mean measures the number of features, while variance measures the number of rows.","Both datasets have the same mean, but Set B has greater spread and therefore greater variance.","Mean is always zero for PCA datasets.","Variance measures only the number of dimensions."],correct:[1],
+ exp:"Mean alone can't distinguish spread — both sets share mean 0, but Set B's points are farther from the mean, giving it higher variance."},
+{part:"p4",topic:"variance",type:"single",q:"For the values -10, 0, 10, the mean is 0. Using population variance, what is the variance?",
+ options:["33.33","66.67","100","200"],correct:[1],
+ exp:"Variance = [(-10)²+0²+10²]/3 = (100+0+100)/3 = 66.67."},
+{part:"p4",topic:"variance",type:"single",q:"For the values -20, 0, 20, what is the population variance?",
+ options:["66.67","133.33","266.67","400"],correct:[2],
+ exp:"Variance = [(-20)²+0²+20²]/3 = (400+0+400)/3 = 266.67."},
+{part:"p4",topic:"variance",type:"single",q:"A student observes that the variance of [-20, 0, 20] is four times the variance of [-10, 0, 10]. What does this demonstrate?",
+ options:["Variance is unaffected by the distance from the mean.","Variance increases with the square of the distance from the mean.","Mean increases four times when variance increases.","PCA ignores variance when choosing components."],correct:[1],
+ exp:"Doubling the spread (distance from mean) quadruples the variance, since variance involves squared differences."},
+{part:"p4",topic:"pcafund",type:"multi",q:"A PCA algorithm is being explained step-by-step to a junior engineer. Which statements correctly describe PCA?",
+ options:["PCA finds directions along which the data has maximum variance.","The first principal component captures the greatest amount of variance.","Subsequent components capture remaining variance while being orthogonal to previous components.","PCA randomly deletes features until only two remain."],correct:[0,1,2],
+ exp:"These three statements correctly describe PCA. PCA does not randomly delete features — it computes new orthogonal directions."},
+{part:"p4",topic:"pcafund",type:"single",q:"A 2D dataset is projected onto two different candidate axes. Axis A produces a very narrow spread of projected points, while Axis B produces a much wider spread. Which axis would PCA prefer as the first principal component?",
+ options:["Axis A, because narrow spread means less information.","Axis B, because PCA seeks the direction with maximum variance.","Both axes equally.","Neither, because PCA does not use projections."],correct:[1],
+ exp:"PCA selects the direction of maximum spread (variance), so Axis B, with the wider projected spread, would be preferred."},
+{part:"p4",topic:"pcafund",type:"single",q:"What does PC1 represent in PCA?",
+ options:["The original first feature in the dataset.","The direction that captures the maximum variance in the data.","The feature with the largest numerical values.","The target variable transformed into a new feature."],correct:[1],
+ exp:"PC1 is a new direction (a linear combination of original features) capturing the maximum variance, not an original feature itself."},
+{part:"p4",topic:"pcafund",type:"single",q:"What is the relationship between PC2 and PC1 in PCA?",
+ options:["PC2 must be identical to PC1.","PC2 is another direction capturing maximum remaining variance while being orthogonal to PC1.","PC2 always captures more variance than PC1.","PC2 is always the second original feature."],correct:[1],
+ exp:"PC2 captures the next-largest amount of variance, constrained to be orthogonal (perpendicular) to PC1."},
+{part:"p4",topic:"pcafund",type:"multi",q:"A 4-feature dataset is processed using PCA. Which statements are consistent with the class notes?",
+ options:["PCA can produce four principal components.","PC1, PC2, PC3 and PC4 are new projection directions.","The components are ordered according to the amount of variance they capture.","PCA can only produce two components regardless of the original number of features."],correct:[0,1,2],
+ exp:"With 4 features, PCA can produce up to 4 principal components, each a new direction, ordered by variance explained."},
+{part:"p4",topic:"evr",type:"single",q:"A 4D dataset has the following explained variance ratios:\nPC1 = 55%\nPC2 = 25%\nPC3 = 15%\nPC4 = 5%\nHow much variance is captured by keeping PC1 and PC2?",
+ options:["55%","70%","80%","95%"],correct:[2],
+ exp:"55% + 25% = 80%."},
+{part:"p4",topic:"evr",type:"single",q:"Using the same dataset (PC1=55%, PC2=25%, PC3=15%, PC4=5%), how much variance is retained if PC1, PC2 and PC3 are kept?",
+ options:["80%","90%","95%","100%"],correct:[2],
+ exp:"55% + 25% + 15% = 95%."},
+{part:"p4",topic:"evr",type:"single",q:"A data scientist wants to reduce the 4D dataset above while retaining 95% of the variance. Which choice should be made?",
+ options:["Keep 1 component.","Keep 2 components.","Keep 3 components.","Keep 4 components."],correct:[2],
+ exp:"Keeping PC1–PC3 retains 95% of variance, meeting the target with the fewest components."},
+{part:"p4",topic:"evr",type:"single",q:"What does explained_variance_ratio_ in sklearn PCA tell the engineer?",
+ options:["The number of rows removed by PCA.","The fraction of total variance captured by each principal component.","The percentage of missing values in each feature.","The accuracy of the final ML model."],correct:[1],
+ exp:"explained_variance_ratio_ reports, for each component, the proportion of total variance it captures."},
+{part:"p4",topic:"evr",type:"multi",q:"Consider the following code:\npca = PCA()\npca.fit(X_scaled)\nprint(pca.explained_variance_ratio_)\nWhat can the output be used for?",
+ options:["Understanding how much variance each component captures.","Deciding how many components may be useful to retain.","Calculating cumulative explained variance.","Directly measuring classification accuracy."],correct:[0,1,2],
+ exp:"The ratio array helps assess per-component variance, decide how many to keep, and compute cumulative variance — it says nothing about downstream classification accuracy."},
+{part:"p4",topic:"evr",type:"single",q:"What does this code calculate?\nnp.cumsum(pca.explained_variance_ratio_)",
+ options:["Cumulative explained variance","Pairwise distances","Classification accuracy","Feature correlation"],correct:[0],
+ exp:"np.cumsum() on the explained variance ratios produces the running cumulative variance explained."},
+{part:"p4",topic:"evr",type:"single",q:"Suppose PCA produces:\n[0.45, 0.22, 0.13, 0.08, ...]\nWhat does 0.45 represent?",
+ options:["PC1 explains approximately 45% of the total variance.","PC1 contains 45% of the original rows.","45% of the features were deleted.","The model has 45% accuracy."],correct:[0],
+ exp:"The first value in explained_variance_ratio_ is the fraction of total variance PC1 explains — here, 45%."},
+{part:"p4",topic:"evr",type:"single",q:"A PCA scree plot shows that variance explained decreases sharply from PC1 to PC4 and then becomes almost flat. What does the \"elbow\" generally suggest?",
+ options:["Components after the elbow may provide diminishing returns.","Components after the elbow always contain 100% noise.","The first component should always be deleted.","PCA should be replaced by K-Means."],correct:[0],
+ exp:"The elbow marks the point where additional components add comparatively little extra explained variance."},
+{part:"p4",topic:"evr",type:"multi",q:"A data scientist is deciding how many PCA components to retain. Which approaches are supported by the notes?",
+ options:["Use cumulative explained variance such as 80–95%, depending on the use case.","Inspect a scree plot and look for an elbow.","For visualization, use 2 or 3 dimensions even if they do not explain 90% of the variance.","Always retain exactly one component."],correct:[0,1,2],
+ exp:"All three are legitimate, notes-supported strategies for choosing the number of components; there's no rule to always keep exactly one."},
+{part:"p4",topic:"evr",type:"single",q:"A team uses:\npca = PCA(n_components=2)\nX_pca = pca.fit_transform(X)\nWhat is the main effect?",
+ options:["The number of samples becomes 2.","The data is transformed into a representation with 2 principal-component dimensions.","Only the first two original features are selected.","The target variable is reduced to two classes."],correct:[1],
+ exp:"PCA(n_components=2) projects the data onto the top 2 principal components — new combined dimensions, not the original first two features."},
+{part:"p4",topic:"pcasklearn",type:"single",q:"The sklearn digits dataset contains:\n1797 samples\n64 features\nIf PCA is applied with:\nPCA(n_components=2)\nwhat will be the expected shape of the transformed feature matrix?",
+ options:["(2, 64)","(1797, 2)","(64, 2)","(1797, 64)"],correct:[1],
+ exp:"Samples stay at 1797, features are reduced to 2, giving shape (1797, 2)."},
+{part:"p4",topic:"pcasklearn",type:"multi",q:"Which are genuine limitations of PCA according to the provided notes?",
+ options:["PCA assumes linear relationships.","PCA primarily captures global structure rather than local cluster structure.","Principal component values are not always humanly interpretable.","PCA guarantees perfect separation of clusters."],correct:[0,1,2],
+ exp:"These are genuine PCA limitations; PCA never guarantees perfect cluster separation."},
+{part:"p4",topic:"pcasklearn",type:"single",q:"A dataset contains a curved, nonlinear structure. A data scientist attempts to reduce it using PCA but the resulting projection loses important structure. What is the most likely reason?",
+ options:["PCA is based on linear projection directions and may struggle with nonlinear patterns.","PCA only works with categorical data.","PCA cannot calculate variance.","PCA always requires exactly 2 features."],correct:[0],
+ exp:"PCA finds linear projections, so it can fail to capture curved/nonlinear structure in the data."},
+{part:"p4",topic:"pcasklearn",type:"single",q:"A dataset contains two visually distinct clusters. PCA projects the data into 2D, but the clusters overlap heavily. Which explanation is most consistent with the notes?",
+ options:["PCA maximizes overall variance and does not specifically optimize local cluster separation.","PCA always separates clusters, so the result must be caused by missing values.","PCA is a clustering algorithm and should have created separate labels.","PCA only works when there is one cluster."],correct:[0],
+ exp:"PCA optimizes for overall variance capture, not for keeping distinct clusters apart — that's why clusters can overlap after projection."},
+{part:"p4",topic:"tsne",type:"single",q:"A data scientist wants a dimensionality-reduction method specifically focused on preserving local neighborhood relationships and revealing clusters in a visualization. Which technique best matches this description?",
+ options:["PCA","t-SNE","Linear Regression","K-Means"],correct:[1],
+ exp:"t-SNE is specifically designed to preserve local neighborhood structure for cluster visualization."},
+{part:"p4",topic:"tsne",type:"multi",q:"Which statements correctly describe t-SNE?",
+ options:["It focuses strongly on local neighborhood relationships.","It converts high-dimensional distances into probabilities.","It creates a low-dimensional arrangement that tries to preserve those neighborhood relationships.","It selects projection vectors that maximize variance exactly like PCA."],correct:[0,1,2],
+ exp:"t-SNE converts distances to probabilities and preserves local neighborhoods — unlike PCA, it does not maximize global variance via linear projections."},
+{part:"p4",topic:"tsne",type:"single",q:"According to the class notes, what is a major computational reason t-SNE can become slow for large datasets?",
+ options:["It requires calculating distances between many pairs of points, with roughly O(N²) scaling.","It always trains a deep neural network.","It calculates only one distance for the entire dataset.","It deletes all features before running."],correct:[0],
+ exp:"t-SNE's pairwise distance computation scales roughly quadratically with the number of points."},
+{part:"p4",topic:"tsne",type:"single",q:"A dataset has 1,000 points. Approximately how many unique pairwise distances exist if every point is compared with every other point?",
+ options:["1,000","2,000","500,000","1,000,000,000"],correct:[2],
+ exp:"Unique pairs among 1,000 points ≈ 1000×999/2 ≈ 500,000."},
+{part:"p4",topic:"tsne",type:"single",q:"Why is the number of pairwise distances for 1,000 points approximately 500,000 rather than 1,000,000?",
+ options:["Each pair is counted twice when considering A-B and B-A, so the unique pairs are approximately N²/2.","Half the points are deleted automatically.","t-SNE only processes half the features.","PCA preprocessing removes half the distances."],correct:[0],
+ exp:"Counting ordered pairs would double-count each unordered pair, so unique pairwise distances are roughly N²/2."},
+{part:"p4",topic:"tsne",type:"single",q:"A data scientist uses:\nTSNE(n_components=2)\nWhat does n_components=2 indicate?",
+ options:["t-SNE should produce a 2-dimensional embedding.","t-SNE should use only two original features.","t-SNE should create two clusters.","t-SNE should calculate two pairwise distances."],correct:[0],
+ exp:"n_components=2 sets the dimensionality of the output embedding to 2."},
+{part:"p4",topic:"tsne",type:"multi",q:"Which statements about t-SNE output are supported by the preread?",
+ options:["It can help reveal whether clusters exist.","Points within a cluster being close can indicate local similarity.","Absolute positions of clusters should not be interpreted as meaningful.","Distances between clusters should always be treated as quantitatively meaningful."],correct:[0,1,2],
+ exp:"t-SNE is good for revealing cluster existence and local similarity, but absolute positions and inter-cluster distances are not meant to be interpreted quantitatively."},
+{part:"p4",topic:"tsne",type:"single",q:"A student runs t-SNE twice and obtains somewhat different layouts. Which statement best explains this?",
+ options:["t-SNE's layout can vary between runs, particularly without controlling randomness.","t-SNE always produces exactly the same coordinates regardless of initialization.","PCA automatically changes the t-SNE output.","The dataset must have changed between the two runs."],correct:[0],
+ exp:"t-SNE involves randomness (e.g. in initialization), so layouts can differ between runs unless a fixed random seed is used."},
+{part:"p4",topic:"tsne",type:"single",q:"A student wants to use t-SNE coordinates as input features for a downstream predictive model because the 2D visualization shows beautiful clusters. Based on the preread, what should the student understand?",
+ options:["t-SNE-reduced coordinates are recommended as standard downstream model features.","t-SNE is primarily intended for visualization, and its distances/layout should not be treated like PCA feature space.","t-SNE should always replace the original dataset.","t-SNE automatically improves every downstream model."],correct:[1],
+ exp:"t-SNE is a visualization tool; its output coordinates aren't designed to serve as a general-purpose feature space for downstream models."},
+{part:"p4",topic:"umap",type:"single",q:"What is the main idea behind UMAP's speed advantage over the pairwise approach described for t-SNE?",
+ options:["UMAP considers a limited number of neighboring points rather than every possible pair.","UMAP always deletes half the dataset.","UMAP uses only one feature.","UMAP does not calculate any distances."],correct:[0],
+ exp:"By focusing on a limited neighborhood per point rather than all pairs, UMAP avoids the O(N²) cost that slows t-SNE."},
+{part:"p4",topic:"umap",type:"single",q:"Suppose UMAP processes 1,000 points and considers approximately 2 neighbors per point. Approximately how many neighbor-distance comparisons are described in the class notes?",
+ options:["2","20","2,000","500,000"],correct:[2],
+ exp:"1,000 points × ~2 neighbors each ≈ 2,000 comparisons, far fewer than the ~500,000 pairwise comparisons t-SNE would need."},
+{part:"p4",topic:"umap",type:"multi",q:"Which statements correctly describe the trade-off between t-SNE and UMAP according to the class notes?",
+ options:["t-SNE can preserve more detail but is computationally expensive.","UMAP uses more approximation to gain substantial speed.","UMAP is generally preferred for larger datasets.","UMAP always produces exactly the same visualization as t-SNE."],correct:[0,1,2],
+ exp:"These three capture the genuine trade-off; UMAP and t-SNE do not produce identical visualizations."},
+{part:"p4",topic:"umap",type:"single",q:"A dataset contains a few hundred samples and the data scientist wants a detailed visualization of local relationships. Based on the provided decision guidance, which technique is a reasonable choice?",
+ options:["t-SNE","PCA only","Linear Regression","StandardScaler"],correct:[0],
+ exp:"For a few hundred samples where detailed local structure matters, t-SNE is a reasonable and computationally feasible choice."},
+{part:"p4",topic:"umap",type:"single",q:"A dataset contains tens of thousands of high-dimensional samples and the engineer wants a scalable visualization method. Which technique is generally preferred according to the notes?",
+ options:["UMAP","t-SNE","Linear Regression","PCA must always be avoided"],correct:[0],
+ exp:"UMAP's neighbor-based approximation scales better, making it preferred for large, high-dimensional datasets."},
+{part:"p4",topic:"umap",type:"multi",q:"Consider the UMAP code:\nreducer = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)\nX_umap = reducer.fit_transform(X)\nWhich statements are correct?",
+ options:["n_components=2 asks for a 2D embedding.","n_neighbors controls the neighborhood size used by UMAP.","min_dist controls how tightly points can be packed in the embedding.","random_state=42 helps make the result reproducible."],correct:[0,1,2,3],
+ exp:"All four statements correctly describe the roles of these UMAP parameters."},
+{part:"p4",topic:"umap",type:"single",q:"A data scientist changes UMAP's n_neighbors from 10 to a much higher value. What is the general effect according to the notes?",
+ options:["More emphasis is placed on broader/global structure.","UMAP stops calculating distances.","The number of output dimensions automatically becomes higher.","The dataset is automatically reduced to exactly 10 features."],correct:[0],
+ exp:"A larger n_neighbors makes UMAP consider a wider neighborhood, shifting emphasis toward more global structure."},
+{part:"p4",topic:"umap",type:"single",q:"A data scientist decreases UMAP's min_dist from 0.1 to a smaller value. What effect is generally expected?",
+ options:["Points can form tighter, more compact groups.","Points are forced to spread uniformly apart.","The number of original features increases.","UMAP becomes identical to PCA."],correct:[0],
+ exp:"A smaller min_dist allows points to be packed closer together in the embedding, producing tighter clusters."},
+{part:"p4",topic:"workflow",type:"multi",q:"A team is designing a dimensionality-reduction workflow for a high-dimensional dataset. Which statements are consistent with the provided practical workflow?",
+ options:["Standardize the features before applying PCA.","PCA can first be used to reduce a very high-dimensional dataset to a more manageable number of dimensions.","PCA-reduced data can then be passed to t-SNE or UMAP for visualization.","Applying t-SNE directly to 500 noisy dimensions is always the preferred approach."],correct:[0,1,2],
+ exp:"The recommended workflow is scale → PCA (to cut noise/dimensionality) → t-SNE/UMAP for visualization, not applying t-SNE directly to hundreds of noisy raw dimensions."},
+{part:"p4",topic:"workflow",type:"multi",q:"A data scientist must choose between PCA, t-SNE, and UMAP for different tasks. Which choices are consistent with the provided notes?",
+ options:["PCA is suitable when variance structure and reproducible feature reduction are important.","t-SNE is useful for visualizing local cluster structure, especially on relatively small datasets.","UMAP is useful for faster visualization of larger datasets and can preserve both local and better global structure.","PCA, t-SNE, and UMAP are all clustering algorithms that directly assign cluster labels."],correct:[0,1,2],
+ exp:"These correctly summarize when to use each technique. None of the three are clustering algorithms — they don't assign cluster labels themselves."}
+);
+
+/* ---------------- PART 5: Neural Networks from First Principles ---------------- */
+Q.push(
+{part:"p5",topic:"perceptron",type:"single",q:"A junior ML engineer asks what a perceptron actually is. Which description is most accurate?",
+ options:["A collection of many hidden layers used only for regression","The simplest neural network consisting of a single artificial neuron","A clustering algorithm that groups similar neurons","A dimensionality-reduction algorithm based on variance"],correct:[1],
+ exp:"A perceptron is the simplest neural network — a single artificial neuron that computes a weighted sum and applies a threshold."},
+{part:"p5",topic:"perceptron",type:"single",q:"A fraud-detection perceptron receives transaction features and computes:\nZ = W.T @ X + B\nWhat does this calculation represent?",
+ options:["The weighted sum of inputs plus bias","The final loss of the model","The gradient of the loss","The output probability after sigmoid"],correct:[0],
+ exp:"Z = W.T @ X + B is the linear combination of inputs — the weighted sum plus bias — before any activation is applied."},
+{part:"p5",topic:"perceptron",type:"single",q:"A perceptron uses the following threshold rule:\nreturn 1 if z >= 0 else 0\nWhat prediction does it produce when z = 0?",
+ options:["0","0.5","1","Undefined"],correct:[2],
+ exp:"The rule returns 1 when z >= 0, and z=0 satisfies that condition, so the output is 1."},
+{part:"p5",topic:"xor",type:"multi",q:"A machine learning engineer is explaining why a perceptron can solve AND but not XOR. Which statements are correct?",
+ options:["A perceptron can create only a linear decision boundary.","AND is linearly separable.","XOR is not linearly separable.","Training the perceptron for more epochs will eventually allow it to solve XOR perfectly."],correct:[0,1,2],
+ exp:"A perceptron can only draw a straight-line boundary; AND is linearly separable so it works, but XOR isn't, so no amount of extra training will let a single perceptron solve it."},
+{part:"p5",topic:"xor",type:"single",q:"A dataset contains two classes that can be separated perfectly using one straight line. Which model can potentially solve this problem directly?",
+ options:["A single perceptron","PCA","K-means","t-SNE"],correct:[0],
+ exp:"A single perceptron can directly solve any linearly separable two-class problem."},
+{part:"p5",topic:"xor",type:"single",q:"A perceptron is trained on XOR for thousands of epochs, but its error never reaches zero. What is the fundamental reason?",
+ options:["XOR requires categorical input features","XOR is not linearly separable","The perceptron requires at least 100 features","The learning rate must always be exactly 1"],correct:[1],
+ exp:"No straight line can separate XOR's classes, so a single perceptron's error can never reach zero on XOR, regardless of training time."},
+{part:"p5",topic:"pweights",type:"multi",q:"Which statements correctly describe the perceptron's learning rule from the class notes?",
+ options:["It compares the prediction with the actual label.","When it makes a mistake, it adjusts its weights.","Its historical update rule is not the same as gradient descent on a smooth loss.","It requires a differentiable step function to make updates."],correct:[0,1,2],
+ exp:"The classic perceptron rule compares prediction to label and updates weights on mistakes, but it's a distinct historical rule, not gradient descent on a smooth differentiable loss — and the step function itself isn't differentiable."},
+{part:"p5",topic:"pweights",type:"single",q:"Consider:\nerror = yi - prediction\nself.w += self.lr * error * xi\nself.b += self.lr * error\nIf the perceptron predicts incorrectly, what is the purpose of these updates?",
+ options:["To shift the decision boundary in a direction that should improve the prediction","To randomly replace all weights","To reduce the number of input features","To calculate explained variance"],correct:[0],
+ exp:"The weight/bias update nudges the decision boundary toward correctly classifying the misclassified example."},
+{part:"p5",topic:"pweights",type:"single",q:"What does one epoch represent during training?",
+ options:["One complete pass through the training data","One individual neuron","One weight update only","One hidden layer"],correct:[0],
+ exp:"An epoch is one full pass through the entire training dataset."},
+{part:"p5",topic:"linlayers",type:"single",q:"A developer stacks several linear layers:\nInput → Linear → Linear → Linear → Output\nbut does not use any activation functions. What is the fundamental problem?",
+ options:["Stacking linear operations still results in an overall linear function.","Linear layers automatically become nonlinear after three layers.","The network automatically becomes a clustering algorithm.","The output can no longer be calculated."],correct:[0],
+ exp:"Composing linear transformations, no matter how many, always collapses mathematically into a single equivalent linear transformation."},
+{part:"p5",topic:"linlayers",type:"multi",q:"Why are activation functions important in neural networks?",
+ options:["They introduce non-linearity.","They allow networks to learn more complex patterns.","Without them, stacking linear layers does not provide additional nonlinear modeling power.","They guarantee that the model will never overfit."],correct:[0,1,2],
+ exp:"Activation functions add nonlinearity, enabling complex pattern learning; without them, depth adds no extra modeling power. They don't prevent overfitting."},
+{part:"p5",topic:"linlayers",type:"single",q:"A neural network uses only linear transformations in every layer. Even if it contains 100 layers, what is the fundamental behavior of the overall network?",
+ options:["It remains linear.","It automatically becomes quadratic.","It automatically becomes a clustering model.","It becomes equivalent to K-means."],correct:[0],
+ exp:"Without nonlinear activations, any number of stacked linear layers is mathematically equivalent to one linear layer."},
+{part:"p5",topic:"activations",type:"single",q:"Which activation function produces an output between 0 and 1 and is therefore suitable for a binary classification output probability?",
+ options:["ReLU","Tanh","Sigmoid","Step function only"],correct:[2],
+ exp:"Sigmoid squashes any input into the range (0,1), making it suitable as a probability output for binary classification."},
+{part:"p5",topic:"activations",type:"multi",q:"Which statements about sigmoid are correct?",
+ options:["Its formula is 1 / (1 + exp(-z)).","Its output range is 0 to 1.","It is useful for producing a probability in binary classification.","Its derivative is sigmoid(z) * (1 - sigmoid(z))."],correct:[0,1,2,3],
+ exp:"All four statements correctly describe sigmoid's formula, range, use case, and derivative."},
+{part:"p5",topic:"activations",type:"single",q:"What is the output range of tanh?",
+ options:["0 to 1","-1 to 1","0 to infinity","-infinity to infinity only"],correct:[1],
+ exp:"Tanh outputs values between -1 and 1."},
+{part:"p5",topic:"activations",type:"single",q:"A developer uses:\ndef relu(z):\n    return np.maximum(0, z)\nWhat does ReLU return for z = -5 and z = 7 respectively?",
+ options:["-5 and 7","0 and 7","5 and 0","0 and 0"],correct:[1],
+ exp:"ReLU(z)=max(0,z): for z=-5 this gives 0, and for z=7 this gives 7."},
+{part:"p5",topic:"activations",type:"multi",q:"Which statements about ReLU are correct according to the notes?",
+ options:["ReLU(z) = max(0, z).","Negative inputs produce 0.","Positive inputs pass through unchanged.","ReLU is the default recommendation for hidden layers."],correct:[0,1,2,3],
+ exp:"All four statements accurately describe ReLU's formula, behavior, and common usage as a default hidden-layer activation."},
+{part:"p5",topic:"activations",type:"single",q:"What is the derivative of ReLU when z > 0?",
+ options:["-1","0","0.25","1"],correct:[3],
+ exp:"For z>0, ReLU behaves as the identity function, so its derivative is 1."},
+{part:"p5",topic:"outputact",type:"single",q:"A neural network performs binary classification such as \"fraud vs not fraud.\" Which activation is recommended for the output layer according to the notes?",
+ options:["Sigmoid","ReLU","Tanh","No activation in every case"],correct:[0],
+ exp:"Sigmoid outputs a value in (0,1), suitable as a probability for binary classification tasks like fraud detection."},
+{part:"p5",topic:"outputact",type:"single",q:"A neural network predicts house prices. Which output-layer approach is described in the notes as appropriate for regression?",
+ options:["Sigmoid only","Step function only","Linear/no activation, or alternatively ReLU","Tanh only"],correct:[2],
+ exp:"Regression output layers typically use a linear (no) activation, or sometimes ReLU, to allow unrestricted continuous predictions."},
+{part:"p5",topic:"architecture",type:"multi",q:"A neural network contains two hidden layers and one output layer. Which statements correctly describe its architecture?",
+ options:["There is exactly one input layer.","There is exactly one output layer.","There can be multiple hidden layers.","The number of hidden layers is a hyperparameter."],correct:[0,1,2,3],
+ exp:"A network always has exactly one input and one output layer, but the number of hidden layers in between is a design choice (hyperparameter)."},
+{part:"p5",topic:"architecture",type:"single",q:"A neuron performs:\nZ = W.T @ X + B\nA = activation(Z)\nWhat are the two fundamental steps performed by the neuron?",
+ options:["Linear transformation followed by activation","Clustering followed by dimensionality reduction","Loss calculation followed by PCA","Prediction followed by data normalization"],correct:[0],
+ exp:"Each neuron computes a linear combination (Z) then applies a nonlinear activation (A) to it."},
+{part:"p5",topic:"architecture",type:"multi",q:"A network has 2 input features, hidden layer 1 with 4 neurons, hidden layer 2 with 4 neurons, and 1 output neuron. Which weight shapes are correct under the class-note convention?",
+ options:["W1 = (2, 4)","W2 = (4, 4)","W3 = (4, 1)","W3 = (2, 1)"],correct:[0,1,2],
+ exp:"With 2 inputs → 4 → 4 → 1 neurons, weight shapes are (2,4), (4,4), and (4,1) respectively; W3=(2,1) doesn't match the layer sizes."},
+{part:"p5",topic:"architecture",type:"single",q:"For the architecture above (2 → 4 → 4 → 1), what is the shape of B1?",
+ options:["(2, 1)","(1, 4)","(4, 4)","(1, 2)"],correct:[1],
+ exp:"The bias for a layer with 4 neurons is shaped (1, 4) — one bias value per neuron, broadcast across samples."},
+{part:"p5",topic:"architecture",type:"single",q:"Suppose:\nX.shape = (100, 2)\nW1.shape = (2, 4)\nB1.shape = (1, 4)\nWhat is the shape of:\nZ1 = X @ W1 + B1",
+ options:["(100, 2)","(2, 4)","(100, 4)","(4, 100)"],correct:[2],
+ exp:"X(100,2) @ W1(2,4) gives (100,4), and adding B1(1,4) broadcasts correctly, keeping the shape (100,4)."},
+{part:"p5",topic:"architecture",type:"multi",q:"A developer says that an activation function changes the shape of the data flowing through a layer. Which statements correctly describe the class example?",
+ options:["Z1 and A1 have the same shape.","ReLU changes the values, not the shape.","Z1 = X @ W1 + B1.","A1 = ReLU(Z1)."],correct:[0,1,2,3],
+ exp:"All four statements are correct: activation functions are applied element-wise, preserving shape while transforming values."},
+{part:"p5",topic:"architecture",type:"single",q:"A network has input shape (n, 2) and first hidden layer output shape (n, 4). What does the 4 represent?",
+ options:["Number of training examples","Number of features in the original dataset","Number of neurons in the hidden layer","Number of output classes"],correct:[2],
+ exp:"The second dimension of the hidden layer's output shape corresponds to the number of neurons in that layer."},
+{part:"p5",topic:"architecture",type:"single",q:"Why can hidden layers be thought of as performing automatic feature engineering?",
+ options:["Each hidden neuron learns a new representation based on combinations of existing features.","Hidden layers simply delete random features.","Hidden layers manually create polynomial features specified by the programmer.","Hidden layers only normalize the original columns."],correct:[0],
+ exp:"Hidden neurons learn new, useful combinations/representations of the inputs automatically during training — effectively automatic feature engineering."},
+{part:"p5",topic:"forwardloss",type:"single",q:"What is forward propagation?",
+ options:["Sending the error backward to update weights","Passing the input through each layer until the final prediction is produced","Randomly initializing weights","Calculating only the final loss"],correct:[1],
+ exp:"Forward propagation is the process of pushing input data through each layer, in order, to produce the final output/prediction."},
+{part:"p5",topic:"forwardloss",type:"multi",q:"Which statements correctly describe a forward pass?",
+ options:["Information flows from input toward output.","Each layer performs its linear and activation steps.","The final output becomes the model's prediction.","Weights are updated during the forward pass."],correct:[0,1,2],
+ exp:"The forward pass moves data input-to-output through each layer's linear+activation steps to produce the prediction; weight updates happen during backpropagation, not the forward pass."},
+{part:"p5",topic:"forwardloss",type:"single",q:"Consider:\nz1 = X @ W1 + B1\na1 = ReLU(z1)\nz2 = a1 @ W2 + B2\na2 = ReLU(z2)\nz3 = a2 @ W3 + B3\na3 = sigmoid(z3)\nWhat is a3?",
+ options:["The first hidden layer output","The second hidden layer output","The final prediction y_hat","The loss gradient"],correct:[2],
+ exp:"a3, the output of the final (output) layer after sigmoid, is the model's final prediction, y_hat."},
+{part:"p5",topic:"forwardloss",type:"single",q:"After a neural network produces y_hat, what does the loss function measure?",
+ options:["How many hidden layers exist","How wrong the current prediction is","The number of input features","The number of neurons in the network"],correct:[1],
+ exp:"The loss function quantifies the discrepancy between the model's prediction and the true label."},
+{part:"p5",topic:"forwardloss",type:"single",q:"For binary classification, which loss function is used in the provided neural-network lesson?",
+ options:["Mean Squared Error only","Binary cross-entropy / log loss","WCSS","Dunn Index"],correct:[1],
+ exp:"Binary cross-entropy (log loss) is the standard loss function used for binary classification."},
+{part:"p5",topic:"forwardloss",type:"single",q:"A binary classifier produces:\ny = 1\ny_hat = 0.99\nCompared with a prediction of y_hat = 0.01, which prediction should have the lower binary cross-entropy loss?",
+ options:["0.99","0.01","Both are always equal","Neither produces a loss"],correct:[0],
+ exp:"With true label y=1, a prediction close to 1 (0.99) is far more accurate than 0.01, so it yields a much lower cross-entropy loss."},
+{part:"p5",topic:"backprop",type:"multi",q:"Which statements correctly describe backpropagation?",
+ options:["It happens after the loss has been calculated.","It computes gradients of the loss with respect to network weights.","It works backward from the output toward earlier layers.","It uses the chain rule."],correct:[0,1,2,3],
+ exp:"All four statements correctly describe backpropagation: it follows loss calculation, computes gradients via the chain rule, moving from output back to earlier layers."},
+{part:"p5",topic:"backprop",type:"single",q:"Why is backpropagation called backward propagation?",
+ options:["The input data is reversed.","The error/gradient information is propagated from the output layer backward toward earlier layers.","The network predicts the previous training example.","The layers are physically rearranged backward."],correct:[1],
+ exp:"It's called 'backward' because gradient information flows from the output layer back toward the input, opposite to the forward pass."},
+{part:"p5",topic:"backprop",type:"single",q:"A network has weights W1, W2, and W3, where W3 connects the final hidden layer to the output. During backpropagation, which weight matrix is updated first according to the notes?",
+ options:["W1","W2","W3","All must be updated simultaneously with identical values"],correct:[2],
+ exp:"Backpropagation proceeds from the output backward, so W3 (closest to the output) is updated first, before W2 and W1."},
+{part:"p5",topic:"backprop",type:"multi",q:"Which statements correctly describe the complete training cycle?",
+ options:["Initialize weights.","Perform a forward pass.","Calculate the loss.","Backpropagate gradients and update weights.","Repeat the process for additional epochs."],correct:[0,1,2,3,4],
+ exp:"This is the complete standard training cycle: initialize, forward pass, compute loss, backpropagate and update, then repeat over epochs."},
+{part:"p5",topic:"backprop",type:"single",q:"A neural network has:\nw = 0.5\nlearning_rate = 0.1\ndL/dw = 0.4\nUsing:\nw_new = w − learning_rate × dL/dw\nwhat is the new weight?",
+ options:["0.46","0.54","0.50","0.04"],correct:[0],
+ exp:"w_new = 0.5 - 0.1×0.4 = 0.5 - 0.04 = 0.46."},
+{part:"p5",topic:"backprop",type:"single",q:"Suppose:\nw = 0.8\nlearning rate = 0.2\ndL/dw = -0.5\nUsing the gradient descent update rule, what is the new weight?",
+ options:["0.70","0.80","0.90","0.30"],correct:[2],
+ exp:"w_new = 0.8 - 0.2×(-0.5) = 0.8 + 0.1 = 0.90."},
+{part:"p5",topic:"gradients",type:"multi",q:"A neural network is becoming very deep and its gradients become extremely small as they reach the early layers. Which statements correctly describe this problem?",
+ options:["It is called the vanishing gradient problem.","Early layers may stop learning effectively.","Repeated multiplication of values below 1 can cause the gradient to shrink.","It is called exploding gradient because the values become infinitely large."],correct:[0,1,2],
+ exp:"Shrinking gradients in deep networks is the vanishing gradient problem, caused by repeatedly multiplying small values, which stalls learning in early layers — it is not called 'exploding gradient' (that's the opposite phenomenon)."},
+{part:"p5",topic:"gradients",type:"single",q:"What is an exploding gradient?",
+ options:["A situation where gradients become extremely large during backward propagation.","A situation where all input features become zero.","A situation where the loss is always exactly zero.","A situation where ReLU produces negative values."],correct:[0],
+ exp:"Exploding gradients occur when gradient values grow extremely large during backpropagation, destabilizing training."},
+{part:"p5",topic:"gradients",type:"multi",q:"Which approaches are listed in the notes as practical ways to help address vanishing or exploding gradients?",
+ options:["Using ReLU instead of sigmoid in hidden layers","Sensible weight initialization","Batch normalization","Gradient clipping","Skip connections"],correct:[0,1,2,3,4],
+ exp:"All five are legitimate, notes-supported mitigation techniques for vanishing/exploding gradients."},
+{part:"p5",topic:"gradients",type:"single",q:"Why can sigmoid contribute to vanishing gradients in deep networks?",
+ options:["Its steepest slope is only 0.25, so repeated multiplication can shrink gradients substantially.","Its output is always greater than 100.","Its derivative is always exactly 1.","It has no derivative."],correct:[0],
+ exp:"Sigmoid's maximum derivative is 0.25; multiplying many such small values across layers during backprop causes gradients to shrink toward zero."},
+{part:"p5",topic:"gradients",type:"single",q:"What is the purpose of He initialization described in the notes?",
+ options:["To initialize weights with a scaling intended to help training behave better and reduce vanishing-gradient problems.","To guarantee 100% model accuracy.","To initialize every weight to zero.","To remove the need for activation functions."],correct:[0],
+ exp:"He initialization scales initial weights appropriately (especially for ReLU networks) to help gradients flow better and mitigate vanishing gradients."},
+{part:"p5",topic:"gradients",type:"single",q:"For a layer with previous_layer_size = 4, the notes describe He initialization using the scaling factor √(2/4). What is the approximate scaling factor?",
+ options:["0.25","0.5","0.707","2"],correct:[2],
+ exp:"√(2/4) = √0.5 ≈ 0.707."},
+{part:"p5",topic:"uat",type:"multi",q:"A team discusses the Universal Approximation Theorem. Which statements are supported by the provided notes?",
+ options:["A sufficiently wide network with one hidden layer can approximate any continuous pattern.","The theorem shows that such a network can exist.","It does not tell us how many neurons will actually be required.","It guarantees that training will always find the required solution.","It guarantees perfect performance on unseen data."],correct:[0,1,2],
+ exp:"The theorem is an existence proof — a wide-enough one-hidden-layer network can approximate continuous functions — but it says nothing about how many neurons are needed, nor does it guarantee training will find that solution or that it will generalize perfectly."},
+{part:"p5",topic:"uat",type:"single",q:"A developer says, \"The Universal Approximation Theorem means I can use one hidden layer and the network will automatically learn any problem perfectly.\" What is the best response?",
+ options:["Correct, because the theorem guarantees perfect training and generalization.","Incorrect, because the theorem says approximation is possible but does not guarantee that training will find the solution or that the model will generalize perfectly.","Correct, because one hidden layer is always better than deeper networks.","Incorrect, because neural networks cannot approximate nonlinear functions."],correct:[1],
+ exp:"The theorem only proves that a suitable network exists in theory — it doesn't guarantee training will actually converge to it or that it will generalize well on new data."},
+{part:"p5",topic:"fullnn",type:"multi",q:"A team trains the following network on XOR:\nInput: 2 features\nHidden 1: 4 neurons + ReLU\nHidden 2: 4 neurons + ReLU\nOutput: 1 neuron + sigmoid\nWhich statements are consistent with the class notes?",
+ options:["The hidden layers introduce nonlinear transformations.","The sigmoid output produces a 0–1 probability.","The architecture can learn the nonlinear XOR boundary.","The network should be expected to behave exactly like a single perceptron."],correct:[0,1,2],
+ exp:"With nonlinear hidden layers, this network can learn XOR's nonlinear boundary and outputs a probability via sigmoid — unlike a single perceptron, which cannot solve XOR at all."},
+{part:"p5",topic:"fullnn",type:"multi",q:"A data scientist summarizes the main idea behind neural networks from first principles. Which statements correctly capture the complete picture?",
+ options:["A perceptron can solve linearly separable problems but cannot solve XOR by itself.","Nonlinear activation functions allow multiple layers to model nonlinear patterns.","Forward propagation produces predictions, while backpropagation uses the loss to compute gradients and update weights.","Gradient descent updates parameters in the direction that reduces the loss.","Hidden layers can learn useful feature representations automatically."],correct:[0,1,2,3,4],
+ exp:"This is the complete mental model: perceptron limits → nonlinearity enables complexity → forward pass predicts → backprop computes gradients → gradient descent updates weights → hidden layers learn representations automatically."}
+);
+
+/* ---------------- PART 6: PyTorch Essentials ---------------- */
+Q.push(
+{part:"p6",topic:"overview",type:"single",q:"A data scientist has previously implemented neural networks manually using NumPy. They now want a framework that provides tensors, automatic differentiation, neural-network layers, optimizers, GPU support, and data-loading utilities. Which framework is being described?",
+ options:["Pandas","PyTorch","Matplotlib","Seaborn"],correct:[1],
+ exp:"PyTorch provides tensors, autograd, nn layers, optimizers, GPU support, and data-loading utilities — exactly what's described."},
+{part:"p6",topic:"overview",type:"multi",q:"A developer compares a NumPy array with a PyTorch tensor. Which two capabilities are the important additional \"superpowers\" of PyTorch tensors?",
+ options:["They can be moved to a GPU.","They support automatic differentiation.","They automatically create charts.","They always use less memory than NumPy arrays."],correct:[0,1],
+ exp:"GPU acceleration and automatic differentiation (autograd) are PyTorch tensors' key advantages over plain NumPy arrays."},
+{part:"p6",topic:"overview",type:"single",q:"A student sees the following PyTorch object:\nA = torch.tensor([1, 2, 3])\nWhat is A?",
+ options:["A pandas DataFrame","A PyTorch tensor","A NumPy array","A neural network model"],correct:[1],
+ exp:"torch.tensor(...) creates a PyTorch tensor object."},
+{part:"p6",topic:"overview",type:"single",q:"Consider:\nA = torch.tensor([1, 2, 3])\nB = torch.tensor([4, 5, 6])\nC = A + B\nWhat is the value of C?",
+ options:["[4, 5, 6]","[5, 7, 9]","[1, 2, 3]","[4, 10, 18]"],correct:[1],
+ exp:"Element-wise addition: [1+4, 2+5, 3+6] = [5, 7, 9]."},
+{part:"p6",topic:"overview",type:"single",q:"A developer wants to calculate the dot product of two integer tensors using:\ntorch.dot(A.float(), B.float())\nWhy is .float() useful in this context?",
+ options:["It converts the tensor to floating-point representation suitable for the calculation.","It converts the tensor into a NumPy array.","It moves the tensor to the GPU automatically.","It enables automatic plotting."],correct:[0],
+ exp:".float() converts integer tensors to floating-point, which torch.dot (and many operations) require."},
+{part:"p6",topic:"overview",type:"multi",q:"Which statements about the tensor dimensionality hierarchy are correct?",
+ options:["A single number is a scalar.","A one-dimensional list of numbers is a vector.","Stacking vectors can form a matrix.","Multiple matrices can form a higher-dimensional tensor.","Every tensor must be exactly 2-dimensional."],correct:[0,1,2,3],
+ exp:"This describes the scalar → vector → matrix → higher-dimensional tensor hierarchy correctly; tensors are not restricted to 2 dimensions."},
+{part:"p6",topic:"overview",type:"single",q:"A developer wants to inspect the dimensions of a tensor. Which property should they use?",
+ options:["A.____","A.type","A.shape","A.dimension"],correct:[2],
+ exp:"A.shape returns the tensor's dimensions."},
+{part:"p6",topic:"overview",type:"single",q:"A NumPy array named numpy_array needs to be converted into a PyTorch tensor. Which code is appropriate?",
+ options:["torch.from_numpy(numpy_array)","torch.to_tensor(numpy_array)","torch.convert(numpy_array)","numpy_array.to_torch()"],correct:[0],
+ exp:"torch.from_numpy() is the standard way to convert a NumPy array into a PyTorch tensor."},
+{part:"p6",topic:"overview",type:"single",q:"A trained PyTorch tensor needs to be converted back to a NumPy array. Which operation is described in the notes?",
+ options:["some_tensor.numpy()","some_tensor.to_numpy_array()","numpy.from_torch(some_tensor)","torch.convert_numpy(some_tensor)"],correct:[0],
+ exp:"Calling .numpy() on a tensor converts it back into a NumPy array."},
+{part:"p6",topic:"cuda",type:"single",q:"A developer runs:\ntorch.cuda.is_available()\nWhat does this check?",
+ options:["Whether a CUDA-capable GPU/device is available to PyTorch","Whether the CPU has enough RAM","Whether the model has been trained","Whether NumPy is installed"],correct:[0],
+ exp:"torch.cuda.is_available() checks whether a CUDA-compatible GPU is accessible to PyTorch."},
+{part:"p6",topic:"cuda",type:"multi",q:"Which statements about CUDA and PyTorch are correct according to the notes?",
+ options:["CUDA is NVIDIA's technology for GPU computing.","PyTorch can use CUDA-enabled GPUs for accelerated computation.","torch.cuda.is_available() can be used to check CUDA availability.","CUDA is required for PyTorch to run on a CPU."],correct:[0,1,2],
+ exp:"CUDA is NVIDIA's GPU-computing technology that PyTorch can leverage; it is not required to run PyTorch on a CPU."},
+{part:"p6",topic:"cuda",type:"single",q:"A developer wants code that automatically uses a GPU when available and otherwise uses the CPU:\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nWhat does this code accomplish?",
+ options:["Selects GPU when CUDA is available and CPU otherwise","Always selects CPU","Always selects GPU","Creates a new neural network"],correct:[0],
+ exp:"The conditional expression picks 'cuda' if available, otherwise falls back to 'cpu'."},
+{part:"p6",topic:"modules",type:"single",q:"A student wants to install the basic PyTorch libraries used in the lesson. Which import is responsible for neural-network layers?",
+ options:["import torch.nn as nn","import torch.data as nn","import torch.layers as nn","import torch.model as nn"],correct:[0],
+ exp:"torch.nn is the module containing neural-network layers and building blocks."},
+{part:"p6",topic:"modules",type:"single",q:"Which PyTorch module provides optimizers such as SGD and Adam?",
+ options:["torch.nn","torch.optim","torch.data","torch.tensor"],correct:[1],
+ exp:"torch.optim provides optimizers such as SGD and Adam."},
+{part:"p6",topic:"modules",type:"single",q:"A developer sees:\nfrom torch.utils.data import DataLoader, TensorDataset\nWhat is the primary purpose of these utilities?",
+ options:["Handling datasets, batching, and data loading","Creating activation functions","Calculating PCA","Performing backpropagation manually"],correct:[0],
+ exp:"DataLoader and TensorDataset are utilities for wrapping data and handling batching/shuffling during training."},
+{part:"p6",topic:"autograd",type:"single",q:"A data scientist writes:\nx = torch.tensor(3.0, requires_grad=True)\nWhat does requires_grad=True tell PyTorch?",
+ options:["Track operations involving x so gradients can later be calculated.","Convert x to a GPU tensor.","Automatically optimize x.","Prevent any mathematical operations on x."],correct:[0],
+ exp:"requires_grad=True tells PyTorch's autograd to track the operations on x so gradients can be computed via backward()."},
+{part:"p6",topic:"autograd",type:"single",q:"Consider:\nx = torch.tensor(3.0, requires_grad=True)\ny = x**2 + 2*x + 1\ny.backward()\nWhat does y.backward() do?",
+ options:["Computes gradients using automatic differentiation.","Updates all model weights automatically.","Calculates the test accuracy.","Converts y into a NumPy array."],correct:[0],
+ exp:"y.backward() triggers autograd to compute gradients of y with respect to tracked tensors (like x)."},
+{part:"p6",topic:"autograd",type:"single",q:"Given:\nx = torch.tensor(3.0, requires_grad=True)\ny = x**2 + 2*x + 1\ny.backward()\nprint(x.grad.item())\nWhat is printed?",
+ options:["6.0","8.0","16.0","9.0"],correct:[1],
+ exp:"dy/dx = 2x + 2; at x=3, that's 2(3)+2 = 8.0."},
+{part:"p6",topic:"autograd",type:"multi",q:"For the expression:\ny = x**2 + 2*x + 1\nat x = 3, which statements are correct?",
+ options:["y = 16","dy/dx = 8","x.grad.item() becomes 8.0 after backward()","dy/dx = 16"],correct:[0,1,2],
+ exp:"y = 9+6+1 = 16; dy/dx = 2x+2 = 8 at x=3, and this is what x.grad.item() reports after backward()."},
+{part:"p6",topic:"autograd",type:"single",q:"A developer has:\nW = torch.randn(3, 2, requires_grad=True)\nZ = W @ X\nL = Z.sum()\nL.backward()\nIf W.shape == (3, 2), what shape should W.grad have?",
+ options:["(3, 2)","(2, 3)","(3, 4)","(1, 1)"],correct:[0],
+ exp:"A gradient tensor always matches the shape of its corresponding parameter tensor, so W.grad has shape (3, 2)."},
+{part:"p6",topic:"gradaccum",type:"single",q:"A developer forgets to call:\noptimizer.zero_grad()\nat the beginning of each training step. What is the likely consequence?",
+ options:["Gradients from previous steps accumulate with new gradients.","The model automatically resets all weights.","The forward pass stops working.","The optimizer changes from SGD to Adam."],correct:[0],
+ exp:"PyTorch accumulates gradients by default; without zero_grad(), each step's gradients add on top of the previous ones, corrupting training."},
+{part:"p6",topic:"gradaccum",type:"single",q:"Why does PyTorch provide optimizer.zero_grad()?",
+ options:["To clear previously accumulated gradients before calculating new ones","To reset model weights to zero","To delete the training dataset","To switch the model to evaluation mode"],correct:[0],
+ exp:"optimizer.zero_grad() clears old gradients so each training step's backward() computes fresh, correct gradients."},
+{part:"p6",topic:"modelbuild",type:"single",q:"A developer wants to create a simple neural network where layers are strictly connected one after another:\nInput → Linear → ReLU → Linear → ReLU → Linear → Output\nWhich PyTorch approach is most suitable?",
+ options:["nn.Sequential","DataLoader","TensorDataset","torch.no_grad()"],correct:[0],
+ exp:"nn.Sequential is ideal for models where layers are applied one after another in a straight line."},
+{part:"p6",topic:"modelbuild",type:"multi",q:"Which statements correctly describe nn.Sequential?",
+ options:["It is convenient for straightforward layer-by-layer architectures.","Layers are applied in the order in which they are specified.","It is less suitable for architectures requiring branching or skip connections.","It automatically replaces the need for an optimizer."],correct:[0,1,2],
+ exp:"nn.Sequential is great for simple, linear architectures but can't express branching/skip connections; it doesn't replace the need for a separate optimizer."},
+{part:"p6",topic:"modelbuild",type:"single",q:"A research engineer needs a model with branching paths, multiple inputs, and skip connections. Which approach should they prefer?",
+ options:["nn.Sequential","Custom subclass of nn.Module","TensorDataset","DataLoader"],correct:[1],
+ exp:"Branching, multiple inputs, and skip connections require the flexibility of a custom nn.Module subclass, not nn.Sequential."},
+{part:"p6",topic:"modelbuild",type:"single",q:"When creating a custom PyTorch model using nn.Module, where are layers normally defined?",
+ options:["__init__","forward","backward","train_loop"],correct:[0],
+ exp:"Layers are typically instantiated and stored as attributes inside the __init__ method of a custom nn.Module."},
+{part:"p6",topic:"modelbuild",type:"single",q:"In a custom nn.Module model, what should the forward() method describe?",
+ options:["How the input data flows through the model","How the optimizer updates weights","How the dataset is shuffled","How the model checkpoint is saved"],correct:[0],
+ exp:"forward() defines the actual computation — how input data passes through the layers to produce output."},
+{part:"p6",topic:"modelbuild",type:"multi",q:"What does nn.Module handle for a PyTorch model?",
+ options:["Keeps track of trainable parameters.","Makes it easier to move the model to a GPU.","Provides a standard structure for defining models.","Automatically chooses the best optimizer."],correct:[0,1,2],
+ exp:"nn.Module tracks parameters, simplifies device transfer (e.g. .to(device)), and provides a standard model-definition structure — it doesn't choose optimizers automatically."},
+{part:"p6",topic:"linearparams",type:"single",q:"A model is defined as:\nmodel = nn.Sequential(\n    nn.Linear(20, 64),\n    nn.ReLU(),\n    nn.Linear(64, 32),\n    nn.ReLU(),\n    nn.Linear(32, 1)\n)\nHow many neurons are in the first hidden layer?",
+ options:["20","32","64","1"],correct:[2],
+ exp:"nn.Linear(20, 64) maps 20 inputs to 64 outputs, so the first hidden layer has 64 neurons."},
+{part:"p6",topic:"linearparams",type:"single",q:"For the same model layer:\nnn.Linear(20, 64)\nhow many trainable weight parameters does this layer contain?",
+ options:["20","64","1,280","1,344"],correct:[2],
+ exp:"Weight parameters = input_size × output_size = 20 × 64 = 1,280."},
+{part:"p6",topic:"linearparams",type:"single",q:"For:\nnn.Linear(20, 64)\nhow many bias parameters are present?",
+ options:["20","64","1,280","1,344"],correct:[1],
+ exp:"Bias parameters equal the number of output neurons: 64."},
+{part:"p6",topic:"linearparams",type:"single",q:"A CancerClassifier has:\n30 → 64 → 32 → 1\nfully connected layers.\nWhat is the total number of trainable parameters?",
+ options:["97","2,048","4,097","4,000"],correct:[2],
+ exp:"Weights+biases: (30×64+64) + (64×32+32) + (32×1+1) = (1920+64)+(2048+32)+(32+1) = 1984+2080+33 = 4097."},
+{part:"p6",topic:"linearparams",type:"single",q:"For the same architecture:\n30 → 64 → 32 → 1\nwhat is the total number of bias parameters?",
+ options:["30","64","97","4,097"],correct:[2],
+ exp:"Total bias count = 64 + 32 + 1 = 97."},
+{part:"p6",topic:"dataloader",type:"multi",q:"A dataset contains thousands of training examples and the developer wants to train using mini-batches. Why is DataLoader useful?",
+ options:["It creates manageable batches.","It can shuffle training data.","It supports mini-batch gradient descent.","It automatically determines the correct neural-network architecture."],correct:[0,1,2],
+ exp:"DataLoader batches and (optionally) shuffles data to support mini-batch training; it has no role in choosing model architecture."},
+{part:"p6",topic:"dataloader",type:"single",q:"A model is being trained on ordinary tabular classification data. Which DataLoader setting is generally appropriate for the training data?\nDataLoader(dataset, shuffle=____)",
+ options:["shuffle=True","shuffle=False","shuffle=None is mandatory","shuffle=\"random\""],correct:[0],
+ exp:"Shuffling training data (shuffle=True) is standard practice to avoid ordering bias during training."},
+{part:"p6",topic:"dataloader",type:"single",q:"A time-series test dataset contains observations where chronological order matters. Which choice is more appropriate for the test DataLoader?",
+ options:["shuffle=True","shuffle=False","Randomly reorder every batch","Duplicate each time step"],correct:[1],
+ exp:"When chronological order matters (time-series test data), shuffling would break that order, so shuffle=False is appropriate."},
+{part:"p6",topic:"dataloader",type:"multi",q:"Which statements correctly describe batch-size trade-offs?",
+ options:["Small batches generally use less memory.","Small batches produce noisier gradient estimates.","Large batches generally produce smoother gradient estimates.","A common practical starting range can be around 32–64.","Larger batches always guarantee better generalization."],correct:[0,1,2,3],
+ exp:"These four correctly describe the memory/noise/smoothness trade-offs and a typical starting batch-size range; larger batches do not always guarantee better generalization."},
+{part:"p6",topic:"dataloader",type:"single",q:"A training dataset contains 1,000 examples and uses a batch size of 100. Approximately how many batches are processed in one epoch?",
+ options:["1","10","100","1,000"],correct:[1],
+ exp:"1,000 examples ÷ batch size 100 = 10 batches per epoch."},
+{part:"p6",topic:"trainloop",type:"single",q:"Which sequence correctly represents the five-step PyTorch training loop?",
+ options:["zero_grad → forward → loss → backward → optimizer.step","forward → zero_grad → optimizer.step → loss → backward","loss → forward → zero_grad → step → backward","backward → forward → loss → zero_grad → step"],correct:[0],
+ exp:"The standard training loop order is: clear old gradients, run the forward pass, compute the loss, backpropagate, then update parameters."},
+{part:"p6",topic:"trainloop",type:"multi",q:"Which operations belong to the standard PyTorch training loop?",
+ options:["optimizer.zero_grad()","Forward pass through the model","Loss calculation","loss.backward()","optimizer.step()","Manually deriving every gradient equation"],correct:[0,1,2,3,4],
+ exp:"These five steps make up the standard PyTorch training loop; manually deriving gradient equations is exactly what autograd/backward() automates away."},
+{part:"p6",topic:"trainloop",type:"single",q:"What does:\noptimizer.step()\nprimarily do?",
+ options:["Updates model parameters using the calculated gradients.","Calculates the loss.","Clears the gradients.","Creates the training batches."],correct:[0],
+ exp:"optimizer.step() applies the update rule to adjust model parameters based on the gradients computed by backward()."},
+{part:"p6",topic:"trainloop",type:"single",q:"A developer uses:\noptimizer = optim.SGD(model.parameters(), lr=0.001)\nWhat does lr=0.001 represent?",
+ options:["Learning rate","Number of layers","Batch size","Number of epochs"],correct:[0],
+ exp:"lr=0.001 sets the learning rate, controlling the step size of each parameter update."},
+{part:"p6",topic:"trainloop",type:"multi",q:"Which statements correctly compare SGD and Adam based on the lesson?",
+ options:["SGD is a classic gradient-based optimizer.","SGD with momentum can help reduce oscillation.","Adam adapts the effective learning rate for individual parameters.","Adam is a strong default choice when unsure which optimizer to try.","Adam guarantees the globally optimal solution."],correct:[0,1,2,3],
+ exp:"These four correctly describe SGD and Adam's properties and typical usage; no optimizer guarantees finding the global optimum."},
+{part:"p6",topic:"trainloop",type:"single",q:"A developer wants to switch from SGD to Adam:\noptimizer = optim.Adam(model.parameters(), lr=0.001)\nWhat is the main reason to consider Adam?",
+ options:["It often converges faster and requires less manual tuning.","It eliminates the need for backpropagation.","It automatically increases the dataset size.","It guarantees zero training loss."],correct:[0],
+ exp:"Adam's adaptive learning rates often make it converge faster with less manual learning-rate tuning compared to plain SGD."},
+{part:"p6",topic:"evalreg",type:"single",q:"A trained model is being evaluated on new data. Which two changes are appropriate?\nmodel.____()\nwith torch.____():\n    predictions = model(X_new)",
+ options:["train() and grad()","eval() and no_grad()","eval() and backward()","test() and no_gradient()"],correct:[1],
+ exp:"model.eval() switches evaluation-specific layer behavior (e.g. dropout), and torch.no_grad() disables gradient tracking during inference."},
+{part:"p6",topic:"evalreg",type:"multi",q:"Why is torch.no_grad() useful during evaluation?",
+ options:["Gradients are not needed when the model is only making predictions.","It avoids unnecessary gradient tracking.","It reduces memory/computational overhead.","It updates model weights more accurately."],correct:[0,1,2],
+ exp:"torch.no_grad() skips gradient tracking during inference, saving memory/computation since no weight updates are needed at prediction time — it doesn't affect weight accuracy."},
+{part:"p6",topic:"evalreg",type:"single",q:"Why must model.eval() be called during evaluation?",
+ options:["It switches the model into evaluation behavior for layers such as dropout.","It permanently deletes the model's weights.","It automatically retrains the model.","It converts every tensor into NumPy."],correct:[0],
+ exp:"model.eval() changes the behavior of layers like dropout and batch norm so they act appropriately during inference rather than training."},
+{part:"p6",topic:"evalreg",type:"single",q:"A neural network starts memorizing its training data and performs poorly on unseen data. Which technique mentioned in the lesson is specifically a regularization technique that randomly disables units during training?",
+ options:["Dropout","PCA","DataLoader","CUDA"],correct:[0],
+ exp:"Dropout randomly disables units during training as a regularization technique to reduce overfitting."},
+{part:"p6",topic:"checkpoint",type:"multi",q:"A team wants to save a trained model so that it can be restored later without retraining from scratch. Which statements are correct?",
+ options:["model.state_dict() contains the learned model parameters.","optimizer.state_dict() can preserve optimizer state.","torch.save() can save a checkpoint.","torch.load() can load the saved checkpoint.","Checkpointing is useful for long-running training."],correct:[0,1,2,3,4],
+ exp:"All five statements correctly describe PyTorch's checkpointing mechanism for saving/restoring model and optimizer state."},
+{part:"p6",topic:"checkpoint",type:"multi",q:"A machine-learning engineer summarizes the complete PyTorch workflow. Which statements are correct?",
+ options:["Data is prepared and converted into tensors.","A model can be created using nn.Sequential or a custom nn.Module.","DataLoader can provide shuffled mini-batches during training.","The training loop follows zero_grad → forward → loss → backward → step.","model.eval() and torch.no_grad() are appropriate during evaluation.","Checkpoints can save model and optimizer state so training can be resumed later."],correct:[0,1,2,3,4,5],
+ exp:"This summarizes the complete PyTorch workflow end-to-end: tensors, model definition, data loading, training loop, evaluation, and checkpointing."}
 );
 
 /* ============================================================
@@ -813,7 +1170,7 @@ Q.push(
 ============================================================ */
 let activePart = "p1";
 let activeTopic = "all";
-const state = {}; // idx -> {selected:Set, checked:bool}
+const state = {};
 Q.forEach((q,i)=>{ state[i] = {selected:new Set(), checked:false}; });
 
 /* ============================================================
@@ -861,7 +1218,7 @@ function renderCoverage(){
   });
 }
 
-const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8"];
+const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8","#F87171","#4ADE80"];
 function topicColor(partId, idx){ return palette[idx % palette.length]; }
 function colorForTopic(partId, topicId){
   const p = partMap[partId];
@@ -900,7 +1257,7 @@ function renderChips(){
    RENDER: questions
 ============================================================ */
 const quizRoot = document.getElementById('quizRoot');
-const letters = ['A','B','C','D'];
+const letters = ['A','B','C','D','E','F'];
 
 function updateScore(){
   let done=0, correct=0;
@@ -1020,7 +1377,6 @@ function handleOptionClick(idx, optIdx, card, q){
     paintOptions(card, idx, q);
     updateScore();
   } else {
-    // multi: toggle selection, don't lock yet
     if(s.selected.has(optIdx)) s.selected.delete(optIdx);
     else s.selected.add(optIdx);
     const opts = card.querySelectorAll('.opt');
@@ -1031,7 +1387,7 @@ function handleOptionClick(idx, optIdx, card, q){
 function checkMulti(idx, card, q){
   const s = state[idx];
   if(s.checked) return;
-  if(s.selected.size===0) return; // require at least one pick
+  if(s.selected.size===0) return;
   s.checked = true;
   paintOptions(card, idx, q);
   updateScore();
@@ -1055,7 +1411,6 @@ function paintOptions(card, idx, q){
     if(sel===cor){ note.textContent = '✓ Correct'; note.className='result-note ok'; }
     else { note.textContent = '✗ Not quite — correct answer highlighted in green'; note.className='result-note bad'; }
   }
-  // hide the check button if present
   const checkBtn = card.querySelector('.check-btn');
   if(checkBtn) checkBtn.style.display = 'none';
 }
