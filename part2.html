@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIML Practice — Part 2 (100 Questions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120; --panel:#121B2E; --panel-2:#0F1729; --line:#22304A;
+    --text:#E5E9F0; --muted:#8B95AC;
+    --teal:#2DD4BF; --violet:#A78BFA; --amber:#FBBF24; --rose:#FB7185;
+    --good:#34D399; --bad:#F87171;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(45,212,191,0.10), transparent 40%),
+      radial-gradient(circle at 88% 18%, rgba(167,139,250,0.10), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(251,191,36,0.06), transparent 45%),
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px 100px;}
+
+  .hero{padding:60px 20px 36px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(45,212,191,.18);}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.6vw,46px);line-height:1.1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;}
+  h1 span{color:var(--teal);}
+  .lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:660px;margin:0 0 26px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:var(--panel);color:var(--muted);}
+  .pill a{color:inherit;text-decoration:underline;}
+
+  .parts-nav{position:sticky;top:0;z-index:30;background:rgba(11,17,32,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .parts-nav-inner{max-width:940px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+  .part-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .part-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 13px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-weight:600;
+    transition:all .15s ease;
+  }
+  .part-tab:hover{color:var(--text);}
+  .part-tab.active{color:#06121b;}
+  .score-box{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:100px;white-space:nowrap;}
+  .score-box b{color:var(--teal);}
+
+  .topic-controls{padding:18px 0 0;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
+  .chip:hover{color:var(--text);}
+  .chip.active{font-weight:700;}
+
+  .coverage{margin:26px 0 6px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;}
+  .coverage h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 14px;font-weight:600;}
+  .cov-row{display:grid;grid-template-columns:230px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
+  .cov-label{font-size:12px;color:var(--text);}
+  .cov-bar-track{height:7px;border-radius:6px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line);}
+  .cov-bar-fill{height:100%;border-radius:6px;}
+  .cov-count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;}
+
+  section.topic-block{margin-top:44px;}
+  .topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap;}
+  .topic-heading .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0;}
+  .topic-heading .count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-left:auto;}
+
+  .qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin-bottom:14px;}
+  .qtop{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .qnum{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#06121b;min-width:40px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .qmeta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:5px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:100px;letter-spacing:.02em;}
+  .tag-topic{border:1px solid var(--line);color:var(--muted);}
+  .tag-type{border:1px solid var(--line);}
+  .qtext{font-size:15px;line-height:1.6;font-weight:500;margin:2px 0 14px;white-space:pre-line;}
+  .options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:13.5px;line-height:1.5;transition:all .12s ease;background:var(--panel-2);}
+  .opt:hover{border-color:var(--violet);}
+  .opt .letter{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--violet);flex-shrink:0;}
+  .opt.selected{border-color:var(--violet);background:rgba(167,139,250,0.09);}
+  .opt.correct{border-color:var(--good);background:rgba(52,211,153,0.10);}
+  .opt.incorrect{border-color:var(--bad);background:rgba(248,113,113,0.10);}
+  .opt.missed{border-color:var(--good);background:rgba(52,211,153,0.05);border-style:dashed;}
+  .opt.correct .letter,.opt.missed .letter{color:var(--good);}
+  .opt.incorrect .letter{color:var(--bad);}
+  .opt.disabled{cursor:default;}
+  .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .reveal-btn,.check-btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer;}
+  .reveal-btn:hover,.check-btn:hover{color:var(--text);border-color:var(--teal);}
+  .check-btn.primary{background:var(--teal);color:#06251f;border-color:var(--teal);font-weight:700;}
+  .result-note{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 0;}
+  .result-note.ok{color:var(--good);}
+  .result-note.bad{color:var(--bad);}
+  .explain{display:none;margin-top:10px;padding:13px 15px;background:var(--panel-2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:#C9D1E5;}
+  .explain.show{display:block;}
+  .explain b{color:var(--teal);}
+
+  footer{text-align:center;padding:50px 20px 20px;color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace;}
+  footer a{color:var(--teal);text-decoration:none;}
+
+  @media (max-width:640px){
+    .cov-row{grid-template-columns:130px 1fr 26px;}
+    .parts-nav-inner{flex-direction:column;align-items:stretch;}
+    .score-box{align-self:flex-end;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Learn AIML with Nitish</div>
+    <h1>AI &amp; ML Practice Bank<br><span>— Part 2: 100 more questions.</span></h1>
+    <p class="lede">Neural Network Training Dynamics (initialization, vanishing/exploding gradients, BatchNorm, LR scheduling, TensorBoard) and FastAPI &amp; Docker (building and deploying an ML inference API). Single-answer and multiple-correct questions are both supported. Click an option to check yourself, then reveal the explanation.</p>
+    <div class="meta-row" id="heroMeta"></div>
+  </div>
+</div>
+
+<div class="parts-nav">
+  <div class="parts-nav-inner">
+    <div class="part-tabs" id="partTabs"></div>
+    <div class="score-box">Checked: <b id="scoreDone">0</b>/100 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="topic-controls">
+    <div class="coverage" id="coverage">
+      <h2 id="coverageTitle">Topic coverage</h2>
+      <div id="covGrid"></div>
+    </div>
+    <div class="chip-row" id="chipRow" style="margin-top:18px;"></div>
+  </div>
+
+  <div id="quizRoot"></div>
+</div>
+
+<footer>
+  Practice bank — Part 2, compiled from course notes: Neural Network Training Dynamics and FastAPI &amp; Docker.<br>
+  This is a companion file to the main 300-question practice bank (Clustering, Anomaly Detection, Dimensionality Reduction, Neural Networks, PyTorch).<br>
+  Self-study only — nothing is pre-revealed. Answer, then use "Show explanation" to check your reasoning.
+</footer>
+
+<script>
+/* ============================================================
+   PARTS + TOPICS
+============================================================ */
+const PARTS = [
+  { id:"p7", name:"Neural Network Training Dynamics", color:"#4ADE80",
+    topics:[
+      {id:"fundamentals", name:"Training Dynamics Fundamentals"},
+      {id:"init", name:"Weight Initialization & Symmetry"},
+      {id:"heinit", name:"He Initialization"},
+      {id:"xavier", name:"Xavier/Glorot Initialization"},
+      {id:"vanishing", name:"Vanishing Gradients"},
+      {id:"exploding", name:"Exploding Gradients & Clipping"},
+      {id:"gradnorm", name:"Gradient Norm Diagnostics"},
+      {id:"batchnorm", name:"Batch Normalization"},
+      {id:"lrbasics", name:"Learning Rate Basics"},
+      {id:"schedulers", name:"LR Schedulers (Step, Cosine, Plateau, One-Cycle)"},
+      {id:"tensorboard", name:"TensorBoard Monitoring"},
+      {id:"workflow", name:"Complete Training Dynamics Workflow"},
+    ]
+  },
+  { id:"p8", name:"FastAPI & Docker", color:"#38BDF8",
+    topics:[
+      {id:"whydeploy", name:"Why ML Models Need Deployment"},
+      {id:"fastapifund", name:"FastAPI Fundamentals"},
+      {id:"getpost", name:"GET vs POST"},
+      {id:"validation", name:"API Input Validation"},
+      {id:"modelload", name:"Model Loading & Persistence"},
+      {id:"uvicorn", name:"Uvicorn & Running FastAPI"},
+      {id:"docs", name:"FastAPI /docs"},
+      {id:"localhost", name:"Localhost & Public Access"},
+      {id:"statuscodes", name:"HTTP Status Codes"},
+      {id:"dockerpurpose", name:"Docker Purpose"},
+      {id:"imagecontainer", name:"Docker Image vs Container"},
+      {id:"dockerfile", name:"Dockerfile Basics"},
+      {id:"layercache", name:"Docker Layer Caching"},
+      {id:"slimimages", name:"Slim Images"},
+      {id:"pinning", name:"Dependency Pinning"},
+      {id:"multistage", name:"Multi-stage Builds"},
+      {id:"networking", name:"Docker Networking & Ports"},
+      {id:"buildrun", name:"Docker Build & Run Commands"},
+      {id:"dockerhub", name:"Docker Hub"},
+      {id:"inference", name:"Real-time vs Batch Inference"},
+      {id:"pipeline", name:"Complete ML Deployment Pipeline"},
+    ]
+  },
+];
+const partMap = Object.fromEntries(PARTS.map(p=>[p.id,p]));
+function topicOf(partId, topicId){ return partMap[partId].topics.find(t=>t.id===topicId); }
+
+/* ============================================================
+   QUESTION BANK — correct: array of option indices (0=A..3+)
+============================================================ */
+const Q = [];
+
+/* ---------------- PART 7: Neural Network Training Dynamics ---------------- */
+Q.push(
+{part:"p7",topic:"fundamentals",type:"multi",q:"Two neural networks have the same architecture and training dataset, but one reaches 85% accuracy while another reaches 96%. Which factors could explain this difference?",
+ options:["Learning rate","Number of epochs","Random weight initialization","The architecture must necessarily be different"],correct:[0,1,2],
+ exp:"Even with identical architecture and data, differences in learning rate, number of epochs, and random weight initialization can all lead to different final accuracy; the architecture itself doesn't have to differ."},
+{part:"p7",topic:"init",type:"single",q:"A developer initializes every weight in a hidden layer to 0. What is the main problem?",
+ options:["Every neuron starts identically and receives the same gradient, creating the symmetry problem.","The network immediately gets perfect accuracy.","The gradients automatically become very large.","Only the output neuron will be affected."],correct:[0],
+ exp:"With all weights at zero, every neuron in a layer computes the same output and receives the same gradient, so they stay identical and never learn distinct features."},
+{part:"p7",topic:"init",type:"single",q:"Why does initializing all neurons with the same constant value create a symmetry problem?",
+ options:["Every neuron behaves identically, so they cannot learn different features.","Every neuron receives a completely different gradient.","It makes the learning rate automatically zero.","It prevents the forward pass from executing."],correct:[0],
+ exp:"Identical initial weights make every neuron compute identical outputs and gradients, so they can never diverge into learning different features — the symmetry problem."},
+{part:"p7",topic:"heinit",type:"single",q:"A neural network uses ReLU activations in its hidden layers. Which initialization is the recommended choice?",
+ options:["Xavier","He","Zero initialization","Constant initialization with standard deviation 5"],correct:[1],
+ exp:"He initialization is specifically designed for ReLU-activated layers."},
+{part:"p7",topic:"xavier",type:"single",q:"A network primarily uses sigmoid/tanh activations in its hidden layers. Which initialization is generally better suited?",
+ options:["He initialization","Xavier/Glorot initialization","Zero initialization","Random initialization with extremely large variance"],correct:[1],
+ exp:"Xavier/Glorot initialization is designed for sigmoid/tanh-activated layers."},
+{part:"p7",topic:"heinit",type:"multi",q:"Which statements about He initialization are correct?",
+ options:["It is designed particularly for ReLU-activated layers.","A commonly used standard deviation is sqrt(2 / fan_in).","It helps maintain a suitable scale for signals and gradients.","It means every weight should start at exactly zero."],correct:[0,1,2],
+ exp:"These three correctly describe He initialization; it does not initialize weights to zero — that would reintroduce the symmetry problem."},
+{part:"p7",topic:"heinit",type:"single",q:"For a layer with fan_in = 8, using the simplified He formula:\nstd = sqrt(2 / fan_in)\nwhat is approximately the standard deviation?",
+ options:["0.25","0.50","1.00","2.00"],correct:[1],
+ exp:"sqrt(2/8) = sqrt(0.25) = 0.5."},
+{part:"p7",topic:"xavier",type:"single",q:"For a layer with fan_in = 8 and fan_out = 2, Xavier initialization uses:\nstd = sqrt(2 / (fan_in + fan_out))\nWhat is the approximate standard deviation?",
+ options:["0.25","0.50","1.00","2.00"],correct:[1],
+ exp:"sqrt(2/(8+2)) = sqrt(0.2) ≈ 0.447, closest to 0.50 among the given options."},
+{part:"p7",topic:"init",type:"single",q:"A developer asks whether weight initialization happens repeatedly during training. Which statement is correct?",
+ options:["It happens once at the beginning of training.","It happens once every epoch.","It happens once for every batch.","It happens after every optimizer step."],correct:[0],
+ exp:"Weight initialization sets the starting values once, before training begins; afterward, weights are updated via gradient descent, not re-initialized."},
+{part:"p7",topic:"init",type:"multi",q:"What can happen when randomly initialized weights are extremely large?",
+ options:["Signals can become excessively large as they pass through layers.","Gradients can explode.","Gradients can also become unstable during backpropagation.","The network is guaranteed to train faster."],correct:[0,1,2],
+ exp:"Extremely large initial weights can cause signals and gradients to blow up through the layers, destabilizing training — it does not guarantee faster training."},
+{part:"p7",topic:"vanishing",type:"single",q:"A deep network's earliest layers have gradients that become extremely small while later layers continue learning. What problem is most likely occurring?",
+ options:["Exploding gradients","Vanishing gradients","Overfitting","Data leakage"],correct:[1],
+ exp:"Gradients shrinking to near-zero in the earliest layers while later layers keep learning is the classic vanishing gradient pattern."},
+{part:"p7",topic:"vanishing",type:"single",q:"Why can vanishing gradients be especially damaging to early layers?",
+ options:["Their weights receive extremely small updates and may effectively stop learning.","They receive excessively large updates.","They automatically become overfitted.","Their batch size becomes zero."],correct:[0],
+ exp:"With vanishing gradients, early-layer weight updates become negligibly small, so those layers effectively stop learning."},
+{part:"p7",topic:"vanishing",type:"multi",q:"Which are appropriate fixes for vanishing gradients?",
+ options:["He/Xavier initialization","Batch normalization","ReLU or Leaky ReLU in appropriate hidden layers","Gradient clipping","Making all weights zero"],correct:[0,1,2,3],
+ exp:"Proper initialization, batch normalization, ReLU-family activations, and gradient clipping are all legitimate mitigations for vanishing gradients; zero-initializing weights would cause the symmetry problem instead."},
+{part:"p7",topic:"vanishing",type:"single",q:"A model has a gradient L2 norm of 0.0005 in one of its early layers. What does this most strongly suggest?",
+ options:["Exploding gradient","Vanishing gradient","Healthy gradient","Overfitting"],correct:[1],
+ exp:"A gradient L2 norm of 0.0005 is extremely small, indicating a vanishing gradient in that early layer."},
+{part:"p7",topic:"exploding",type:"single",q:"A TensorBoard gradient-norm plot shows a layer with a gradient norm around 87. How should this be interpreted based on the course guidance?",
+ options:["Vanishing gradient","Healthy gradient","Exploding gradient","Symmetry problem"],correct:[2],
+ exp:"A gradient norm around 87 is unusually large, indicating an exploding gradient."},
+{part:"p7",topic:"gradnorm",type:"single",q:"A layer has a gradient norm around 0.3. Based on the approximate healthy range discussed in class, how should this be interpreted?",
+ options:["Healthy","Vanishing","Exploding","Guaranteed overfitting"],correct:[0],
+ exp:"A gradient norm around 0.3 falls within the approximate healthy range discussed in class — neither too small nor too large."},
+{part:"p7",topic:"vanishing",type:"single",q:"Consider the simplified gradient calculation:\ngradient ≈ 0.25 × 0.25 × 0.25 × ...\nacross many layers. What is the likely effect?",
+ options:["The gradient becomes progressively smaller.","The gradient becomes progressively larger.","The gradient remains exactly 0.25.","The gradient becomes independent of network depth."],correct:[0],
+ exp:"Repeatedly multiplying values less than 1 (like 0.25) across many layers makes the product shrink toward zero — the essence of vanishing gradients."},
+{part:"p7",topic:"vanishing",type:"single",q:"A 20-layer network uses sigmoid activations, and many neurons operate in regions where the sigmoid derivative is close to zero. What problem is likely?",
+ options:["Exploding gradients","Vanishing gradients","Symmetry problem caused by zero weights","Excessive batch size"],correct:[1],
+ exp:"Sigmoid derivatives near zero, multiplied repeatedly across 20 layers during backprop, cause gradients to vanish."},
+{part:"p7",topic:"exploding",type:"multi",q:"Which statements correctly describe exploding gradients?",
+ options:["Gradients become extremely large.","Weight updates can become excessively large.","Training may become unstable.","Loss may eventually become NaN.","Gradient clipping can help control the problem."],correct:[0,1,2,3,4],
+ exp:"All five statements correctly describe exploding gradients and a standard mitigation (clipping)."},
+{part:"p7",topic:"exploding",type:"single",q:"A developer observes rapidly growing gradient norms followed by NaN loss values. What should they investigate first?",
+ options:["Exploding gradients","Vanishing gradients","Underfitting caused by too few epochs","Batch size being exactly 32"],correct:[0],
+ exp:"Rapidly growing gradient norms followed by NaN loss is the textbook signature of exploding gradients."},
+{part:"p7",topic:"exploding",type:"single",q:"Which technique specifically caps the maximum gradient value/norm before applying the weight update?",
+ options:["Gradient clipping","Batch normalization","Xavier initialization","Cosine annealing"],correct:[0],
+ exp:"Gradient clipping directly caps the gradient value/norm before the weight update is applied."},
+{part:"p7",topic:"exploding",type:"multi",q:"Which statements about gradient clipping are correct?",
+ options:["It is useful for exploding gradients.","It limits excessively large gradients.","It does not directly solve vanishing gradients.","It can be combined with other stabilization techniques.","It guarantees that gradients will never become too small."],correct:[0,1,2,3],
+ exp:"Gradient clipping addresses exploding gradients and can be combined with other techniques, but it doesn't address or guarantee anything about vanishing gradients."},
+{part:"p7",topic:"exploding",type:"single",q:"A model has severe vanishing gradients. An engineer suggests gradient clipping as the primary fix. What is the best response?",
+ options:["Gradient clipping is primarily for exploding gradients, not vanishing gradients.","Gradient clipping is the standard solution for every gradient problem.","Gradient clipping increases all small gradients automatically.","Gradient clipping replaces weight initialization."],correct:[0],
+ exp:"Gradient clipping caps large gradients — it does nothing to boost gradients that are already too small, so it's the wrong primary fix for vanishing gradients."},
+{part:"p7",topic:"batchnorm",type:"single",q:"Batch normalization primarily addresses what training issue?",
+ options:["Unstable/shifting distributions of values flowing through layers during training","Lack of training data","Incorrect labels","Number of output classes"],correct:[0],
+ exp:"Batch normalization addresses the shifting distribution of layer inputs during training (internal covariate shift), stabilizing training."},
+{part:"p7",topic:"batchnorm",type:"single",q:"Where is BatchNorm typically placed in a fully connected layer according to the notes?",
+ options:["Linear → BatchNorm → Activation","Linear → Activation → BatchNorm","BatchNorm → Linear → Activation","Activation → Linear → BatchNorm"],correct:[0],
+ exp:"The standard placement is Linear, then BatchNorm, then the activation function."},
+{part:"p7",topic:"batchnorm",type:"multi",q:"A developer implements batch normalization using:\nmu = mean(Z)\nvar = variance(Z)\nZ_norm = (Z - mu) / sqrt(var + epsilon)\nZ_bn = gamma * Z_norm + beta\nWhich statements are correct?",
+ options:["epsilon helps prevent division by zero.","gamma is a learned scale parameter.","beta is a learned shift parameter.","Normalization forces the layer to permanently lose all ability to rescale its outputs."],correct:[0,1,2],
+ exp:"epsilon avoids division-by-zero, and gamma/beta are learnable parameters that let the network restore any needed scale and shift — so the layer does NOT permanently lose that ability."},
+{part:"p7",topic:"batchnorm",type:"single",q:"Why are gamma and beta used after normalization?",
+ options:["They allow the network to learn an appropriate scale and shift after normalization.","They randomly initialize the network.","They calculate the learning rate.","They remove the need for an activation function."],correct:[0],
+ exp:"gamma and beta let the network learn to rescale and shift the normalized values if that helps performance, rather than being stuck with strict zero-mean/unit-variance outputs."},
+{part:"p7",topic:"batchnorm",type:"single",q:"A developer sets:\nself.bn1 = nn.BatchNorm1d(128)\nWhat does the 128 correspond to in this example?",
+ options:["Number of samples in the dataset","Number of features/neurons being normalized","Batch size","Number of epochs"],correct:[1],
+ exp:"nn.BatchNorm1d(128) normalizes over 128 features/neurons — that's the number of channels being normalized, not batch size or dataset size."},
+{part:"p7",topic:"batchnorm",type:"single",q:"Consider:\nx = self.relu(self.bn1(self.fc1(x)))\nWhat is the order of operations?",
+ options:["Linear → BatchNorm → ReLU","ReLU → BatchNorm → Linear","BatchNorm → Linear → ReLU","Linear → ReLU → BatchNorm"],correct:[0],
+ exp:"self.relu(self.bn1(self.fc1(x))) applies fc1 (Linear) first, then bn1 (BatchNorm), then relu — Linear → BatchNorm → ReLU."},
+{part:"p7",topic:"batchnorm",type:"single",q:"During prediction, why doesn't BatchNorm simply calculate fresh batch statistics for every single prediction?",
+ options:["It uses running estimates collected during training.","It removes normalization entirely.","It resets gamma and beta.","It retrains the network before every prediction."],correct:[0],
+ exp:"At inference time, BatchNorm uses running mean/variance estimates accumulated during training rather than computing fresh batch statistics."},
+{part:"p7",topic:"batchnorm",type:"single",q:"A developer disables BatchNorm using:\nnn.Identity()\nWhat does nn.Identity() do?",
+ options:["Passes the input through unchanged.","Normalizes the input.","Randomly drops neurons.","Reinitializes the weights."],correct:[0],
+ exp:"nn.Identity() is a no-op layer that simply passes its input through unchanged — useful as a placeholder when BatchNorm is disabled."},
+{part:"p7",topic:"batchnorm",type:"multi",q:"Which are practical benefits of BatchNorm mentioned in the lesson?",
+ options:["More stable inputs flowing through layers","Ability to use a higher learning rate safely","Faster convergence in many situations","Mild regularizing effect","Guaranteed elimination of overfitting"],correct:[0,1,2,3],
+ exp:"These four are genuine, commonly cited benefits of BatchNorm; it does not guarantee overfitting is eliminated."},
+{part:"p7",topic:"lrbasics",type:"single",q:"A model uses a learning rate of 0.5, and the loss repeatedly jumps above and below the minimum instead of settling down. What is a likely explanation?",
+ options:["The learning rate may be too large.","The learning rate is definitely too small.","The model has no weights.","The dataset must contain no features."],correct:[0],
+ exp:"Loss oscillating above and below the minimum instead of settling is a classic sign the learning rate is too large, causing overshoot."},
+{part:"p7",topic:"lrbasics",type:"single",q:"A model uses a learning rate of 0.0000001 and barely improves even after many epochs. What is the most likely issue?",
+ options:["Learning rate may be too small.","Learning rate is definitely too large.","Gradients must be exploding.","BatchNorm is guaranteed to be disabled."],correct:[0],
+ exp:"An extremely tiny learning rate (1e-7) with barely any improvement over many epochs points to the learning rate being too small, making steps too tiny to matter."},
+{part:"p7",topic:"lrbasics",type:"multi",q:"Why can a fixed learning rate be problematic in deep learning?",
+ options:["A large learning rate may overshoot the optimum.","A very small learning rate can make training unnecessarily slow.","The ideal step size can change as training progresses.","A scheduler can adjust the learning rate over time."],correct:[0,1,2,3],
+ exp:"All four correctly describe why a fixed learning rate is often suboptimal and motivate the use of learning-rate schedules."},
+{part:"p7",topic:"lrbasics",type:"single",q:"A model should take large steps early in training and progressively smaller steps later. What technique is designed for this?",
+ options:["Learning rate scheduling","Zero initialization","Data standardization","Gradient clipping only"],correct:[0],
+ exp:"Learning rate scheduling is designed exactly for this — large steps early, progressively smaller steps as training proceeds."},
+{part:"p7",topic:"schedulers",type:"single",q:"A developer wants the learning rate to remain fixed for 10 epochs and then be multiplied by 0.5, repeating this pattern. Which scheduler concept matches this requirement?",
+ options:["Step decay","Cosine annealing","Reduce on plateau","One-cycle learning rate"],correct:[0],
+ exp:"Step decay keeps the learning rate fixed for a set number of epochs, then drops it by a fixed factor, repeating this pattern."},
+{part:"p7",topic:"schedulers",type:"single",q:"Suppose:\ninitial_lr = 0.1\ndrop_every = 10\ndrop_factor = 0.5\nUsing the step-decay formula from the notes, what is the learning rate during epochs 10–19?",
+ options:["0.1","0.05","0.025","0.005"],correct:[1],
+ exp:"With drop_every=10 and drop_factor=0.5, epochs 0–9 use 0.1, and epochs 10–19 use 0.1 × 0.5 = 0.05."},
+{part:"p7",topic:"schedulers",type:"single",q:"Which learning-rate schedule reduces the learning rate smoothly following a cosine-shaped curve rather than making sudden fixed drops?",
+ options:["Step decay","Cosine annealing","Reduce on plateau","Zero decay"],correct:[1],
+ exp:"Cosine annealing smoothly reduces the learning rate following a cosine curve, rather than making sudden fixed-factor drops."},
+{part:"p7",topic:"schedulers",type:"multi",q:"Which statements correctly describe Reduce-on-Plateau?",
+ options:["The learning rate remains unchanged while performance improves.","It reduces the learning rate when progress stops.","It reacts to actual training/validation performance rather than a fixed epoch schedule.","It can reduce the rate again if another plateau occurs.","It always changes the learning rate every epoch."],correct:[0,1,2,3],
+ exp:"Reduce-on-Plateau monitors performance and only reduces the LR when progress stalls — it does not change the rate every single epoch by default."},
+{part:"p7",topic:"schedulers",type:"single",q:"A model starts with a temporarily high learning rate and then gradually decreases it throughout training. Which scheduler is being described?",
+ options:["One-cycle learning rate","Zero initialization","Batch normalization","Fixed-step scheduling"],correct:[0],
+ exp:"One-cycle scheduling ramps the learning rate up temporarily, then gradually decreases it over the rest of training."},
+{part:"p7",topic:"schedulers",type:"single",q:"A small neural network is trained on only about 500 samples for around 25 epochs. Five different learning-rate strategies all produce roughly 95% accuracy with only minor differences. What conclusion is most appropriate?",
+ options:["Complex learning-rate scheduling may provide little benefit for such a small/simple problem.","One scheduler must always be dramatically better.","The dataset is too large for any scheduler.","Learning-rate scheduling is useless for all neural networks."],correct:[0],
+ exp:"When multiple schedulers converge to similar accuracy on a small, simple problem, it suggests scheduling complexity isn't adding much value there — not that scheduling is universally useless."},
+{part:"p7",topic:"schedulers",type:"single",q:"When is learning-rate scheduling generally more valuable?",
+ options:["Large datasets and complex/deep neural networks","Only tiny datasets","Only models with one neuron","Only during data preprocessing"],correct:[0],
+ exp:"Learning-rate scheduling tends to matter more for larger, more complex/deep networks where training dynamics are harder to tune manually."},
+{part:"p7",topic:"tensorboard",type:"multi",q:"What can TensorBoard help a developer monitor during neural-network training?",
+ options:["Training loss","Test/validation loss","Accuracy","Learning rate","Weight histograms","Gradient histograms/norms","The exact business value of every prediction automatically"],correct:[0,1,2,3,4,5],
+ exp:"TensorBoard can track all of these training-related metrics and visualizations, but it has no built-in concept of a prediction's business value."},
+{part:"p7",topic:"tensorboard",type:"single",q:"A developer only looks at the loss-vs-epoch graph and sees a smooth decreasing curve. Why might this still be insufficient?",
+ options:["Vanishing or exploding gradients can exist inside individual layers while the overall loss curve still looks reasonable.","Loss curves are never useful.","A decreasing loss always means every layer is healthy.","TensorBoard only displays model architecture."],correct:[0],
+ exp:"A smoothly decreasing overall loss can mask per-layer problems like vanishing or exploding gradients, so deeper diagnostics (weight/gradient histograms) are still valuable."},
+{part:"p7",topic:"tensorboard",type:"single",q:"What does a weight histogram primarily show?",
+ options:["The distribution of weight values in a layer","The number of rows in the training dataset","The learning rate schedule","The model's final accuracy only"],correct:[0],
+ exp:"A weight histogram shows how a layer's weight values are distributed, which helps spot issues like dying units or exploding weights."},
+{part:"p7",topic:"tensorboard",type:"multi",q:"Which histogram patterns can indicate potential problems?",
+ options:["A spike of weights barely changing may indicate dying ReLU units.","Saturated sigmoid/tanh units can lead to gradients becoming very small.","A dramatically widening weight distribution can indicate exploding weights.","A roughly zero-centered, stable distribution can be a healthy sign.","Any non-zero weight is automatically a problem."],correct:[0,1,2,3],
+ exp:"These four are genuine, notes-supported diagnostic patterns; non-zero weights are completely normal and expected, not a problem."},
+{part:"p7",topic:"gradnorm",type:"single",q:"A developer wants one number summarizing the overall size of a layer's gradient array. Which concept from the lesson is appropriate?",
+ options:["L2 gradient norm","Mean accuracy","Explained variance","Entropy"],correct:[0],
+ exp:"The L2 gradient norm summarizes the overall magnitude of a layer's gradient array into a single number."},
+{part:"p7",topic:"gradnorm",type:"single",q:"A TensorBoard dashboard shows:\nLayer 1 gradient norm → 0.0002\nLayer 2 gradient norm → 0.03\nLayer 3 gradient norm → 0.25\nLayer 4 gradient norm → 85\nWhich interpretation is most appropriate?",
+ options:["Layer 1 suggests vanishing gradients, while Layer 4 suggests exploding gradients.","All layers have healthy gradients.","Layer 1 is exploding and Layer 4 is vanishing.","All gradients are exactly the same size."],correct:[0],
+ exp:"Layer 1's norm (0.0002) is extremely small — vanishing — while Layer 4's norm (85) is extremely large — exploding; layers 2 and 3 fall in a more moderate range."},
+{part:"p7",topic:"workflow",type:"multi",q:"A data scientist wants a stable training pipeline for a deep ReLU-based neural network. Which combination best matches the techniques taught in this lesson?",
+ options:["He initialization for hidden layers","BatchNorm after linear layers and before activation","Learning-rate scheduling when appropriate","TensorBoard monitoring of loss, weights, and gradient norms","Gradient clipping if exploding gradients occur","Zero initialization of every hidden-layer weight"],correct:[0,1,2,3,4],
+ exp:"This combination — He init, correctly placed BatchNorm, scheduling, monitoring, and clipping when needed — matches the stable training pipeline taught in the lesson; zero-initializing every weight would reintroduce the symmetry problem."}
+);
+
+/* ---------------- PART 8: FastAPI & Docker ---------------- */
+Q.push(
+{part:"p8",topic:"whydeploy",type:"single",q:"A data scientist has trained a machine-learning model inside a Jupyter notebook. A product team wants a web application to send new customer data to the model and receive predictions. What is the main reason the model needs to be wrapped in an API?",
+ options:["An API allows external applications to send data to the model and receive predictions without directly accessing the notebook or model code.","An API automatically retrains the model whenever new data arrives.","An API converts every ML model into a neural network.","An API is only required when the model is trained using PyTorch."],correct:[0],
+ exp:"Wrapping a model in an API lets other applications send data and get predictions through a clean interface, without needing direct access to the notebook or model internals."},
+{part:"p8",topic:"whydeploy",type:"single",q:"A developer explains an API using a restaurant analogy. Which component represents the API most closely?",
+ options:["The customer eating the food","The waiter receiving the order and returning the result","The kitchen equipment","The restaurant building"],correct:[1],
+ exp:"The waiter — who takes the request and returns the result without the customer needing to know how the kitchen works — is the closest analogy to an API."},
+{part:"p8",topic:"whydeploy",type:"multi",q:"Which statements correctly describe an API?",
+ options:["It provides an interface through which another application can communicate with a service.","The caller does not need to know how the underlying model works internally.","It can receive input and return a prediction or other response.","It requires the caller to have the same Python environment as the server.","It can expose different endpoints for different operations."],correct:[0,1,2,4],
+ exp:"An API provides an interface, hides internal implementation details, handles input/output, and can expose multiple endpoints — but callers do not need to share the server's Python environment at all."},
+{part:"p8",topic:"fastapifund",type:"single",q:"A FastAPI application contains:\n@app.get(\"/\")\ndef home():\n    return \"Hello World\"\nWhat does this endpoint do?",
+ options:["Accepts a POST request containing prediction data","Returns a greeting when the root URL is accessed using GET","Loads the trained model","Checks whether Docker is installed"],correct:[1],
+ exp:"@app.get(\"/\") with a return of \"Hello World\" simply returns a greeting when the root URL is hit with a GET request."},
+{part:"p8",topic:"fastapifund",type:"single",q:"A developer creates:\n@app.get(\"/health\")\ndef health():\n    return {\"status\": \"ok\"}\nWhat is the main purpose of this endpoint?",
+ options:["To provide a lightweight check that the server is running","To retrain the model","To return model predictions","To install dependencies"],correct:[0],
+ exp:"A /health endpoint is a simple, lightweight way to confirm the server is up and responding."},
+{part:"p8",topic:"fastapifund",type:"single",q:"An API exposes /info. Its response contains:\n{\n  \"model\": \"RandomForestClassifier\",\n  \"preprocessing\": \"StandardScaler\",\n  \"features\": 30\n}\nWhat is the purpose of such an endpoint?",
+ options:["To provide information about the deployed model and its expected inputs","To start Docker","To calculate training accuracy","To replace the /predict endpoint"],correct:[0],
+ exp:"An /info endpoint documents metadata about the deployed model (type, preprocessing, expected feature count) for callers."},
+{part:"p8",topic:"getpost",type:"multi",q:"Which of the following endpoints would normally use GET in the FastAPI application from the lesson?",
+ options:["/","/health","/info","/predict"],correct:[0,1,2],
+ exp:"/, /health, and /info are read-only informational endpoints suited to GET; /predict sends data for scoring and is normally POST."},
+{part:"p8",topic:"getpost",type:"single",q:"Why is /predict normally implemented using POST?",
+ options:["Prediction requests need to send feature data in the request body.","POST is required whenever Python is used.","GET cannot return any response.","POST automatically improves model accuracy."],correct:[0],
+ exp:"POST is used because /predict needs to send structured feature data in the request body, which GET requests aren't designed to carry."},
+{part:"p8",topic:"getpost",type:"single",q:"Consider:\n@app.post(\"/predict\")\ndef predict(data: dict):\n    features = data[\"features\"]\nWhich request body is appropriate?",
+ options:["{\"features\": [1, 2, 3, 4]}","[1, 2, 3, 4]","\"features\": [1, 2, 3, 4]","{\"prediction\": \"features\"}"],correct:[0],
+ exp:"The endpoint expects a dict with a \"features\" key, so the request body must be a JSON object like {\"features\": [1,2,3,4]}."},
+{part:"p8",topic:"validation",type:"single",q:"A /predict endpoint expects exactly 30 features, but the caller sends only 25. What should the API ideally do?",
+ options:["Return a clear validation/error response rather than silently making a prediction.","Automatically create five missing features with random values.","Retrain the model.","Ignore the missing features."],correct:[0],
+ exp:"Silently guessing missing feature values or ignoring the mismatch could produce misleading predictions; the API should validate and return a clear error instead."},
+{part:"p8",topic:"validation",type:"multi",q:"Why is input validation important for an ML inference API?",
+ options:["It prevents incorrectly shaped data from reaching the model.","It can verify that input values have the expected data type.","It can provide clear error messages to API callers.","It guarantees that the model's prediction is correct.","It can catch feature-count mismatches."],correct:[0,1,2,4],
+ exp:"Input validation catches shape/type/count problems and gives clear errors — but it cannot guarantee the model's actual prediction is correct, since that depends on the model itself."},
+{part:"p8",topic:"validation",type:"single",q:"Consider:\nclass PredictRequest(BaseModel):\n    features: list[float]\nWhat is Pydantic being used for here?",
+ options:["Validating and structuring incoming request data","Training the machine-learning model","Building the Docker image","Starting the Uvicorn server"],correct:[0],
+ exp:"Pydantic's BaseModel is used to validate and structure the shape/types of incoming request data."},
+{part:"p8",topic:"validation",type:"single",q:"A caller sends:\n{\"features\": [\"hello\", \"world\"]}\nto an endpoint expecting:\nfeatures: list[float]\nWhat is the purpose of Pydantic validation in this situation?",
+ options:["Rejecting or validating the request before the prediction function processes invalid feature types","Automatically training a new model","Converting the API from POST to GET","Creating a Docker container"],correct:[0],
+ exp:"Pydantic catches the type mismatch (strings instead of floats) and rejects the request before it ever reaches the prediction logic."},
+{part:"p8",topic:"validation",type:"single",q:"Why might an API perform both Pydantic validation and an explicit feature-count check?",
+ options:["Pydantic can validate the type/structure, while the explicit check can verify the model-specific number of features.","Pydantic cannot validate anything.","The explicit check replaces the need for a model.","Both checks are only required for GET requests."],correct:[0],
+ exp:"Pydantic handles general type/structure validation, while an explicit check can enforce model-specific constraints like the exact expected feature count."},
+{part:"p8",topic:"modelload",type:"single",q:"A developer loads the trained model using:\nmodel = joblib.load(\"model.pkl\")\ninside the /predict function. What is the main disadvantage?",
+ options:["The model may be loaded repeatedly for incoming requests, wasting time and resources.","The model will always produce incorrect predictions.","FastAPI will automatically convert it into a Docker image.","The model cannot be used with POST."],correct:[0],
+ exp:"Loading the model inside the /predict function means it gets reloaded from disk on every request, which is wasteful and slow compared to loading it once."},
+{part:"p8",topic:"modelload",type:"single",q:"Where should a saved ML model generally be loaded in an inference API?",
+ options:["Once when the application starts","Every time /predict is called","Only when /health is called","During every Docker build"],correct:[0],
+ exp:"The model should be loaded once at application startup and kept in memory, then reused across all incoming prediction requests."},
+{part:"p8",topic:"modelload",type:"multi",q:"Why is saving a trained pipeline useful for deployment?",
+ options:["The model does not need to be retrained every time the API starts.","Preprocessing can be bundled together with the model.","Raw incoming data can automatically go through the same preprocessing pipeline.","The API can load the saved artifact into memory.","It guarantees zero prediction errors."],correct:[0,1,2,3],
+ exp:"Saving a trained pipeline avoids retraining, bundles preprocessing with the model, ensures consistent preprocessing at inference, and lets the API load it directly — but it doesn't guarantee error-free predictions."},
+{part:"p8",topic:"modelload",type:"single",q:"A scikit-learn pipeline contains:\nPipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", RandomForestClassifier())\n])\nWhat happens to raw input sent to the API?",
+ options:["It is standardized first and then passed to the classifier.","It goes directly to the classifier without preprocessing.","It is sent to Docker first and then standardized.","It is converted into an image."],correct:[0],
+ exp:"The pipeline applies its steps in order — StandardScaler first, then the RandomForestClassifier — so raw input is standardized before classification."},
+{part:"p8",topic:"uvicorn",type:"single",q:"A FastAPI application is started with:\nuvicorn main:app --reload --port 8000\nWhat does main:app mean?",
+ options:["Load the app object from the main.py module.","Run the file app.py using the main function.","Load Docker's main image.","Run the /main API endpoint."],correct:[0],
+ exp:"main:app tells Uvicorn to import the app object defined inside the main.py module."},
+{part:"p8",topic:"uvicorn",type:"single",q:"What is Uvicorn's role in this setup?",
+ options:["It runs the FastAPI application as a web server.","It trains the ML model.","It creates Docker images.","It performs feature scaling."],correct:[0],
+ exp:"Uvicorn is the ASGI server that actually runs and serves the FastAPI application."},
+{part:"p8",topic:"docs",type:"multi",q:"Which statements about FastAPI's /docs endpoint are correct?",
+ options:["FastAPI automatically generates interactive API documentation.","It lists available endpoints.","It can provide a \"Try it out\" mechanism for testing requests.","It requires writing a separate HTML documentation system manually.","It helps developers understand what requests an API expects."],correct:[0,1,2,4],
+ exp:"FastAPI's /docs is auto-generated interactive documentation — no manual HTML documentation system is required."},
+{part:"p8",topic:"localhost",type:"single",q:"A locally running FastAPI server is available at:\n127.0.0.1:8000\nWhat does 127.0.0.1 represent?",
+ options:["The local machine itself","A public cloud server","Docker Hub","A database server"],correct:[0],
+ exp:"127.0.0.1 (localhost) refers to the local machine itself."},
+{part:"p8",topic:"localhost",type:"single",q:"A developer can access the API from their own laptop but another computer cannot access it. The API is running only on 127.0.0.1. What is the most likely explanation?",
+ options:["127.0.0.1 refers to the local machine, so it is not directly reachable by other machines.","FastAPI only supports one request.","Docker automatically blocks all GET requests.","The model has become corrupted."],correct:[0],
+ exp:"Since 127.0.0.1 is the loopback address of the local machine, a server bound only to it isn't reachable from other computers on the network."},
+{part:"p8",topic:"statuscodes",type:"single",q:"A request to an existing endpoint returns status code 200. What does this generally indicate?",
+ options:["Successful request","Endpoint not found","Server permanently shut down","Invalid Dockerfile"],correct:[0],
+ exp:"HTTP status code 200 indicates a successful request."},
+{part:"p8",topic:"statuscodes",type:"single",q:"A user requests an endpoint that does not exist, such as /abc123, while the application only defines /, /health, /info, and /predict. What status code should normally be expected?",
+ options:["200","201","404","5000"],correct:[2],
+ exp:"Requesting a route that isn't defined on the server returns HTTP 404 (Not Found)."},
+{part:"p8",topic:"dockerpurpose",type:"single",q:"What is the primary problem Docker solves in ML deployment?",
+ options:["The \"works on my machine\" problem caused by differences in environments and dependencies.","The problem of choosing the correct ML algorithm.","The problem of collecting training labels.","The problem of calculating model accuracy."],correct:[0],
+ exp:"Docker packages the application with its exact environment/dependencies, solving the classic 'works on my machine' inconsistency problem."},
+{part:"p8",topic:"dockerpurpose",type:"multi",q:"A developer's laptop has Python 3.11 and one version of scikit-learn, while a cloud server has Python 3.10 and another version. What can potentially cause problems?",
+ options:["Different Python versions","Different library versions","Different operating systems","Missing dependencies","Different screen resolutions"],correct:[0,1,2,3],
+ exp:"Mismatched Python versions, library versions, operating systems, and missing dependencies are all real sources of the 'works on my machine' problem; screen resolution is irrelevant to server-side deployment."},
+{part:"p8",topic:"imagecontainer",type:"single",q:"Which statement best describes a Docker image?",
+ options:["A packaged unit containing application code and the environment/dependencies required to run it","A running Python process only","A GitHub repository","A single source-code file"],correct:[0],
+ exp:"A Docker image bundles application code together with the environment and dependencies needed to run it."},
+{part:"p8",topic:"imagecontainer",type:"single",q:"Which statement best describes a Docker container?",
+ options:["A running instance of a Docker image","A Dockerfile before it is built","A Python virtual environment","A Docker Hub repository"],correct:[0],
+ exp:"A Docker container is a running instance of a Docker image."},
+{part:"p8",topic:"imagecontainer",type:"multi",q:"Which sequence represents the basic Docker workflow?",
+ options:["Write Dockerfile → build image → run container","Write Dockerfile → run image → build container","Build image → run container","Push image → pull image → run container on another machine","Train model → automatically become Docker container without building an image"],correct:[0,2,3],
+ exp:"The correct workflow order is write Dockerfile → build image → run container, and separately, an already-built image can be pushed and pulled to run elsewhere. Training a model never automatically becomes a container without an explicit build step."},
+{part:"p8",topic:"dockerfile",type:"single",q:"A developer has a file named:\nDockerfile.txt\nand Docker cannot find the expected Dockerfile automatically. What is the likely problem?",
+ options:["The file should be named exactly Dockerfile, without an extension.","Docker only accepts .docker files.","The file must be named docker.py.","Docker requires a .txt extension."],correct:[0],
+ exp:"Docker looks for a file named exactly 'Dockerfile' with no extension by default."},
+{part:"p8",topic:"dockerfile",type:"single",q:"Consider:\nFROM python:3.11-slim\nWhat does FROM specify?",
+ options:["The base image from which the Docker image starts","The application endpoint","The port exposed to users","The Python function to execute"],correct:[0],
+ exp:"FROM specifies the base image the new image is built on top of — here, a slim Python 3.11 image."},
+{part:"p8",topic:"dockerfile",type:"single",q:"What is the main purpose of:\nWORKDIR /app",
+ options:["Set the working directory inside the container","Copy the local /app folder to Docker Hub","Start FastAPI","Install Python"],correct:[0],
+ exp:"WORKDIR sets the working directory inside the container for subsequent instructions."},
+{part:"p8",topic:"dockerfile",type:"single",q:"What does this Dockerfile instruction do?\nCOPY requirements.txt ./",
+ options:["Copies requirements.txt from the build context into the image","Installs requirements automatically","Deletes the requirements file","Runs FastAPI"],correct:[0],
+ exp:"COPY requirements.txt ./ copies that file from the build context into the image; installation is a separate RUN step."},
+{part:"p8",topic:"dockerfile",type:"single",q:"What does this instruction do?\nRUN pip install -r requirements.txt",
+ options:["Installs the dependencies listed in requirements.txt inside the image","Copies Python files into the image","Starts the container","Publishes the image to Docker Hub"],correct:[0],
+ exp:"RUN pip install -r requirements.txt executes pip during the image build to install the listed dependencies."},
+{part:"p8",topic:"layercache",type:"single",q:"Why is this Dockerfile ordering preferred?\nCOPY requirements.txt ./\nRUN pip install -r requirements.txt\nCOPY . .",
+ options:["Docker can reuse the dependency layer when only application code changes.","It guarantees that Python code never changes.","It prevents the model from being loaded.","It makes FastAPI unnecessary."],correct:[0],
+ exp:"Copying requirements.txt and installing dependencies before copying the rest of the code lets Docker cache that layer, so only the code layer needs rebuilding when app code changes but dependencies don't."},
+{part:"p8",topic:"slimimages",type:"multi",q:"Why is a slim Python base image attractive for production deployment?",
+ options:["It is smaller.","It generally pulls faster.","It contains fewer unnecessary build tools.","It can reduce the final deployment footprint.","It always contains every compiler needed by every Python package."],correct:[0,1,2,3],
+ exp:"Slim images are smaller, faster to pull, leaner on build tools, and reduce footprint — but they deliberately omit many compilers/tools, which is the opposite of always containing every possible compiler."},
+{part:"p8",topic:"slimimages",type:"single",q:"What is the main trade-off of a slim Docker image?",
+ options:["Some compilers/system libraries may be absent, which can make building certain packages more difficult.","It cannot run Python.","It cannot run FastAPI.","It cannot contain application code."],correct:[0],
+ exp:"The trade-off of a slim image's smaller size is that some build tools/system libraries are missing, which can complicate installing packages that need compilation."},
+{part:"p8",topic:"pinning",type:"single",q:"A production team wants the same dependency versions every time the Docker image is rebuilt. Which approach is best?\nfastapi\nuvicorn\nscikit-learn\nor\nfastapi==0.111.0\nuvicorn==0.29.0\nscikit-learn==1.4.2",
+ options:["The first because latest versions are always safer.","The second because versions are pinned.","Both behave identically forever.","Neither can be used with Docker."],correct:[1],
+ exp:"Pinning exact versions (fastapi==0.111.0, etc.) ensures the same dependency versions are installed every time the image is rebuilt, unlike unpinned requirements which can drift over time."},
+{part:"p8",topic:"pinning",type:"single",q:"What problem does dependency pinning primarily address?",
+ options:["Reproducibility across builds","API endpoint naming","Docker port mapping","Model feature selection"],correct:[0],
+ exp:"Dependency pinning exists primarily to guarantee reproducible builds with consistent dependency versions."},
+{part:"p8",topic:"multistage",type:"multi",q:"A package requires compilation during installation, but the final production image should remain small. Why might a multi-stage Docker build help?",
+ options:["A builder stage can contain compilers/build tools.","A final stage can use a slim image.","Only the required installed output can be copied into the final stage.","Build-time compilers do not need to remain in the final image.","It requires putting all dependencies into the final image twice."],correct:[0,1,2,3],
+ exp:"Multi-stage builds let a heavier 'builder' stage compile what's needed, then copy only the final artifacts into a lean final image — build tools don't need to be duplicated or kept in the final image."},
+{part:"p8",topic:"multistage",type:"single",q:"A Dockerfile contains two FROM instructions. What does this commonly indicate?",
+ options:["A multi-stage build","Two FastAPI applications must run","Two containers are automatically created","The Dockerfile is invalid"],correct:[0],
+ exp:"Multiple FROM instructions in one Dockerfile is the standard pattern for a multi-stage build."},
+{part:"p8",topic:"networking",type:"single",q:"Consider:\nEXPOSE 8000\nWhat is the primary purpose of this instruction?",
+ options:["Documents the port on which the application listens.","Starts the FastAPI server.","Installs Uvicorn.","Maps the host port automatically."],correct:[0],
+ exp:"EXPOSE is primarily documentation, indicating which port the containerized app listens on; it does not itself map ports to the host."},
+{part:"p8",topic:"networking",type:"single",q:"Consider:\nCMD [\"uvicorn\", \"main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\nWhat is the main purpose of this command?",
+ options:["Start the Uvicorn server inside the container.","Build the Docker image.","Install FastAPI.","Upload the image to Docker Hub."],correct:[0],
+ exp:"CMD specifies the default command run when the container starts — here, launching Uvicorn to serve the FastAPI app."},
+{part:"p8",topic:"networking",type:"single",q:"Why is 0.0.0.0 commonly used as the host when starting the API inside a Docker container?",
+ options:["It allows the server to listen on the container's network interfaces rather than only the container's localhost.","It means the server will only accept requests from 127.0.0.1.","It disables networking.","It automatically creates a public IP."],correct:[0],
+ exp:"Binding to 0.0.0.0 makes the server listen on all network interfaces inside the container, which is necessary for requests routed in from outside the container to reach it."},
+{part:"p8",topic:"buildrun",type:"single",q:"A developer runs:\ndocker build -t cancer-classifier:v1 .\nWhat does -t cancer-classifier:v1 provide?",
+ options:["A name/tag for the image, with v1 representing its version.","The container's IP address.","The FastAPI endpoint.","The Docker Hub password."],correct:[0],
+ exp:"-t cancer-classifier:v1 tags the built image with a name (cancer-classifier) and version tag (v1)."},
+{part:"p8",topic:"buildrun",type:"single",q:"Consider:\ndocker run -p 8000:8000 --name ML-API cancer-classifier:v1\nWhat does -p 8000:8000 mean?",
+ options:["Map host port 8000 to container port 8000.","Expose port 8000 only inside Docker Hub.","Open 8000 different containers.","Change the model's learning rate."],correct:[0],
+ exp:"-p 8000:8000 maps port 8000 on the host machine to port 8000 inside the container, making the API reachable from outside."},
+{part:"p8",topic:"dockerhub",type:"multi",q:"Which statements correctly describe Docker Hub?",
+ options:["It can store Docker images.","Images can be pushed to it.","Images can be pulled from it.","Repositories can be public or private.","Image versions can be represented using tags such as v1 and v2.","It replaces FastAPI."],correct:[0,1,2,3,4],
+ exp:"Docker Hub is a registry for storing, pushing, pulling, and tagging images, with public/private repositories — it's unrelated to and does not replace FastAPI."},
+{part:"p8",topic:"inference",type:"single",q:"A company has a live recommendation system where a user expects a prediction immediately after clicking a button. Which deployment pattern is most appropriate?",
+ options:["Real-time/online inference through an API endpoint","Batch inference once every week","Manual notebook execution","Training-only deployment"],correct:[0],
+ exp:"A live recommendation that must respond immediately after a user action needs real-time/online inference via an API, not a scheduled batch job."},
+{part:"p8",topic:"pipeline",type:"multi",q:"A team has completed training a model and wants to turn it into a portable, callable ML service. Which sequence best represents the deployment workflow covered in the lesson?",
+ options:["Save the trained model/pipeline.","Wrap it with FastAPI endpoints.","Test the API locally.","Build a Docker image.","Run and test the Docker container.","Optionally push the image to Docker Hub.","Deploy the image to a public cloud machine when cloud deployment is ready.","Retrain the model every time a user calls /predict."],correct:[0,1,2,3,4,5,6],
+ exp:"This is the full deployment pipeline: save → wrap with FastAPI → test locally → build image → run/test container → optionally push to Docker Hub → deploy to the cloud. Retraining on every prediction request is not part of a standard inference pipeline."}
+);
+
+/* ============================================================
+   STATE
+============================================================ */
+let activePart = "p7";
+let activeTopic = "all";
+const state = {};
+Q.forEach((q,i)=>{ state[i] = {selected:new Set(), checked:false}; });
+
+/* ============================================================
+   RENDER: hero meta + part tabs
+============================================================ */
+const heroMeta = document.getElementById('heroMeta');
+heroMeta.innerHTML = PARTS.map(p=>{
+  const n = Q.filter(q=>q.part===p.id).length;
+  return `<span class="pill" style="border-color:${p.color}55;color:${p.color}">${p.name} · ${n}</span>`;
+}).join('') + `<span class="pill">click an option to check yourself</span>`;
+
+const partTabs = document.getElementById('partTabs');
+function renderPartTabs(){
+  partTabs.innerHTML = '';
+  PARTS.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'part-tab' + (activePart===p.id ? ' active':'');
+    if(activePart===p.id){ btn.style.background = p.color; btn.style.borderColor = p.color; }
+    btn.textContent = p.name;
+    btn.onclick = ()=>{ activePart = p.id; activeTopic='all'; renderPartTabs(); renderCoverage(); renderChips(); renderQuestions(); window.scrollTo({top:0,behavior:'smooth'}); };
+    partTabs.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   RENDER: coverage bars for active part
+============================================================ */
+function renderCoverage(){
+  const p = partMap[activePart];
+  document.getElementById('coverageTitle').textContent = p.name + ' — topic coverage';
+  const grid = document.getElementById('covGrid');
+  grid.innerHTML = '';
+  const total = Q.filter(q=>q.part===activePart).length;
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const pct = Math.round((count/total)*100);
+    const hue = topicColor(activePart, i);
+    const row = document.createElement('div');
+    row.className = 'cov-row';
+    row.innerHTML = `
+      <div class="cov-label">${t.name}</div>
+      <div class="cov-bar-track"><div class="cov-bar-fill" style="width:${pct}%;background:${hue}"></div></div>
+      <div class="cov-count">${count}</div>`;
+    grid.appendChild(row);
+  });
+}
+
+const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8","#F87171","#4ADE80","#22D3EE","#E879F9","#A3E635","#FACC15","#FB923C","#818CF8","#2DD4BF","#F472B6","#34D399"];
+function topicColor(partId, idx){ return palette[idx % palette.length]; }
+function colorForTopic(partId, topicId){
+  const p = partMap[partId];
+  const idx = p.topics.findIndex(t=>t.id===topicId);
+  return topicColor(partId, idx);
+}
+
+/* ============================================================
+   RENDER: filter chips
+============================================================ */
+const chipRow = document.getElementById('chipRow');
+function renderChips(){
+  chipRow.innerHTML = '';
+  const p = partMap[activePart];
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (activeTopic==='all' ? ' active':'');
+  const totalCount = Q.filter(q=>q.part===activePart).length;
+  if(activeTopic==='all'){ allChip.style.background=p.color; allChip.style.color='#06121b'; allChip.style.borderColor=p.color; }
+  allChip.textContent = `All (${totalCount})`;
+  allChip.onclick = ()=>{ activeTopic='all'; renderChips(); renderQuestions(); };
+  chipRow.appendChild(allChip);
+
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (activeTopic===t.id ? ' active':'');
+    const c = topicColor(activePart, i);
+    if(activeTopic===t.id){ chip.style.background=c; chip.style.color='#06121b'; chip.style.borderColor=c; }
+    chip.textContent = `${t.name} (${count})`;
+    chip.onclick = ()=>{ activeTopic=t.id; renderChips(); renderQuestions(); };
+    chipRow.appendChild(chip);
+  });
+}
+
+/* ============================================================
+   RENDER: questions
+============================================================ */
+const quizRoot = document.getElementById('quizRoot');
+const letters = ['A','B','C','D','E','F','G','H'];
+
+function updateScore(){
+  let done=0, correct=0;
+  Object.entries(state).forEach(([idx,s])=>{
+    if(!s.checked) return;
+    done++;
+    const q = Q[idx];
+    const sel = [...s.selected].sort().join(',');
+    const cor = [...q.correct].sort().join(',');
+    if(sel===cor) correct++;
+  });
+  document.getElementById('scoreDone').textContent = done;
+  document.getElementById('scoreCorrect').textContent = correct;
+}
+
+function renderQuestions(){
+  quizRoot.innerHTML = '';
+  const p = partMap[activePart];
+
+  const withIdx = Q.map((q,i)=>({...q, gidx:i}));
+  const filtered = withIdx.filter(q=> q.part===activePart && (activeTopic==='all' || q.topic===activeTopic));
+
+  if(activeTopic==='all'){
+    p.topics.forEach((t,ti)=>{
+      const group = filtered.filter(q=>q.topic===t.id);
+      if(group.length===0) return;
+      const c = topicColor(activePart, ti);
+      const section = document.createElement('section');
+      section.className = 'topic-block';
+      section.innerHTML = `<div class="topic-heading">
+        <span class="dot" style="background:${c}"></span>
+        <h3>${t.name}</h3>
+        <span class="count">${group.length} question${group.length>1?'s':''}</span>
+      </div>`;
+      group.forEach(q=> section.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+      quizRoot.appendChild(section);
+    });
+  } else {
+    filtered.forEach(q=> quizRoot.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+  }
+}
+
+function buildCard(q, color){
+  const idx = q.gidx;
+  const t = topicOf(q.part, q.topic);
+  const card = document.createElement('div');
+  card.className = 'qcard';
+  card.id = q.part+'-q'+(idx+1);
+
+  const localNum = Q.slice(0, idx).filter(x=>x.part===q.part).length + 1;
+
+  const top = document.createElement('div');
+  top.className = 'qtop';
+  top.innerHTML = `<div class="qnum" style="background:${color}">Q${localNum}</div>
+    <div style="flex:1">
+      <div class="qmeta">
+        <span class="tag tag-topic" style="border-color:${color}66;color:${color}">${t.name}</span>
+        <span class="tag tag-type" style="border-color:#8B95AC66;color:${q.type==='multi'?'#FBBF24':'#8B95AC'}">${q.type==='multi' ? 'Multiple correct' : 'Single choice'}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+    </div>`;
+  card.appendChild(top);
+
+  const optWrap = document.createElement('div');
+  optWrap.className = 'options';
+  q.options.forEach((optText, i)=>{
+    const opt = document.createElement('div');
+    opt.className = 'opt';
+    opt.innerHTML = `<span class="letter">${letters[i]}.</span><span>${optText}</span>`;
+    opt.onclick = ()=> handleOptionClick(idx, i, card, q);
+    optWrap.appendChild(opt);
+  });
+  card.appendChild(optWrap);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+
+  if(q.type==='multi'){
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'check-btn primary';
+    checkBtn.textContent = 'Check answer';
+    checkBtn.onclick = ()=> checkMulti(idx, card, q);
+    btnRow.appendChild(checkBtn);
+  }
+
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'reveal-btn';
+  revealBtn.textContent = 'Show explanation';
+  const explain = document.createElement('div');
+  explain.className = 'explain';
+  explain.innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  revealBtn.onclick = ()=>{
+    explain.classList.toggle('show');
+    revealBtn.textContent = explain.classList.contains('show') ? 'Hide explanation' : 'Show explanation';
+  };
+  btnRow.appendChild(revealBtn);
+
+  const resultNote = document.createElement('div');
+  resultNote.className = 'result-note';
+  resultNote.id = 'result-'+idx;
+
+  card.appendChild(btnRow);
+  card.appendChild(resultNote);
+  card.appendChild(explain);
+
+  if(state[idx].checked) paintOptions(card, idx, q);
+
+  return card;
+}
+
+function handleOptionClick(idx, optIdx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(q.type==='single'){
+    s.selected = new Set([optIdx]);
+    s.checked = true;
+    paintOptions(card, idx, q);
+    updateScore();
+  } else {
+    if(s.selected.has(optIdx)) s.selected.delete(optIdx);
+    else s.selected.add(optIdx);
+    const opts = card.querySelectorAll('.opt');
+    opts.forEach((el,i)=> el.classList.toggle('selected', s.selected.has(i)));
+  }
+}
+
+function checkMulti(idx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(s.selected.size===0) return;
+  s.checked = true;
+  paintOptions(card, idx, q);
+  updateScore();
+}
+
+function paintOptions(card, idx, q){
+  const s = state[idx];
+  const opts = card.querySelectorAll('.opt');
+  const correctSet = new Set(q.correct);
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    el.classList.remove('selected');
+    if(correctSet.has(i) && s.selected.has(i)) el.classList.add('correct');
+    else if(!correctSet.has(i) && s.selected.has(i)) el.classList.add('incorrect');
+    else if(correctSet.has(i) && !s.selected.has(i)) el.classList.add('missed');
+  });
+  const sel = [...s.selected].sort().join(',');
+  const cor = [...correctSet].sort().join(',');
+  const note = document.getElementById('result-'+idx);
+  if(note){
+    if(sel===cor){ note.textContent = '✓ Correct'; note.className='result-note ok'; }
+    else { note.textContent = '✗ Not quite — correct answer highlighted in green'; note.className='result-note bad'; }
+  }
+  const checkBtn = card.querySelector('.check-btn');
+  if(checkBtn) checkBtn.style.display = 'none';
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPartTabs();
+renderCoverage();
+renderChips();
+renderQuestions();
+updateScore();
+</script>
+</body>
+</html>
