@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIML Practice — Part 4 (200 Questions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120; --panel:#121B2E; --panel-2:#0F1729; --line:#22304A;
+    --text:#E5E9F0; --muted:#8B95AC;
+    --teal:#2DD4BF; --violet:#A78BFA; --amber:#FBBF24; --rose:#FB7185;
+    --good:#34D399; --bad:#F87171;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(45,212,191,0.10), transparent 40%),
+      radial-gradient(circle at 88% 18%, rgba(167,139,250,0.10), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(251,191,36,0.06), transparent 45%),
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px 100px;}
+
+  .hero{padding:60px 20px 36px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(45,212,191,.18);}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.6vw,46px);line-height:1.1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;}
+  h1 span{color:var(--teal);}
+  .lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:660px;margin:0 0 26px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:var(--panel);color:var(--muted);}
+  .pill-link{text-decoration:none;display:inline-block;}
+
+  .parts-nav{position:sticky;top:0;z-index:30;background:rgba(11,17,32,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .parts-nav-inner{max-width:940px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+  .part-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .part-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 13px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-weight:600;
+    transition:all .15s ease;
+  }
+  .part-tab:hover{color:var(--text);}
+  .part-tab.active{color:#06121b;}
+  .score-box{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:100px;white-space:nowrap;}
+  .score-box b{color:var(--teal);}
+
+  .topic-controls{padding:18px 0 0;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
+  .chip:hover{color:var(--text);}
+  .chip.active{font-weight:700;}
+
+  .coverage{margin:26px 0 6px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;}
+  .coverage h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 14px;font-weight:600;}
+  .cov-row{display:grid;grid-template-columns:230px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
+  .cov-label{font-size:12px;color:var(--text);}
+  .cov-bar-track{height:7px;border-radius:6px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line);}
+  .cov-bar-fill{height:100%;border-radius:6px;}
+  .cov-count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;}
+
+  section.topic-block{margin-top:44px;}
+  .topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap;}
+  .topic-heading .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0;}
+  .topic-heading .count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-left:auto;}
+
+  .qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin-bottom:14px;}
+  .qtop{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .qnum{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#06121b;min-width:40px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .qmeta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:5px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:100px;letter-spacing:.02em;}
+  .tag-topic{border:1px solid var(--line);color:var(--muted);}
+  .tag-type{border:1px solid var(--line);}
+  .qtext{font-size:15px;line-height:1.6;font-weight:500;margin:2px 0 14px;white-space:pre-line;}
+  .options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:13.5px;line-height:1.5;transition:all .12s ease;background:var(--panel-2);}
+  .opt:hover{border-color:var(--violet);}
+  .opt .letter{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--violet);flex-shrink:0;}
+  .opt.selected{border-color:var(--violet);background:rgba(167,139,250,0.09);}
+  .opt.correct{border-color:var(--good);background:rgba(52,211,153,0.10);}
+  .opt.incorrect{border-color:var(--bad);background:rgba(248,113,113,0.10);}
+  .opt.missed{border-color:var(--good);background:rgba(52,211,153,0.05);border-style:dashed;}
+  .opt.correct .letter,.opt.missed .letter{color:var(--good);}
+  .opt.incorrect .letter{color:var(--bad);}
+  .opt.disabled{cursor:default;}
+  .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .reveal-btn,.check-btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer;}
+  .reveal-btn:hover,.check-btn:hover{color:var(--text);border-color:var(--teal);}
+  .check-btn.primary{background:var(--teal);color:#06251f;border-color:var(--teal);font-weight:700;}
+  .result-note{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 0;}
+  .result-note.ok{color:var(--good);}
+  .result-note.bad{color:var(--bad);}
+  .explain{display:none;margin-top:10px;padding:13px 15px;background:var(--panel-2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:#C9D1E5;}
+  .explain.show{display:block;}
+  .explain b{color:var(--teal);}
+
+  footer{text-align:center;padding:50px 20px 20px;color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace;}
+  footer a{color:var(--teal);text-decoration:none;}
+
+  @media (max-width:640px){
+    .cov-row{grid-template-columns:130px 1fr 26px;}
+    .parts-nav-inner{flex-direction:column;align-items:stretch;}
+    .score-box{align-self:flex-end;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Learn AIML with Nitish</div>
+    <h1>AI &amp; ML Practice Bank<br><span>— Part 4: 200 more questions.</span></h1>
+    <p class="lede">ML System Design Principles, Gradient Boosting &amp; XGBoost, Hyperparameter Tuning &amp; Experiment Tracking, and SHAP &amp; Model Interpretability. Single-answer and multiple-correct questions are both supported. Click an option to check yourself, then reveal the explanation.</p>
+    <div class="meta-row" id="heroMeta"></div>
+    <div class="meta-row" style="margin-top:10px;">
+      <a href="index.html" class="pill pill-link">← Part 1: Clustering, Anomaly Detection, Dimensionality Reduction, Neural Networks &amp; PyTorch (300 questions)</a>
+      <a href="part2.html" class="pill pill-link">← Part 2: Neural Network Training Dynamics &amp; FastAPI/Docker (100 questions)</a>
+      <a href="part3.html" class="pill pill-link">← Part 3: MLOps, Prometheus &amp; Grafana, Recommender Systems (150 questions)</a>
+    </div>
+  </div>
+</div>
+
+<div class="parts-nav">
+  <div class="parts-nav-inner">
+    <div class="part-tabs" id="partTabs"></div>
+    <div class="score-box">Checked: <b id="scoreDone">0</b>/200 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="topic-controls">
+    <div class="coverage" id="coverage">
+      <h2 id="coverageTitle">Topic coverage</h2>
+      <div id="covGrid"></div>
+    </div>
+    <div class="chip-row" id="chipRow" style="margin-top:18px;"></div>
+  </div>
+
+  <div id="quizRoot"></div>
+</div>
+
+<footer>
+  Practice bank — Part 4, compiled from course notes: ML System Design Principles, Gradient Boosting &amp; XGBoost, Hyperparameter Tuning &amp; Experiment Tracking, and SHAP &amp; Model Interpretability.<br>
+  Companion file to Part 1 (300 questions), Part 2 (100 questions), and Part 3 (150 questions).<br>
+  Self-study only — nothing is pre-revealed. Answer, then use "Show explanation" to check your reasoning.
+</footer>
+
+<script>
+/* ============================================================
+   PARTS + TOPICS
+============================================================ */
+const PARTS = [
+  { id:"p12", name:"ML System Design Principles", color:"#818CF8",
+    topics:[
+      {id:"fundamentals", name:"System Design Fundamentals"},
+      {id:"layers", name:"Data Layer & Feature Engineering"},
+      {id:"inference", name:"Online vs Batch Inference"},
+      {id:"featurestores", name:"Online & Offline Feature Stores"},
+      {id:"skew", name:"Training-Serving Skew"},
+      {id:"registry", name:"Model Registry"},
+      {id:"deployment", name:"Deployment Safeguards"},
+      {id:"drift", name:"Data & Concept Drift"},
+      {id:"monitoring", name:"Production Monitoring"},
+      {id:"frame", name:"FRAME Framework"},
+      {id:"imbalance", name:"Imbalanced Evaluation"},
+      {id:"fraudexample", name:"Fraud/Fake-Account Example"},
+      {id:"cloud", name:"Cloud & Infrastructure Decisions"},
+      {id:"e2e", name:"End-to-End System Design"},
+    ]
+  },
+  { id:"p13", name:"Gradient Boosting & XGBoost", color:"#FB923C",
+    topics:[
+      {id:"boostfund", name:"Boosting Fundamentals"},
+      {id:"residuals", name:"Residuals & Pseudo-Residuals"},
+      {id:"algorithm", name:"GBDT Algorithm & Update Rule"},
+      {id:"learningrate", name:"Learning Rate"},
+      {id:"ntrees", name:"Number of Trees, Depth & Overfitting"},
+      {id:"stochastic", name:"Stochastic GBDT (Row/Column Sampling)"},
+      {id:"usecases", name:"GBDT Use Cases & Limitations"},
+      {id:"xgboost", name:"XGBoost Fundamentals & Optimizations"},
+      {id:"lightgbm", name:"LightGBM (GOSS & EFB)"},
+      {id:"tuning", name:"Hyperparameter Tuning"},
+      {id:"comparison", name:"GBDT vs Random Forest & Model Selection"},
+    ]
+  },
+  { id:"p14", name:"Hyperparameter Tuning & Tracking", color:"#F472B6",
+    topics:[
+      {id:"paramvship", name:"Parameters vs Hyperparameters"},
+      {id:"biasvariance", name:"Bias–Variance Trade-off"},
+      {id:"datasplits", name:"Train / Validation / Test Splits"},
+      {id:"kfold", name:"K-Fold Cross-Validation"},
+      {id:"gridsearch", name:"Grid Search"},
+      {id:"randomsearch", name:"Randomized Search"},
+      {id:"earlystop", name:"Early Stopping"},
+      {id:"advsearch", name:"Advanced Search Strategies"},
+      {id:"methodology", name:"Experimental Methodology"},
+      {id:"exptrack", name:"Experiment Tracking & Reproducibility"},
+      {id:"mlflow", name:"MLflow & Tracking Tools"},
+      {id:"modelselect", name:"Model Selection Trade-offs"},
+      {id:"finaleval", name:"Final Test Evaluation"},
+      {id:"e2eworkflow", name:"End-to-End Workflow"},
+    ]
+  },
+  { id:"p15", name:"SHAP & Model Interpretability", color:"#38BDF8",
+    topics:[
+      {id:"interpretfund", name:"Why Interpretability Matters"},
+      {id:"shapley", name:"Shapley Values / Game Theory"},
+      {id:"shapformula", name:"SHAP Formula & Base Value"},
+      {id:"shapproperties", name:"Shapley Properties"},
+      {id:"shapcalc", name:"SHAP Numerical Calculations"},
+      {id:"shapplots", name:"SHAP Plot Types"},
+      {id:"explainers", name:"SHAP Explainer Selection"},
+      {id:"workflow", name:"SHAP Coding Workflow"},
+      {id:"leakage", name:"Data Leakage & Sensitive Features"},
+      {id:"causality", name:"SHAP vs Causality"},
+      {id:"limitations", name:"SHAP Limitations"},
+      {id:"bestpractices", name:"SHAP Best Practices"},
+      {id:"transparentmodels", name:"Transparent vs Black-Box Models"},
+      {id:"shapvslime", name:"SHAP vs LIME"},
+      {id:"practical", name:"Practical SHAP Interpretation"},
+    ]
+  },
+];
+const partMap = Object.fromEntries(PARTS.map(p=>[p.id,p]));
+function topicOf(partId, topicId){ return partMap[partId].topics.find(t=>t.id===topicId); }
+
+/* ============================================================
+   QUESTION BANK — correct: array of option indices (0=A..3+)
+============================================================ */
+const Q = [];
+
+/* ---------------- PART 12: ML System Design Principles ---------------- */
+Q.push(
+{part:"p12",topic:"fundamentals",type:"single",q:"A data scientist has trained a fraud model with excellent test accuracy and says, \"The ML project is finished.\" Which statement best describes why this is incomplete?",
+ options:["Training the model is only a small part of a production ML system; data, features, serving, monitoring, and retraining also need to be designed.","Once test accuracy is high, the model automatically becomes production-ready.","Production ML systems only require a trained model and a database.","Monitoring is unnecessary if the test dataset was representative."],correct:[0],
+ exp:"Model training is just one piece of a much larger production system that also needs data pipelines, feature engineering, serving infrastructure, monitoring, and retraining."},
+{part:"p12",topic:"fundamentals",type:"single",q:"According to the course notes, approximately what portion of the total production ML effort is the model training itself?",
+ options:["Roughly 20%","Roughly 50%","Roughly 80%","Roughly 95%"],correct:[0],
+ exp:"The notes estimate model training as only a small fraction (roughly 20%) of the total production ML effort — the rest goes into surrounding infrastructure."},
+{part:"p12",topic:"fundamentals",type:"multi",q:"Which are the five major stages of a production ML system described in the notes?",
+ options:["Data","Features","Training","Serving/inference","Monitoring","PCA","Hyperparameter tuning only"],correct:[0,1,2,3,4],
+ exp:"The five major stages are Data, Features, Training, Serving/inference, and Monitoring; PCA and hyperparameter tuning are specific techniques, not top-level system stages."},
+{part:"p12",topic:"layers",type:"single",q:"A recommendation system collects clicks, purchases, and views from users. These raw events are stored before being transformed into model inputs. Which layer does this represent?",
+ options:["Data layer","Serving layer","Model layer","Monitoring layer"],correct:[0],
+ exp:"Collecting and storing raw events like clicks, purchases, and views before any transformation is the data layer."},
+{part:"p12",topic:"layers",type:"single",q:"A fraud model receives transaction information and transforms it into features such as:\ntransactions_last_7_days\naverage_transaction_amount\naccount_age\nWhich stage is responsible for creating these model-ready inputs?",
+ options:["Feature engineering","Model serving","Monitoring","Model registry"],correct:[0],
+ exp:"Transforming raw transaction data into model-ready inputs like transactions_last_7_days is feature engineering."},
+{part:"p12",topic:"layers",type:"multi",q:"Why should ML system design consider the entire pipeline rather than only the model?",
+ options:["Bad data can make an otherwise good model fail.","Incorrect feature processing can produce wrong predictions.","A slow serving system can make a useful model impractical.","Monitoring is needed to detect production degradation.","A model's test accuracy guarantees production success, so the other components are optional."],correct:[0,1,2,3],
+ exp:"Bad data, incorrect features, slow serving, and lack of monitoring can each undermine an otherwise good model — test accuracy alone doesn't guarantee production success."},
+{part:"p12",topic:"inference",type:"single",q:"A fraud detection system must decide whether to approve a payment while the customer is waiting at checkout. The decision should take approximately 100 ms. Which inference strategy is most appropriate?",
+ options:["Online inference","Batch inference","Monthly offline inference","Manual inference"],correct:[0],
+ exp:"A decision needed in ~100ms while the customer waits requires online (real-time) inference."},
+{part:"p12",topic:"inference",type:"single",q:"A recommendation platform calculates personalized recommendations for 50 million users every night at 2 AM. Users simply retrieve the prepared recommendations when they open the application. Which inference approach is this?",
+ options:["Batch inference","Online inference","Manual inference","Interactive training"],correct:[0],
+ exp:"Precomputing recommendations overnight for retrieval later is the batch inference pattern."},
+{part:"p12",topic:"inference",type:"multi",q:"Which situations are good candidates for online inference?",
+ options:["Fraud detection while a payment is being processed.","A prediction needed immediately while the user waits.","A gaming-cheat detection decision during gameplay.","A recommendation that must immediately reflect what a user clicked seconds ago.","A monthly report where predictions can be prepared overnight."],correct:[0,1,2,3],
+ exp:"These four all need an immediate, real-time decision — the hallmark of online inference; the monthly report is a batch inference use case instead."},
+{part:"p12",topic:"inference",type:"single",q:"A bank wants to score millions of customers overnight for a marketing campaign. Customers do not need the score immediately. Which design is generally preferable?",
+ options:["Batch inference because predictions can be computed in bulk on a schedule.","Online inference because every prediction must be calculated when the customer opens the app.","Manual prediction because millions of predictions should not be automated.","Real-time inference because batch systems cannot process large datasets."],correct:[0],
+ exp:"Since scores aren't needed immediately, computing them in bulk overnight (batch inference) is the more efficient, preferable design."},
+{part:"p12",topic:"featurestores",type:"single",q:"A feature must be read in approximately 5 ms during live fraud detection. Which feature-store type is most appropriate?",
+ options:["Online feature store","Offline feature store","Spreadsheet","Archive store"],correct:[0],
+ exp:"A feature needed in ~5ms for live serving requires an online feature store optimized for very fast reads."},
+{part:"p12",topic:"featurestores",type:"single",q:"A training job needs to read billions of historical transactions, and a few seconds of read time is acceptable. Which storage option is most appropriate?",
+ options:["Offline feature store","Online feature store","Browser cache","API response cache"],correct:[0],
+ exp:"Reading billions of historical rows for training, where a few seconds of latency is acceptable, is exactly what offline feature stores are designed for."},
+{part:"p12",topic:"featurestores",type:"multi",q:"Which statements correctly compare online and offline feature stores?",
+ options:["Online stores prioritize very fast reads for serving.","Offline stores are suitable for large historical datasets used during training.","Redis is an example of an online store.","BigQuery can be used as an offline store.","Online stores are always cheaper than offline stores.","Offline stores are always faster than online stores."],correct:[0,1,2,3],
+ exp:"These four correctly characterize online vs offline stores (Redis for fast serving, BigQuery for bulk historical data); cost and speed comparisons aren't universally one-directional."},
+{part:"p12",topic:"featurestores",type:"single",q:"An engineer stores a live-serving fraud feature in BigQuery because it is inexpensive, but each lookup takes several seconds. What is the main design problem?",
+ options:["The storage choice does not satisfy the low-latency requirement of online serving.","BigQuery cannot store numerical features.","Fraud models can only use Redis.","Offline stores automatically change the model's parameters."],correct:[0],
+ exp:"Using an offline-style store (BigQuery, several-second lookups) for live serving fails the low-latency requirement that online fraud detection needs."},
+{part:"p12",topic:"skew",type:"single",q:"A model was trained using:\nmean = 54.37\nstd = 64.86\nFor a transaction amount of $200, what is the approximate standardized value?",
+ options:["2.24","3.08","1.54","0.44"],correct:[0],
+ exp:"(200 − 54.37) / 64.86 = 145.63 / 64.86 ≈ 2.24."},
+{part:"p12",topic:"skew",type:"single",q:"During production inference, the same $200 transaction is standardized using a different mean and standard deviation than those used during training. The API does not crash, but predictions become inaccurate. What problem is this?",
+ options:["Training-serving skew","Overfitting","Underfitting","Cold start"],correct:[0],
+ exp:"Using different preprocessing parameters (mean/std) at training vs. serving time — silently degrading predictions without crashing — is training-serving skew."},
+{part:"p12",topic:"skew",type:"multi",q:"Which situations can create training-serving skew?",
+ options:["Using different scaling parameters during training and inference.","Imputing missing values with 0 during training but -1 during serving.","Supplying features in a different order during inference.","Using exactly the same preprocessing pipeline for both training and serving.","Using different preprocessing logic in the notebook and production service."],correct:[0,1,2,4],
+ exp:"Mismatched scaling, imputation, feature order, or preprocessing logic between training and serving all create skew; using the identical shared pipeline is the fix, not a cause."},
+{part:"p12",topic:"skew",type:"single",q:"What makes training-serving skew particularly dangerous?",
+ options:["It can silently produce incorrect predictions without causing an obvious software error.","It always crashes the prediction server immediately.","It only occurs when the model has too few layers.","It can only happen with neural networks."],correct:[0],
+ exp:"Training-serving skew is dangerous precisely because it degrades predictions quietly, without any error or crash that would draw attention to the problem."},
+{part:"p12",topic:"skew",type:"single",q:"An engineer wants to prevent preprocessing differences between training and serving. Which approach best matches the notes?",
+ options:["Bundle preprocessing and the model into one saved pipeline.","Manually rewrite preprocessing code separately for production.","Remove preprocessing entirely.","Recalculate preprocessing parameters independently every time the API starts."],correct:[0],
+ exp:"Saving preprocessing and the model together as a single pipeline guarantees the exact same transformations are applied consistently at training and serving time."},
+{part:"p12",topic:"skew",type:"multi",q:"A scikit-learn Pipeline contains:\nSimpleImputer → StandardScaler → DecisionTreeClassifier\nWhat advantages does saving the entire pipeline provide?",
+ options:["The same imputation logic is reused.","The same scaling parameters are reused.","The same feature order is preserved.","The model and preprocessing can be loaded together for inference.","Production developers must manually recreate every preprocessing step."],correct:[0,1,2,3],
+ exp:"Saving the entire pipeline preserves imputation logic, scaling parameters, and feature order automatically — eliminating the need to manually recreate preprocessing steps in production."},
+{part:"p12",topic:"skew",type:"single",q:"A production prediction is incorrect even though no API error occurred. The engineer traces one transaction through:\nraw data → features → imputation → scaling → model → prediction\nAt which point should the engineer look for the first difference between expected and actual values?",
+ options:["At the first pipeline stage where the actual value diverges from the expected value.","Only at the final model prediction.","Only inside the database.","Only in the API response."],correct:[0],
+ exp:"Tracing a prediction issue means checking each pipeline stage in order and identifying exactly where the actual value first diverges from what's expected."},
+{part:"p12",topic:"skew",type:"single",q:"A model receives exactly five features during training. During production, the API sends the same five values but in a different order. What is the likely problem?",
+ options:["The model can interpret the values incorrectly because feature order must remain consistent.","The model automatically identifies the correct feature names.","The model will retrain itself automatically.","The API will always reject the request."],correct:[0],
+ exp:"Most models expect features in a fixed positional order; sending the same values in a different order causes the model to misinterpret which value belongs to which feature."},
+{part:"p12",topic:"registry",type:"single",q:"A team wants to store and manage multiple versions of trained models, including their metrics and current environment such as staging or production. What should they use?",
+ options:["Model registry","Feature store","Raw CSV file","Python notebook"],correct:[0],
+ exp:"Centrally managing multiple model versions along with their metrics and deployment environment is exactly what a model registry provides."},
+{part:"p12",topic:"registry",type:"multi",q:"Which are examples of model registries mentioned in the notes?",
+ options:["MLflow Registry","AWS SageMaker","Google Vertex AI","Weights & Biases","Redis","PostgreSQL"],correct:[0,1,2,3],
+ exp:"MLflow Registry, SageMaker, Vertex AI, and Weights & Biases are cited model registry examples; Redis and PostgreSQL are general-purpose data stores, not model registries."},
+{part:"p12",topic:"registry",type:"single",q:"A model registry currently contains:\nV1 → production\nV2 → staging\nV3 → staging\nThe team approves V2 for production. What should happen?",
+ options:["V2 can be promoted to production while the previous production model can be archived.","V2 must be deleted because only one model can exist in the registry.","V1 and V2 must both serve production traffic simultaneously.","V3 must automatically become production."],correct:[0],
+ exp:"Promoting V2 typically moves the current production model (V1) to archive while V2 becomes the new live production model."},
+{part:"p12",topic:"registry",type:"single",q:"Why is a model registry more useful than simply saving:\nmodel_v1.pkl\nmodel_v2.pkl\nmodel_v3.pkl\nin random folders?",
+ options:["A registry can centrally version models and track metrics and environments.","Pickle files cannot store trained models.","A registry automatically improves model accuracy.","A registry eliminates the need for model evaluation."],correct:[0],
+ exp:"Unlike scattered pickle files, a registry provides centralized, structured version tracking along with metrics and environment metadata."},
+{part:"p12",topic:"deployment",type:"single",q:"A team wants to compare a new model against the existing production model without allowing users to see the new model's predictions. Which technique is appropriate?",
+ options:["Shadow testing","Direct production replacement","Manual retraining","Feature scaling"],correct:[0],
+ exp:"Comparing a candidate model against production without exposing users to its predictions is shadow testing."},
+{part:"p12",topic:"deployment",type:"single",q:"A company deploys a new model to staging first, tests it, and then promotes it to production only after approval. Why?",
+ options:["Staging provides a safer environment to evaluate a candidate model before exposing real users to it.","Staging automatically guarantees 100% model accuracy.","Production models cannot be evaluated.","Staging eliminates the need for monitoring."],correct:[0],
+ exp:"Staging exists to validate a candidate model safely before it's promoted and exposed to real production users."},
+{part:"p12",topic:"deployment",type:"multi",q:"Which are sensible safeguards when deploying a new ML model?",
+ options:["Staging","Shadow testing","A/B testing where appropriate","Rollback capability","Directly replacing the production model without testing","Skipping evaluation if training accuracy is high"],correct:[0,1,2,3],
+ exp:"Staging, shadow testing, A/B testing, and rollback capability are all sensible safeguards; skipping testing/evaluation before deployment is the opposite of a safeguard."},
+{part:"p12",topic:"deployment",type:"single",q:"A new model causes unexpected production behavior immediately after deployment. The previous model is still available as an archived version. What should the team be able to do?",
+ options:["Roll back to the previous stable model.","Retrain the old model from scratch before responding.","Delete the old model.","Disable monitoring."],correct:[0],
+ exp:"Keeping the previous model archived allows the team to quickly roll back to it if the new model misbehaves."},
+{part:"p12",topic:"drift",type:"single",q:"A fraud model's input distribution changes significantly after a major change in customer behavior, while the relationship between inputs and fraud remains the same. What type of drift is this?",
+ options:["Data drift","Concept drift","Model drift caused by weight updates","Training-serving skew"],correct:[0],
+ exp:"Input distributions shifting while the input-output relationship stays the same is data drift."},
+{part:"p12",topic:"drift",type:"single",q:"A fraud pattern that used to indicate fraudulent activity no longer does because criminals have changed their behavior. The relationship between input features and the target has changed. What is this?",
+ options:["Concept drift","Data drift","Feature scaling","Batch inference"],correct:[0],
+ exp:"The relationship between features and the target label changing over time is concept drift."},
+{part:"p12",topic:"monitoring",type:"multi",q:"Which statements correctly describe production monitoring?",
+ options:["Monitor model performance.","Monitor feature distributions.","Monitor prediction distributions.","Monitor latency and error rate.","Monitor infrastructure resources such as memory and disk.","Monitoring is unnecessary once a model has passed its test set."],correct:[0,1,2,3,4],
+ exp:"Production monitoring should track all of these signals; passing the test set once does not eliminate the need for ongoing monitoring."},
+{part:"p12",topic:"monitoring",type:"single",q:"A fraud model normally produces approximately 1% fraud probability for $1,000 transactions. It suddenly begins producing around 20% for similar transactions. What type of monitoring signal is this?",
+ options:["Prediction distribution shift","Database schema validation","Model serialization","Feature-store latency only"],correct:[0],
+ exp:"A sudden, large change in the distribution of output predictions (1% → 20% fraud probability) is a prediction distribution shift."},
+{part:"p12",topic:"monitoring",type:"single",q:"A model's P99 latency is normally below 200 ms, but it remains above 200 ms for several hours. What should the monitoring system do?",
+ options:["Raise an alert because the latency has persistently crossed the expected threshold.","Ignore it because average latency may still be low.","Retrain the model immediately without investigating system performance.","Delete the model automatically."],correct:[0],
+ exp:"A latency SLA violation that persists for hours should trigger an alert so the team investigates, rather than being ignored or met with an unrelated action like retraining."},
+{part:"p12",topic:"monitoring",type:"single",q:"Why can average latency be misleading for a production ML service?",
+ options:["A small number of extremely slow requests can be hidden by a good average.","Average latency always equals P99.","Average latency only measures model accuracy.","Average latency cannot be calculated for APIs."],correct:[0],
+ exp:"Averages can mask a painful tail experience for a subset of users, which is exactly why P99 latency is tracked alongside the average."},
+{part:"p12",topic:"monitoring",type:"multi",q:"Which are examples of system-level monitoring metrics?",
+ options:["CPU usage","Memory usage","Request latency","Error rate","Disk usage","Precision","Recall"],correct:[0,1,2,3,4],
+ exp:"CPU, memory, latency, error rate, and disk usage are system-level infrastructure metrics; precision and recall are model-performance metrics, a different monitoring category."},
+{part:"p12",topic:"monitoring",type:"single",q:"A fraud model's true labels are not available immediately after prediction. A transaction may only be confirmed as fraudulent days later. What is this situation called?",
+ options:["Lagged/delayed labels","Data leakage","Training-serving skew","Batch normalization"],correct:[0],
+ exp:"When the true outcome (fraud confirmed) is only known well after the prediction was made, this is the lagged/delayed labels problem."},
+{part:"p12",topic:"monitoring",type:"single",q:"Why can't the team always calculate live model accuracy immediately after every fraud prediction?",
+ options:["The true outcome/label may not be available at prediction time.","Accuracy cannot be calculated for classification models.","Accuracy only works for batch inference.","Monitoring systems cannot store predictions."],correct:[0],
+ exp:"Without the ground-truth label available immediately, live accuracy can't be computed until the true outcome is eventually confirmed."},
+{part:"p12",topic:"monitoring",type:"single",q:"For a highly imbalanced fraud problem, the team eventually receives the true fraud labels. Which metric is particularly useful for measuring how many actual fraud cases were successfully caught?",
+ options:["Recall","Mean squared error","R²","Explained variance"],correct:[0],
+ exp:"Recall measures how many actual positive (fraud) cases were correctly caught, which is exactly the concern in a highly imbalanced fraud detection setting."},
+{part:"p12",topic:"frame",type:"single",q:"A fake-account detection system is being designed. The engineer immediately says, \"I'll use XGBoost.\" What important step should come first?",
+ options:["Frame the business problem and clarify requirements.","Deploy XGBoost immediately.","Choose the database after deployment.","Start monitoring before defining the problem."],correct:[0],
+ exp:"Before picking any specific algorithm, the business problem and system requirements should be framed and clarified first."},
+{part:"p12",topic:"frame",type:"single",q:"In the FRAME framework, what does the F represent?",
+ options:["Frame the problem","Feature scaling","Fast inference","Fault tolerance"],correct:[0],
+ exp:"In the FRAME framework, F stands for Frame the problem."},
+{part:"p12",topic:"frame",type:"single",q:"What is the correct order of the five FRAME stages taught in the notes?",
+ options:["Frame → Requirements → Architecture → Model selection → Evaluation","Features → Regression → Architecture → Monitoring → Evaluation","Frame → Model selection → Requirements → Evaluation → Architecture","Requirements → Frame → Model selection → Architecture → Evaluation"],correct:[0],
+ exp:"The FRAME stages in order are Frame → Requirements → Architecture → Model selection → Evaluation."},
+{part:"p12",topic:"frame",type:"multi",q:"During an ML system design interview, which questions belong to the Requirements stage?",
+ options:["How many users/requests must the system support?","How fresh must the prediction be?","Is the prediction needed immediately or can it be generated later?","What latency is acceptable?","Which neural network architecture has the highest accuracy?"],correct:[0,1,2,3],
+ exp:"Scale, freshness, timing, and latency questions all belong to the Requirements stage; picking a specific architecture/algorithm comes later, in the Model selection stage."},
+{part:"p12",topic:"frame",type:"single",q:"An ML engineer designing fake-account detection first asks:\n\"Why does the business care about fake accounts?\"\nWhy is this a strong system-design approach?",
+ options:["It connects the ML problem to the underlying business objective before selecting a technical solution.","Business objectives are irrelevant to ML systems.","It guarantees that a neural network is required.","It replaces the need for evaluation metrics."],correct:[0],
+ exp:"Starting with 'why does the business care' ensures the technical solution is grounded in the actual business objective, rather than jumping straight to a model choice."},
+{part:"p12",topic:"imbalance",type:"single",q:"A fake-account detection system has extremely imbalanced data: 99.5% legitimate accounts and 0.5% fake accounts. Which metrics should receive more attention than plain accuracy?",
+ options:["Recall, F1, and AUC","Only accuracy","RMSE and MAE","R² and explained variance"],correct:[0],
+ exp:"With extreme class imbalance, accuracy is misleading (predicting 'legitimate' always would score 99.5%), so recall, F1, and AUC deserve more attention."},
+{part:"p12",topic:"fraudexample",type:"multi",q:"For a fake-account detection system, which could reasonably be part of the data/features layer?",
+ options:["User information","Geographic information","Login frequency and timing","Transaction amounts","Rolling transaction features","Transaction-network/graph features","Only the final model prediction"],correct:[0,1,2,3,4,5],
+ exp:"All six categories are reasonable raw/engineered features feeding into a fake-account detection system; the final model prediction is the output, not an input feature."},
+{part:"p12",topic:"fraudexample",type:"single",q:"A system needs to process 100 fraud-related transactions per second and make a decision in roughly 100 ms while the overall payment experience should ideally remain around 500 ms. Which design principle is most important?",
+ options:["Design for low-latency online inference and fast online feature access.","Use only nightly batch inference.","Store all live features in a slow offline store.","Wait for labels before making the prediction."],correct:[0],
+ exp:"With a strict ~100ms decision requirement at high throughput, the system needs low-latency online inference backed by fast online feature access — not batch or slow offline storage."},
+{part:"p12",topic:"cloud",type:"multi",q:"A company is deciding between AWS, GCP, and Azure for a new ML system. Based on the notes, which statements are reasonable?",
+ options:["Cloud platforms are broadly interchangeable for many ML system-design decisions.","Cost and business partnerships can influence cloud choice.","Cloud choice should not distract from first deciding the actual ML architecture and requirements.","The team must choose the cloud provider before deciding whether inference should be batch or online.","AWS is always technically superior to GCP and Azure."],correct:[0,1,2],
+ exp:"Cloud platforms are largely interchangeable for ML design purposes, with choice often driven by cost/partnerships rather than technical superiority; the ML architecture/requirements should be decided independently of, and before, the specific cloud provider."},
+{part:"p12",topic:"e2e",type:"multi",q:"A team is asked in an interview:\n\"Design a machine-learning system to detect fake accounts.\"\nWhich responses demonstrate a strong system-design approach?",
+ options:["First explain the business problem and translate it into an ML problem.","Clarify scale, latency, and whether inference needs to be online or batch.","Discuss available data and feature generation.","Start with a simple baseline and justify increasing model complexity if necessary.","Choose appropriate evaluation metrics, especially for an imbalanced problem.","Discuss training-serving skew, monitoring, and retraining.","Immediately name a complex model without discussing requirements."],correct:[0,1,2,3,4,5],
+ exp:"A strong system-design answer covers business framing, requirements, data/features, a justified baseline, evaluation metrics, and production concerns like skew/monitoring/retraining — jumping straight to naming a complex model skips all of that."}
+);
+
+/* ---------------- PART 13: Gradient Boosting & XGBoost ---------------- */
+Q.push(
+{part:"p13",topic:"boostfund",type:"single",q:"A data scientist explains boosting to a colleague by saying, \"Instead of building one very powerful model, we build several weak models one after another, where each new model focuses on what the previous models got wrong.\" What concept is being described?",
+ options:["Bagging","Boosting","PCA","Stacking"],correct:[1],
+ exp:"Building weak models sequentially, each correcting the previous models' errors, is the definition of boosting."},
+{part:"p13",topic:"boostfund",type:"single",q:"Which statement best describes a weak learner in Gradient Boosting?",
+ options:["A simple model that performs only moderately well individually but contributes to a stronger ensemble.","A model that must always have 100% training accuracy.","A neural network with thousands of parameters.","A model that cannot make predictions without another model."],correct:[0],
+ exp:"A weak learner is a simple, moderately-performing model whose combined contributions with other weak learners form a strong ensemble."},
+{part:"p13",topic:"boostfund",type:"multi",q:"Which statements correctly describe Gradient Boosting?",
+ options:["Models are trained sequentially.","Each new model attempts to correct errors from previous models.","Decision trees are commonly used as the base learners.","The models' contributions are combined to form the final prediction.","All trees are trained completely independently on unrelated targets."],correct:[0,1,2,3],
+ exp:"These four correctly describe Gradient Boosting; trees are trained sequentially on the residual/error signal, not independently on unrelated targets (that would describe bagging)."},
+{part:"p13",topic:"residuals",type:"single",q:"A regression model initially predicts:\nActual:     100\nPrediction: 80\nWhat is the ordinary residual using Actual - Prediction?",
+ options:["-20","20","180","80"],correct:[1],
+ exp:"Residual = Actual − Prediction = 100 − 80 = 20."},
+{part:"p13",topic:"residuals",type:"single",q:"Why are ordinary residuals not sufficient as the general concept for Gradient Boosting?",
+ options:["Ordinary residuals work directly with squared-error regression, while negative gradients generalize the idea to other loss functions.","Residuals can only be calculated for classification.","Residuals are unrelated to prediction errors.","Residuals always produce exactly zero error."],correct:[0],
+ exp:"Ordinary residuals are specific to squared-error loss; negative gradients generalize the same 'what's still wrong' concept to any differentiable loss function."},
+{part:"p13",topic:"residuals",type:"single",q:"For squared-error regression, the negative gradient of the loss is proportional to the residual. What does this tell us?",
+ options:["For squared error, pseudo-residuals behave like ordinary residuals.","Gradient Boosting cannot be used for regression.","Residuals and gradients are always unrelated.","The learning rate becomes unnecessary."],correct:[0],
+ exp:"For squared-error loss specifically, the negative gradient reduces to the ordinary residual, showing these two concepts are consistent for that special case."},
+{part:"p13",topic:"residuals",type:"single",q:"A team changes its Gradient Boosting loss from squared error to another loss function. Why does the negative-gradient approach remain useful?",
+ options:["Because the negative gradient can be calculated for the new loss function.","Because residuals never depend on the loss function.","Because decision trees automatically change the loss function.","Because learning rate replaces the loss function."],correct:[0],
+ exp:"The negative-gradient framework generalizes across loss functions — you can always compute the gradient of whatever loss you choose, unlike plain residuals which are tied to squared error."},
+{part:"p13",topic:"algorithm",type:"multi",q:"Which steps occur during one iteration of Gradient Boosting?",
+ options:["Calculate pseudo-residuals using the negative gradient.","Train a new model/tree to predict those pseudo-residuals.","Add the new model's weighted contribution to the existing model.","Repeat the process for subsequent iterations.","Throw away all previous trees after training the new tree."],correct:[0,1,2,3],
+ exp:"Each iteration computes pseudo-residuals, trains a tree on them, adds its weighted contribution, and repeats; previous trees are kept, not discarded — they remain part of the cumulative ensemble."},
+{part:"p13",topic:"algorithm",type:"single",q:"Suppose the current model is:\nFj−1​(X)\nand the newly trained tree is:\nMj​(X)\nwith learning rate α. Which update correctly represents Gradient Boosting?",
+ options:["Fj​(X)=Fj−1​(X)+αMj​(X)","Fj​(X)=Fj−1​(X)−Mj​(X)","Fj​(X)=Mj​(X)/α","Fj​(X)=Fj−1​(X)×Mj​(X)"],correct:[0],
+ exp:"The Gradient Boosting update adds the new tree's prediction, scaled by the learning rate α, to the existing model: F_j = F_(j-1) + αM_j."},
+{part:"p13",topic:"algorithm",type:"single",q:"A Gradient Boosting model has:\nInitial prediction = 50\nTree prediction = 20\nLearning rate = 0.1\nWhat is the updated prediction after adding this tree?",
+ options:["52","70","48","50.1"],correct:[0],
+ exp:"50 + 0.1×20 = 50 + 2 = 52."},
+{part:"p13",topic:"algorithm",type:"single",q:"A Gradient Boosting model has an initial prediction of 66.75. The first tree predicts 10 and the learning rate is 0.1. What is the new prediction?",
+ options:["67.75","66.85","76.75","65.75"],correct:[0],
+ exp:"66.75 + 0.1×10 = 66.75 + 1 = 67.75."},
+{part:"p13",topic:"learningrate",type:"multi",q:"Why is the learning rate used in Gradient Boosting?",
+ options:["It controls how much each new tree contributes.","A small learning rate makes learning more gradual.","A large learning rate can make learning faster but less stable.","A small learning rate usually requires more trees.","A learning rate of 0 means every tree completely replaces the previous model."],correct:[0,1,2,3],
+ exp:"These four correctly describe the learning rate's role and trade-offs; a learning rate of 0 would mean trees contribute nothing at all, not that they replace the model."},
+{part:"p13",topic:"learningrate",type:"single",q:"A Gradient Boosting model uses learning_rate=0.01 instead of 0.1. What would generally be expected?",
+ options:["Slower learning and usually a need for more trees.","Faster learning with fewer trees in every case.","No change at all.","Immediate overfitting."],correct:[0],
+ exp:"A much smaller learning rate (0.01 vs 0.1) makes each tree's contribution tinier, generally requiring more trees to reach the same level of fit."},
+{part:"p13",topic:"learningrate",type:"single",q:"A model uses:\nlearning_rate=0.5\nWhat is the primary concern according to the notes?",
+ options:["Large updates may be unstable or overshoot.","The model cannot contain trees.","The model automatically becomes a Random Forest.","The model cannot perform classification."],correct:[0],
+ exp:"A relatively large learning rate like 0.5 risks unstable, overshooting updates that can hurt convergence."},
+{part:"p13",topic:"ntrees",type:"single",q:"Why does Gradient Boosting commonly use shallow trees such as max_depth=2–4?",
+ options:["Boosting works well by combining many weak learners rather than a few powerful trees.","Deep trees are required for every boosting iteration.","Shallow trees cannot overfit.","The algorithm only supports trees of depth 4."],correct:[0],
+ exp:"Boosting's strength comes from combining many shallow, weak trees sequentially, rather than relying on a few very deep, powerful trees."},
+{part:"p13",topic:"ntrees",type:"single",q:"A GBDT model uses:\nn_estimators=10\nand is underfitting. Which change could reasonably help?",
+ options:["Increase n_estimators.","Reduce n_estimators to 1.","Set learning_rate=0.","Remove all trees."],correct:[0],
+ exp:"If the model is underfitting with too few trees, adding more trees (increasing n_estimators) can help capture more structure."},
+{part:"p13",topic:"ntrees",type:"single",q:"A GBDT model uses 1,000 trees and achieves nearly perfect training performance but poor validation performance. What is the likely issue?",
+ options:["Overfitting","Underfitting","Data normalization","PCA compression"],correct:[0],
+ exp:"Near-perfect training performance with much worse validation performance is the classic signature of overfitting."},
+{part:"p13",topic:"ntrees",type:"multi",q:"Which hyperparameters can strongly affect the complexity/generalization of a GBDT model?",
+ options:["n_estimators","max_depth","learning_rate","subsample","max_features","random_state as a direct complexity-control parameter"],correct:[0,1,2,3,4],
+ exp:"n_estimators, max_depth, learning_rate, subsample, and max_features all directly influence model complexity/generalization; random_state only controls randomness reproducibility, not complexity."},
+{part:"p13",topic:"ntrees",type:"single",q:"A developer sets:\nGradientBoostingClassifier(\n    n_estimators=100,\n    max_depth=3,\n    learning_rate=0.1\n)\nWhat does n_estimators=100 represent?",
+ options:["Approximately 100 boosting stages/trees.","Maximum depth of every tree.","Learning rate of every tree.","Number of input features."],correct:[0],
+ exp:"n_estimators=100 sets the number of boosting stages (trees) in the ensemble."},
+{part:"p13",topic:"ntrees",type:"single",q:"What does max_depth=3 control?",
+ options:["The maximum depth of each individual decision tree.","The number of trees in the ensemble.","The number of training epochs.","The learning rate."],correct:[0],
+ exp:"max_depth controls how deep each individual tree can grow."},
+{part:"p13",topic:"ntrees",type:"single",q:"What is the main problem with simply continuing to add trees to a GBDT indefinitely?",
+ options:["The model can eventually memorize training noise and errors.","More trees always guarantee better test performance.","The learning rate automatically becomes zero.","Trees stop contributing after exactly 100 iterations."],correct:[0],
+ exp:"Adding trees indefinitely risks the ensemble eventually fitting noise in the training data — i.e., overfitting — rather than always improving test performance."},
+{part:"p13",topic:"stochastic",type:"single",q:"A data scientist wants to reduce GBDT overfitting by training each tree on only 80% of the rows. Which parameter is relevant in sklearn's GradientBoostingClassifier?",
+ options:["subsample=0.8","max_depth=0.8","learning_rate=0.8","n_estimators=0.8"],correct:[0],
+ exp:"subsample=0.8 controls the fraction of rows randomly sampled for training each tree."},
+{part:"p13",topic:"stochastic",type:"single",q:"What is the main effect of row subsampling in stochastic GBDT?",
+ options:["Different trees see different subsets of observations, reducing correlation and variance.","Every tree sees exactly the same training data.","It increases the depth of every tree.","It removes the need for a learning rate."],correct:[0],
+ exp:"Row subsampling exposes each tree to a different random subset of data, reducing correlation between trees and helping lower ensemble variance."},
+{part:"p13",topic:"stochastic",type:"single",q:"A GBDT model uses:\nmax_features=0.8\nWhat does this represent in the context of the notes?",
+ options:["Approximately 80% of features are considered for each tree.","80% of rows are removed permanently.","The learning rate becomes 0.8.","The model has 80 trees."],correct:[0],
+ exp:"max_features=0.8 means roughly 80% of the available features are considered when building each tree/split."},
+{part:"p13",topic:"stochastic",type:"multi",q:"What are potential benefits of column sampling in GBDT?",
+ options:["More diversity between trees.","Different trees can use different subsets of features.","It can help reduce overfitting.","It can improve generalization.","It guarantees higher training accuracy."],correct:[0,1,2,3],
+ exp:"Column sampling increases tree diversity, uses different feature subsets, and helps reduce overfitting/improve generalization — it does not guarantee higher training accuracy (it can even lower it slightly)."},
+{part:"p13",topic:"stochastic",type:"single",q:"Why is stochastic GBDT described as combining ideas from both Bagging and Boosting?",
+ options:["Boosting reduces bias through sequential learning, while random sampling helps reduce variance.","Both methods always train identical trees.","Bagging supplies the gradient while Boosting supplies the random rows.","They are mathematically identical algorithms."],correct:[0],
+ exp:"Boosting's sequential error correction reduces bias, while the random row/column sampling borrowed from Bagging-style ideas reduces variance — combining strengths of both."},
+{part:"p13",topic:"usecases",type:"single",q:"A team wants a model for a tabular fraud-detection dataset containing hundreds of thousands of rows and many numerical/categorical features. Which model family from the notes is a strong candidate?",
+ options:["GBDT/XGBoost/LightGBM","PCA only","t-SNE","K-Means only"],correct:[0],
+ exp:"For large tabular datasets with mixed numerical/categorical features, GBDT-family models (GBDT, XGBoost, LightGBM) are strong, standard candidates."},
+{part:"p13",topic:"usecases",type:"single",q:"Why are GBDT models particularly popular for tabular data?",
+ options:["Decision trees can effectively model structured feature relationships and boosting combines many such trees.","Tabular data can only be solved with decision trees.","GBDT is specifically designed for images.","GBDT requires every feature to be normally distributed."],correct:[0],
+ exp:"Tree-based splits naturally handle structured, mixed-type tabular features well, and boosting combines many such trees into a strong, accurate ensemble."},
+{part:"p13",topic:"usecases",type:"multi",q:"Which are examples of problems where GBDT is commonly used?",
+ options:["Fraud detection","Customer churn prediction","Risk assessment","Price prediction","Ranking problems","Image recognition as the primary recommended use case"],correct:[0,1,2,3,4],
+ exp:"Fraud, churn, risk, price prediction, and ranking are classic GBDT applications; raw image recognition is typically better handled by deep learning/CNNs, not GBDT as the primary approach."},
+{part:"p13",topic:"usecases",type:"single",q:"A team is building an image-classification system from raw pixels and is deciding whether to use GBDT or a neural network. Based on the notes, which is generally more appropriate?",
+ options:["Neural network","GBDT","K-Means","Linear regression"],correct:[0],
+ exp:"For raw pixel-based image classification, neural networks (especially CNNs) are generally the more appropriate choice over GBDT."},
+{part:"p13",topic:"usecases",type:"single",q:"A dataset contains points that require a diagonal decision boundary. Why might standard decision trees/GBDT be less efficient?",
+ options:["Tree splits are axis-parallel, so approximating a diagonal boundary may require many nested splits.","Trees can only handle one feature.","Trees cannot perform classification.","GBDT automatically rotates the feature axes."],correct:[0],
+ exp:"Since tree splits are always axis-aligned (parallel to feature axes), representing a diagonal boundary requires many small staircase-like splits, making it inefficient."},
+{part:"p13",topic:"xgboost",type:"single",q:"What is the key idea behind XGBoost?",
+ options:["It is an optimized and faster implementation of Gradient Boosted Decision Trees.","It replaces decision trees with neural networks.","It is a clustering algorithm.","It is simply Random Forest with a different name."],correct:[0],
+ exp:"XGBoost keeps the core Gradient Boosting idea but adds implementation-level optimizations for speed and scalability."},
+{part:"p13",topic:"xgboost",type:"multi",q:"Which optimizations in the notes help XGBoost become faster than standard GBDT?",
+ options:["Parallel feature evaluation","Parallel tree construction","Histogram-based binning","Testing fewer candidate split thresholds","Sequentially forcing every feature to wait for the previous one"],correct:[0,1,2,3],
+ exp:"Parallel feature evaluation, parallel tree construction aspects, histogram binning, and testing fewer thresholds all speed up XGBoost; forcing features to wait sequentially would be the opposite of a speed optimization."},
+{part:"p13",topic:"xgboost",type:"single",q:"Standard GBDT examines many possible split values for a feature. XGBoost instead groups values into a limited number of bins. What is this technique called?",
+ options:["Histogram-based binning","One-hot encoding","PCA projection","Gradient clipping"],correct:[0],
+ exp:"Grouping continuous feature values into a limited number of bins to speed up split evaluation is histogram-based binning."},
+{part:"p13",topic:"xgboost",type:"single",q:"Suppose a feature has 1,000 unique values. Standard tree construction may consider many potential thresholds, while XGBoost places those values into approximately 100 bins. What is the primary benefit?",
+ options:["Fewer candidate split points need to be evaluated.","The number of training rows becomes 100.","The number of features becomes 100.","The model no longer uses gradients."],correct:[0],
+ exp:"Binning 1,000 unique values into ~100 bins drastically reduces the number of candidate split thresholds that must be evaluated during tree construction."},
+{part:"p13",topic:"xgboost",type:"single",q:"Why can XGBoost evaluate different features in parallel during tree construction?",
+ options:["The evaluation of candidate splits across different features can be performed concurrently.","Boosting requires all features to be evaluated one after another.","Parallelism removes the need for decision trees.","It changes the model into Random Forest."],correct:[0],
+ exp:"Since evaluating splits for different features are independent computations, XGBoost can run them concurrently, speeding up tree construction."},
+{part:"p13",topic:"xgboost",type:"single",q:"Which statement correctly compares standard GBDT and XGBoost?",
+ options:["XGBoost keeps the Gradient Boosting idea but provides implementation optimizations for speed and scalability.","XGBoost is an entirely unrelated algorithm.","Standard GBDT always has higher accuracy.","XGBoost does not use decision trees."],correct:[0],
+ exp:"XGBoost is fundamentally still Gradient Boosting with decision trees — the key difference is its optimized, faster implementation."},
+{part:"p13",topic:"xgboost",type:"single",q:"A developer writes:\nmodel = xgb.XGBClassifier(\n    n_estimators=100,\n    max_depth=4,\n    learning_rate=0.1,\n    subsample=0.8,\n    colsample_bytree=0.8\n)\nWhat does colsample_bytree=0.8 control?",
+ options:["The fraction of features sampled for each tree.","The fraction of rows sampled for each tree.","The learning rate.","The number of trees."],correct:[0],
+ exp:"colsample_bytree controls what fraction of features are randomly sampled when building each tree."},
+{part:"p13",topic:"xgboost",type:"single",q:"What does subsample=0.8 generally mean in XGBoost?",
+ options:["Each tree uses approximately 80% of the training rows.","Each tree has depth 0.8.","80% of the trees are removed after training.","The learning rate is 0.8."],correct:[0],
+ exp:"subsample=0.8 means each tree trains on a randomly sampled 80% of the rows."},
+{part:"p13",topic:"lightgbm",type:"multi",q:"Which statements correctly describe LightGBM according to the notes?",
+ options:["It is another optimized Gradient Boosting implementation.","GOSS focuses on observations with large gradients.","EFB bundles mutually exclusive features.","It targets very large datasets and high-dimensional feature spaces.","GOSS means every data point is always treated equally.","EFB increases the number of features deliberately."],correct:[0,1,2,3],
+ exp:"These four correctly describe LightGBM, GOSS, and EFB; GOSS specifically prioritizes large-gradient points (not treating everything equally), and EFB reduces, not increases, the effective feature count."},
+{part:"p13",topic:"lightgbm",type:"single",q:"In LightGBM's GOSS approach, why are observations with large gradients considered important?",
+ options:["They represent points where the model is making larger errors and therefore contain more useful information for the next tree.","They are always the easiest observations.","They have already been perfectly predicted.","They contain no information about the loss."],correct:[0],
+ exp:"Large-gradient observations are where the model is currently performing worst, so they carry the most useful learning signal for correcting the next tree."},
+{part:"p13",topic:"lightgbm",type:"single",q:"A dataset contains 10,000 features, many of which are rarely non-zero simultaneously. Which LightGBM technique can bundle such mutually exclusive features?",
+ options:["EFB","GOSS","PCA","SMOTE"],correct:[0],
+ exp:"Exclusive Feature Bundling (EFB) is LightGBM's technique for bundling mutually exclusive (rarely simultaneously non-zero) features together to reduce dimensionality."},
+{part:"p13",topic:"lightgbm",type:"single",q:"What is the main purpose of EFB?",
+ options:["Reduce the effective number of features by bundling mutually exclusive features.","Remove observations with large gradients.","Increase the number of decision trees.","Replace trees with neural networks."],correct:[0],
+ exp:"EFB's core purpose is reducing the effective feature count by combining mutually exclusive features into bundles."},
+{part:"p13",topic:"lightgbm",type:"single",q:"A machine-learning engineer has a dataset with 1 billion rows and 10,000 features. Training standard GBDT is extremely slow. Which framework from the notes is specifically designed to address very large-scale datasets through techniques such as GOSS and EFB?",
+ options:["LightGBM","PCA","K-Means","Logistic Regression"],correct:[0],
+ exp:"LightGBM, with techniques like GOSS and EFB, is specifically built to handle very large-scale, high-dimensional datasets efficiently."},
+{part:"p13",topic:"tuning",type:"single",q:"A model is underfitting because its trees are too shallow and too few. Which combination would generally increase model capacity?",
+ options:["Increase n_estimators and/or max_depth.","Set learning_rate=0.","Reduce n_estimators and max_depth.","Set subsample=0."],correct:[0],
+ exp:"To increase model capacity for an underfitting model, adding more trees and/or allowing deeper trees increases complexity."},
+{part:"p13",topic:"tuning",type:"multi",q:"A team wants to tune a GBDT model using GridSearchCV. Which parameter combinations from the notes are reasonable candidates?\nparams = {\n    'n_estimators': [50, 100, 200],\n    'max_depth': [2, 3, 4, 5],\n    'learning_rate': [0.01, 0.1, 0.3],\n    'subsample': [0.7, 0.8, 0.9]\n}\nWhich statements are correct?",
+ options:["GridSearchCV can evaluate combinations of these hyperparameters.","n_estimators controls the number of boosting stages.","max_depth controls individual tree depth.","learning_rate controls the contribution of each tree.","subsample controls row sampling.","None of these parameters affects model behavior."],correct:[0,1,2,3,4],
+ exp:"All five statements correctly describe how GridSearchCV and these hyperparameters work together; obviously these parameters do affect model behavior, contrary to the last option."},
+{part:"p13",topic:"tuning",type:"single",q:"A data scientist uses:\nGridSearchCV(\n    GradientBoostingClassifier(),\n    params,\n    cv=5,\n    scoring='accuracy'\n)\nWhat does cv=5 represent?",
+ options:["Five-fold cross-validation.","Five trees.","Five features.","Five epochs."],correct:[0],
+ exp:"cv=5 in GridSearchCV specifies 5-fold cross-validation for evaluating each hyperparameter combination."},
+{part:"p13",topic:"tuning",type:"single",q:"A model configuration is:\nn_estimators=100\nmax_depth=3\nlearning_rate=0.1\nsubsample=0.8\nmax_features='sqrt'\nWhich description best matches it?",
+ options:["A GBDT model using many shallow trees, controlled learning rate, row sampling, and feature sampling.","A single deep decision tree.","A Random Forest with no boosting.","A neural network with five hidden layers."],correct:[0],
+ exp:"This configuration (100 estimators, depth 3, learning rate 0.1, subsample 0.8, max_features sqrt) describes a stochastic GBDT model with many shallow trees and regularization via sampling."},
+{part:"p13",topic:"comparison",type:"multi",q:"Which statements are important to remember when comparing Random Forest and GBDT?",
+ options:["Random Forest uses independently trained trees, while boosting builds trees sequentially.","Boosting focuses later trees on errors from earlier stages.","Stochastic GBDT can introduce row/column randomization to reduce variance.","Boosting cannot simply train every boosting tree independently because later trees depend on earlier predictions.","Random Forest and GBDT use exactly the same training strategy."],correct:[0,1,2,3],
+ exp:"These four correctly capture the key contrast: Random Forest trees are independent, while boosting trees are sequential and error-focused, with stochastic GBDT borrowing bagging-style randomization — the two are not the same training strategy."},
+{part:"p13",topic:"comparison",type:"multi",q:"An ML engineer is choosing between GBDT, XGBoost, and LightGBM for a large tabular fraud-detection problem. Which statements demonstrate a good understanding of the notes?",
+ options:["GBDT is a strong choice for structured/tabular data.","XGBoost is an optimized GBDT implementation focused on speed and scalability.","LightGBM uses techniques such as GOSS and EFB for large-scale efficiency.","Learning rate and number of trees should be tuned together.","Very deep trees should always be preferred because each tree should learn the entire problem.","Adding unlimited trees always improves generalization."],correct:[0,1,2,3],
+ exp:"These four correctly summarize GBDT/XGBoost/LightGBM and the learning-rate/n_estimators relationship; boosting favors many shallow trees (not very deep ones), and unlimited trees eventually overfit rather than always improving generalization."}
+);
+
+/* ---------------- PART 14: Hyperparameter Tuning & Experiment Tracking ---------------- */
+Q.push(
+{part:"p14",topic:"paramvship",type:"single",q:"A machine learning engineer trains a linear regression model and notices that the weights change automatically during training. The engineer also manually sets the learning rate before training. Which statement correctly distinguishes these two values?",
+ options:["The weights are hyperparameters and learning rate is a parameter.","The weights are parameters and learning rate is a hyperparameter.","Both weights and learning rate are parameters.","Both weights and learning rate are hyperparameters."],correct:[1],
+ exp:"Weights are learned automatically during training (parameters), while the learning rate is manually set beforehand (a hyperparameter)."},
+{part:"p14",topic:"paramvship",type:"single",q:"Which of the following is a hyperparameter?",
+ options:["Weight learned by linear regression","Bias learned by a neural network","max_depth of a decision tree","Coefficient learned during training"],correct:[2],
+ exp:"max_depth is set manually before training — a hyperparameter — unlike weights, biases, and coefficients, which are learned during training."},
+{part:"p14",topic:"paramvship",type:"multi",q:"Which of the following are commonly considered hyperparameters?",
+ options:["Learning rate","Batch size","Number of epochs","Regularisation strength","Neural-network dropout rate","Learned neural-network weights"],correct:[0,1,2,3,4],
+ exp:"Learning rate, batch size, epochs, regularization strength, and dropout rate are all hyperparameters set before training; learned weights are parameters, not hyperparameters."},
+{part:"p14",topic:"paramvship",type:"single",q:"A neural network starts with random weights and updates them using gradient descent. Which statement is correct?",
+ options:["The weights are hyperparameters because they are initialized before training.","The weights are parameters because they are learned from training data.","The weights are fixed throughout training.","The weights are selected by GridSearchCV."],correct:[1],
+ exp:"Even though weights start with random initial values, they are updated and learned during training via gradient descent — making them parameters, not hyperparameters."},
+{part:"p14",topic:"paramvship",type:"single",q:"A developer asks, \"Is there a mathematical formula that tells me the perfect learning rate for every dataset?\" What is the best answer?",
+ options:["Yes, learning_rate = 0.1 is always optimal.","Yes, the optimal learning rate depends only on dataset size.","No, hyperparameter values generally need to be found empirically.","Yes, the optimal value is always the square root of the number of features."],correct:[2],
+ exp:"There's no universal formula for the perfect learning rate — hyperparameters are generally tuned empirically through experimentation, like cross-validated search."},
+{part:"p14",topic:"biasvariance",type:"single",q:"A decision tree has max_depth=2 and is performing poorly because it cannot capture enough structure. What is the most likely issue?",
+ options:["Underfitting / high bias","Overfitting / high variance","Data leakage","Test-set contamination"],correct:[0],
+ exp:"A shallow tree (max_depth=2) that can't capture enough structure is underfitting, associated with high bias."},
+{part:"p14",topic:"biasvariance",type:"single",q:"A decision tree has max_depth=30 and achieves almost perfect training accuracy but much lower validation accuracy. What is the likely problem?",
+ options:["Underfitting","Overfitting","High bias","Insufficient model complexity"],correct:[1],
+ exp:"Near-perfect training accuracy with much lower validation accuracy for a very deep tree (max_depth=30) is a classic overfitting signature."},
+{part:"p14",topic:"biasvariance",type:"multi",q:"Which statements correctly describe the bias-variance trade-off?",
+ options:["Very simple models can have high bias.","Very complex models can have high variance.","Increasing model complexity can reduce bias but increase variance.","The goal is generally to find a configuration that generalizes well.","A more complex model always performs better on unseen data."],correct:[0,1,2,3],
+ exp:"These four correctly describe the bias-variance trade-off; more complexity does not always mean better unseen-data performance — that's exactly the trade-off being managed."},
+{part:"p14",topic:"biasvariance",type:"single",q:"A KNN classifier uses K=1 and perfectly memorizes many training examples but performs poorly on new data. Which explanation is most appropriate?",
+ options:["Very small K can lead to overfitting.","Large K always causes overfitting.","KNN does not have hyperparameters.","The model has high bias because K is too small."],correct:[0],
+ exp:"K=1 memorizes individual training points (nearest neighbor exactly matches), leading to overfitting on new data."},
+{part:"p14",topic:"biasvariance",type:"single",q:"A KNN model uses a very large value of K. What can happen?",
+ options:["The model may become too smooth and underfit.","The model always memorizes the training set.","The model automatically becomes a decision tree.","The model cannot make predictions."],correct:[0],
+ exp:"A very large K averages over many neighbors, smoothing out decision boundaries so much that the model can underfit."},
+{part:"p14",topic:"datasplits",type:"single",q:"A team has a dataset split into training, validation, and test sets. Which purpose is associated with the validation set?",
+ options:["Learning the model's weights.","Tuning hyperparameters and comparing configurations.","Final evaluation exactly once after all decisions are complete.","Replacing the training set."],correct:[1],
+ exp:"The validation set's role is tuning hyperparameters and comparing different model configurations, distinct from training (parameter learning) and testing (final evaluation)."},
+{part:"p14",topic:"datasplits",type:"single",q:"Why should the test set generally not be used repeatedly during hyperparameter tuning?",
+ options:["It causes data leakage and can lead to overly optimistic performance estimates.","The test set cannot contain labels.","Models cannot predict on test data.","Test data is always smaller than training data."],correct:[0],
+ exp:"Repeatedly using the test set for tuning decisions effectively leaks test information into model selection, producing overly optimistic, unreliable final performance estimates."},
+{part:"p14",topic:"datasplits",type:"multi",q:"Which statements correctly describe the roles of the three common dataset splits?",
+ options:["Training set → learn model parameters.","Validation set → tune hyperparameters and compare models.","Test set → final unbiased evaluation.","Test set → repeatedly select the best hyperparameters.","Validation set → permanently update model weights without training."],correct:[0,1,2],
+ exp:"These three correctly describe the roles of training, validation, and test sets; the test set should be used once for final evaluation, not repeatedly for hyperparameter selection."},
+{part:"p14",topic:"datasplits",type:"single",q:"A researcher evaluates 20 different hyperparameter configurations using the test set and chooses the configuration with the highest test accuracy. What is the main concern?",
+ options:["The test set has effectively influenced model selection.","Cross-validation automatically becomes unnecessary.","The model has no parameters.","The test set becomes larger."],correct:[0],
+ exp:"Choosing configurations based on repeated test-set evaluation means the test set has effectively been used for model selection, undermining its purpose as an unbiased final check."},
+{part:"p14",topic:"kfold",type:"single",q:"What is the main purpose of K-fold cross-validation?",
+ options:["To obtain a more reliable estimate of model performance by rotating the validation data across multiple folds.","To permanently increase the number of training examples.","To remove all hyperparameters.","To guarantee the globally optimal model."],correct:[0],
+ exp:"K-fold CV rotates which portion of data serves as validation, averaging results across folds for a more robust performance estimate than a single split."},
+{part:"p14",topic:"kfold",type:"single",q:"A dataset is divided into 5 folds. During one CV round, which arrangement is correct?",
+ options:["20% validation and 80% training.","80% validation and 20% training.","100% validation.","50% validation and 50% training."],correct:[0],
+ exp:"With 5 folds, each round uses 1/5 (20%) of the data as validation and the remaining 4/5 (80%) as training."},
+{part:"p14",topic:"kfold",type:"single",q:"With cv=5, how many times does each data point serve as part of the validation set?",
+ options:["0","1","5","It depends on the number of hyperparameters."],correct:[1],
+ exp:"With 5-fold CV, each data point serves as validation exactly once across the 5 rounds."},
+{part:"p14",topic:"kfold",type:"single",q:"A researcher performs 5-fold cross-validation and obtains:\nFold 1 = 0.90\nFold 2 = 0.85\nFold 3 = 0.88\nFold 4 = 0.92\nFold 5 = 0.85\nWhat is the average CV score?",
+ options:["0.80","0.86","0.88","0.92"],correct:[2],
+ exp:"Average = (0.90+0.85+0.88+0.92+0.85)/5 = 4.40/5 = 0.88."},
+{part:"p14",topic:"kfold",type:"single",q:"Why might a single train-validation split be less reliable than K-fold cross-validation?",
+ options:["Its result can depend heavily on which observations happen to fall into the validation set.","It always produces a higher score.","It cannot calculate accuracy.","It requires no training."],correct:[0],
+ exp:"A single split's estimate can be noisy and depend heavily on the particular random split, which is exactly what K-fold CV averages away."},
+{part:"p14",topic:"kfold",type:"single",q:"When is Stratified K-fold especially useful?",
+ options:["When class proportions need to be preserved across folds, especially with imbalanced classification.","When there are no labels.","Only for regression.","Only for neural networks."],correct:[0],
+ exp:"Stratified K-fold is specifically useful for preserving class proportions across folds, which matters most for imbalanced classification problems."},
+{part:"p14",topic:"gridsearch",type:"single",q:"A developer creates this parameter grid:\nparam_grid = {\n    \"n_estimators\": [50, 100, 200],\n    \"max_depth\": [3, 5]\n}\nHow many hyperparameter combinations are there?",
+ options:["2","3","5","6"],correct:[3],
+ exp:"3 values for n_estimators × 2 values for max_depth = 6 combinations."},
+{part:"p14",topic:"gridsearch",type:"single",q:"The grid in the previous question is evaluated using 5-fold cross-validation. How many model fits are required?",
+ options:["6","11","30","35"],correct:[2],
+ exp:"6 combinations × 5 folds = 30 model fits."},
+{part:"p14",topic:"gridsearch",type:"single",q:"A GridSearchCV configuration contains:\n'n_estimators': [3, 5, 10]\n'max_depth': [3, 5, 10]\nwith cv=5. How many total fits are performed?",
+ options:["9","15","45","50"],correct:[2],
+ exp:"3 values × 3 values = 9 combinations; 9 × 5 folds = 45 total fits."},
+{part:"p14",topic:"gridsearch",type:"single",q:"What is the primary idea behind GridSearchCV?",
+ options:["Explicitly test every combination of specified hyperparameter values.","Randomly test exactly one configuration.","Automatically test every possible value in the universe.","Stop after the first successful model."],correct:[0],
+ exp:"GridSearchCV exhaustively tests every combination of the specified hyperparameter values."},
+{part:"p14",topic:"gridsearch",type:"multi",q:"Which are advantages or characteristics of grid search?",
+ options:["It systematically evaluates specified combinations.","It is easy to understand.","It can become computationally expensive as the grid grows.","It can be combined with cross-validation.","It guarantees the global optimum regardless of the search range."],correct:[0,1,2,3],
+ exp:"These four correctly describe grid search's characteristics; it can only find the best value within the specified grid, not guarantee a true global optimum beyond that search range."},
+{part:"p14",topic:"gridsearch",type:"single",q:"Why can GridSearchCV become extremely expensive?",
+ options:["The number of combinations can grow rapidly as more hyperparameters and values are added.","Cross-validation eliminates all training.","Grid search trains only one model.","Hyperparameters are learned automatically."],correct:[0],
+ exp:"Grid search's combinatorial nature means adding more hyperparameters or more values per parameter causes the number of combinations (and total training cost) to grow rapidly."},
+{part:"p14",topic:"randomsearch",type:"single",q:"A researcher has 50 possible combinations and wants to evaluate only 10 randomly selected configurations. Which approach is appropriate?",
+ options:["GridSearchCV","RandomizedSearchCV","train_test_split","classification_report"],correct:[1],
+ exp:"Sampling only a fixed number of random configurations out of a larger space is exactly what RandomizedSearchCV is designed for."},
+{part:"p14",topic:"randomsearch",type:"single",q:"What is the major advantage of RandomizedSearchCV over a large exhaustive grid?",
+ options:["It can explore a large search space using a fixed number of sampled configurations.","It always tests every possible combination.","It never uses cross-validation.","It guarantees the optimal configuration."],correct:[0],
+ exp:"RandomizedSearchCV's key advantage is exploring a large space efficiently by sampling only a fixed, controllable number of configurations, rather than testing everything exhaustively."},
+{part:"p14",topic:"randomsearch",type:"multi",q:"Which statements correctly describe randomized search?",
+ options:["It samples configurations from defined distributions/ranges.","n_iter controls how many configurations are sampled.","It can be much faster than an exhaustive grid.","It may find a configuration comparable to the best grid-search result with fewer runs.","It guarantees the global optimum."],correct:[0,1,2,3],
+ exp:"These four correctly describe randomized search's mechanics and benefits; it does not guarantee finding the true global optimum, since it only samples a subset of the space."},
+{part:"p14",topic:"randomsearch",type:"single",q:"Consider:\nrandom_search = RandomizedSearchCV(\n    model,\n    param_dist,\n    n_iter=20,\n    cv=5,\n    random_state=42\n)\nHow many model fits are performed, ignoring any additional implementation-specific refitting?",
+ options:["20","25","100","200"],correct:[0],
+ exp:"n_iter=20 means 20 sampled configurations are evaluated (the base number of fits, before considering CV folds per configuration in some interpretations); per the question's framing (ignoring additional refitting), this is 20."},
+{part:"p14",topic:"randomsearch",type:"single",q:"What is the purpose of random_state=42 in a randomized search?",
+ options:["It helps make the random sampling reproducible.","It increases model accuracy.","It controls the number of folds.","It determines the learning rate."],correct:[0],
+ exp:"random_state fixes the random seed so the same set of sampled configurations is produced on repeated runs, ensuring reproducibility."},
+{part:"p14",topic:"earlystop",type:"single",q:"A neural network reaches its best validation accuracy at epoch 75. From epoch 76 onward, validation accuracy does not improve. Which technique can automatically stop training?",
+ options:["Early stopping","Grid search","PCA","Bagging"],correct:[0],
+ exp:"Automatically halting training once validation performance stops improving is early stopping."},
+{part:"p14",topic:"earlystop",type:"single",q:"Early stopping is particularly associated with which type of training?",
+ options:["Epoch-based iterative training such as neural networks.","A one-time linear regression calculation only.","K-Means initialization only.","Data preprocessing only."],correct:[0],
+ exp:"Early stopping is designed for iterative, epoch-based training processes like neural networks, where performance can be monitored across successive training steps."},
+{part:"p14",topic:"earlystop",type:"multi",q:"Which statements correctly describe early stopping?",
+ options:["It can stop training when a monitored validation metric stops improving.","It can reduce wasted computation.","It can help prevent unnecessary over-training.","It can identify the point where validation performance peaks.","It guarantees the globally optimal hyperparameters."],correct:[0,1,2,3],
+ exp:"These four correctly describe early stopping's behavior and benefits; it does not guarantee globally optimal hyperparameters — it only controls training duration for a given configuration."},
+{part:"p14",topic:"advsearch",type:"single",q:"Which hyperparameter search strategy starts with many configurations using limited resources, eliminates weaker configurations, and gives more resources to survivors?",
+ options:["Successive halving","Grid search","Random forest","PCA"],correct:[0],
+ exp:"Starting with many configurations under limited resources, then progressively eliminating weaker ones and giving survivors more resources, is successive halving."},
+{part:"p14",topic:"advsearch",type:"single",q:"Which strategy uses previous experiment results to intelligently decide which hyperparameter configuration to try next?",
+ options:["Bayesian optimisation","GridSearchCV","Random train-test split","StandardScaler"],correct:[0],
+ exp:"Bayesian optimization uses the results of previous trials to intelligently decide which configuration to try next, unlike grid/random search which don't adapt based on past results."},
+{part:"p14",topic:"methodology",type:"single",q:"A developer changes the learning rate, model architecture, preprocessing, and feature selection all at once and sees an improved score. Why is this poor experimental practice?",
+ options:["The developer cannot determine which change caused the improvement.","Multiple changes always reduce accuracy.","Hyperparameters cannot be changed together.","Cross-validation becomes impossible."],correct:[0],
+ exp:"Changing multiple variables simultaneously makes it impossible to attribute the observed improvement to any specific change — good experimental practice isolates one variable at a time."},
+{part:"p14",topic:"exptrack",type:"single",q:"What is experiment tracking in machine learning?",
+ options:["Systematically recording configurations, data, code versions, metrics, and results for ML runs.","Only storing the final model.","Saving the test accuracy in a notebook once.","Automatically increasing the model's accuracy."],correct:[0],
+ exp:"Experiment tracking means systematically recording all relevant details of an ML run — configs, data/code versions, metrics — not just the final accuracy or model file."},
+{part:"p14",topic:"exptrack",type:"multi",q:"Which information should ideally be recorded for every ML experiment?",
+ options:["Dataset name and version","Git/code version","Hyperparameter values","Random seed","Evaluation metrics","Training/inference time","Comments describing what changed","Only the final accuracy"],correct:[0,1,2,3,4,5,6],
+ exp:"A thorough experiment record should capture all seven of these fields; recording only the final accuracy is insufficient for reproducibility and comparison."},
+{part:"p14",topic:"exptrack",type:"single",q:"Two experiments use exactly the same code and hyperparameters, but one uses a different dataset version. Why might comparing their scores be misleading?",
+ options:["The data changed, so the experiments are not directly comparable.","Dataset versions never affect ML results.","Hyperparameters automatically change with the dataset.","Git prevents model training."],correct:[0],
+ exp:"Since the dataset itself differs between the two runs, any score difference could stem from the data change rather than the code/hyperparameters, making direct comparison misleading."},
+{part:"p14",topic:"exptrack",type:"single",q:"An engineer does not record the random seed. Later, they cannot reproduce the exact result of an earlier experiment. Which principle was violated?",
+ options:["Reproducibility","Dimensionality reduction","Feature scaling","Cross-validation"],correct:[0],
+ exp:"Failing to record the random seed and being unable to reproduce an earlier result is exactly a reproducibility failure."},
+{part:"p14",topic:"mlflow",type:"single",q:"Which tool is specifically described in the notes as providing an experiment dashboard and automatic scikit-learn logging?",
+ options:["MLflow","NumPy","Matplotlib","Seaborn"],correct:[0],
+ exp:"MLflow is specifically cited as providing an experiment dashboard and automatic scikit-learn logging."},
+{part:"p14",topic:"mlflow",type:"single",q:"What does this MLflow code do?\nwith mlflow.start_run():\n    mlflow.log_param(\"max_depth\", 5)\n    mlflow.log_metric(\"f1_score\", f1)",
+ options:["It records a hyperparameter and a metric for an experiment run.","It trains a neural network.","It performs GridSearchCV.","It permanently changes max_depth to 5."],correct:[0],
+ exp:"mlflow.log_param and mlflow.log_metric simply record the given hyperparameter value and metric under the current tracked run — they don't train anything or alter the model."},
+{part:"p14",topic:"mlflow",type:"multi",q:"Which tools from the notes can be used for experiment tracking or related versioning?",
+ options:["MLflow","Weights & Biases","TensorBoard","Git/GitHub","DVC","Standard Python logging"],correct:[0,1,2,3,4,5],
+ exp:"All six of these tools are cited as usable for experiment tracking or related versioning (models, code, data, or metrics)."},
+{part:"p14",topic:"modelselect",type:"single",q:"A team has three models:\nModel A: F1=0.91, Training time=5 min, Inference=10 ms\nModel B: F1=0.92, Training time=4 hours, Inference=2 sec\nModel C: F1=0.90, Training time=2 min, Inference=8 ms\nWhich statement best reflects proper model selection?",
+ options:["Always choose B because it has the highest F1.","Consider F1 together with training time, inference latency, model size, interpretability and reproducibility.","Always choose C because it trains fastest.","Ignore inference time because only validation score matters."],correct:[1],
+ exp:"Proper model selection weighs multiple practical factors together — not just the raw F1 score or training speed alone."},
+{part:"p14",topic:"modelselect",type:"single",q:"Why is inference latency important when selecting a production model?",
+ options:["A highly accurate model may still be impractical if predictions take too long.","Inference latency affects only training.","Latency has no relationship to deployment.","A slower model always has lower accuracy."],correct:[0],
+ exp:"Even a very accurate model can be unusable in production if its inference latency doesn't meet the application's real-time requirements."},
+{part:"p14",topic:"finaleval",type:"single",q:"A researcher finishes hyperparameter tuning using the training/validation data. What should generally happen next?",
+ options:["Evaluate the selected best model on the untouched test set.","Restart GridSearchCV using the test set.","Change the hyperparameters based on test performance.","Delete the validation results."],correct:[0],
+ exp:"After tuning is complete using training/validation data, the correct final step is a single evaluation of the chosen model on the untouched test set."},
+{part:"p14",topic:"finaleval",type:"single",q:"Consider:\ngrid_search.fit(X_train, y_train)\nbest_model = grid_search.best_estimator_\ntest_score = best_model.score(X_test, y_test)\nWhy is this workflow appropriate?",
+ options:["Hyperparameters were selected using training/CV information, and the test set is used afterward for final evaluation.","The test set determines best_estimator_.","GridSearchCV trains directly on the test set.","The test set is used repeatedly during tuning."],correct:[0],
+ exp:"This workflow correctly keeps the test set untouched during tuning (grid_search.fit uses X_train/y_train) and only evaluates on it once, afterward, for an unbiased final score."},
+{part:"p14",topic:"e2eworkflow",type:"multi",q:"A team wants its ML experiments to be reproducible. Which practices help?",
+ options:["Record the random seed.","Version the dataset.","Record the Git commit/code version.","Record hyperparameter values.","Save the trained model artifact.","Record important metrics.","Keep changing several experimental variables without recording them."],correct:[0,1,2,3,4,5],
+ exp:"These six practices all support reproducibility; changing multiple variables without recording them is exactly the anti-pattern that breaks reproducibility."},
+{part:"p14",topic:"e2eworkflow",type:"multi",q:"An ML engineer is designing a complete tuning and experiment workflow. Which sequence represents a sound approach?",
+ options:["Split data into training/test sets.","Use cross-validation on training data for tuning.","Search hyperparameters using GridSearchCV or RandomizedSearchCV.","Select the best configuration based on validation/CV performance.","Evaluate the final selected model on the test set.","Record data version, code version, hyperparameters, seed, metrics and artifacts.","Repeatedly use the test set to decide which hyperparameters to try next."],correct:[0,1,2,3,4,5],
+ exp:"This is the sound end-to-end workflow: split, tune with CV on training data, select the best config, do one final test evaluation, and track everything — repeatedly consulting the test set during tuning would defeat its purpose as an unbiased final check."}
+);
+
+/* ---------------- PART 15: SHAP & Model Interpretability ---------------- */
+Q.push(
+{part:"p15",topic:"interpretfund",type:"single",q:"A machine-learning model predicts that a particular machine has an 85% probability of failure. The engineering team wants to understand why this particular machine received such a high prediction. Which type of explanation are they looking for?",
+ options:["Global explanation","Local explanation","Dataset-level normalization","Feature scaling"],correct:[1],
+ exp:"Explaining why one specific machine received a particular prediction is a local explanation, focused on an individual instance."},
+{part:"p15",topic:"interpretfund",type:"single",q:"A data scientist wants to understand which features generally drive predictions across thousands of machine-failure predictions. Which type of explanation is most appropriate?",
+ options:["Local explanation","Global explanation","Single-instance explanation","Individual residual analysis"],correct:[1],
+ exp:"Understanding which features generally drive predictions across many instances is a global explanation."},
+{part:"p15",topic:"interpretfund",type:"multi",q:"Which statements correctly describe model interpretability?",
+ options:["It helps understand how a model arrives at its predictions.","It is especially important in high-stakes applications such as healthcare.","It guarantees that the model's predictions are correct.","It can help turn a raw prediction into a meaningful explanation."],correct:[0,1,3],
+ exp:"Interpretability helps explain how/why a model predicts what it does, which matters especially in high-stakes domains — but it never guarantees the predictions themselves are correct."},
+{part:"p15",topic:"interpretfund",type:"single",q:"A medical AI model predicts that a patient has a disease, but the doctor asks, \"Why did the model make this prediction?\" What concept is the doctor asking for?",
+ options:["Model training","Explanation","Feature scaling","Hyperparameter tuning"],correct:[1],
+ exp:"The doctor is asking for an explanation of why the model made this particular prediction."},
+{part:"p15",topic:"interpretfund",type:"single",q:"Which model is generally the easiest to interpret by directly inspecting how it makes predictions?",
+ options:["Neural network","XGBoost","Decision tree","Random forest"],correct:[2],
+ exp:"A decision tree's predictions can be directly traced through its branches, making it the most inherently interpretable of these options."},
+{part:"p15",topic:"interpretfund",type:"multi",q:"According to the notes, which models generally have lower interpretability because of their complexity?",
+ options:["Random forest","XGBoost","Neural network","Simple linear regression"],correct:[0,1,2],
+ exp:"Random forest, XGBoost, and neural networks are all complex ensemble/nonlinear models with lower inherent interpretability; simple linear regression is comparatively transparent."},
+{part:"p15",topic:"interpretfund",type:"single",q:"Why is a neural network often described as a \"black box\" model?",
+ options:["It cannot produce numerical predictions.","It may contain millions of parameters, weights, and nonlinear relationships that make individual feature effects difficult to trace.","It only works with categorical data.","It does not use features during prediction."],correct:[1],
+ exp:"The sheer scale and nonlinearity of a neural network's parameters make it hard to trace how any single feature affects the output — hence 'black box.'"},
+{part:"p15",topic:"shapley",type:"single",q:"SHAP is primarily based on which concept from mathematics/game theory?",
+ options:["Gradient descent","Shapley values","Principal components","Euclidean distance"],correct:[1],
+ exp:"SHAP is built on Shapley values, a concept from cooperative game theory."},
+{part:"p15",topic:"shapley",type:"single",q:"In the house-building analogy, four laborers generate ₹100,000 of profit. Three contribute 30% each and one contributes 10%. If profit is divided proportionally, how much does each 30%-contributor receive?",
+ options:["₹10,000","₹20,000","₹30,000","₹40,000"],correct:[2],
+ exp:"30% of ₹100,000 = ₹30,000 for each of the three equal contributors."},
+{part:"p15",topic:"shapley",type:"single",q:"In the SHAP analogy, what does a feature represent in the cooperative game?",
+ options:["The final profit","A laborer contributing toward the result","The model itself","The training dataset"],correct:[1],
+ exp:"In the analogy, each feature is like a laborer contributing toward the final outcome (prediction/profit)."},
+{part:"p15",topic:"shapley",type:"multi",q:"Which statements correctly describe the basic idea behind Shapley values?",
+ options:["They distribute credit according to contribution.","A feature's contribution can be examined by comparing predictions with and without that feature.","They are only applicable to neural networks.","They provide a principled way of assigning contribution among features."],correct:[0,1,3],
+ exp:"Shapley values distribute credit fairly based on contribution (comparing with/without a feature), and this framework applies broadly, not just to neural networks."},
+{part:"p15",topic:"shapley",type:"single",q:"Suppose a model using income and age predicts a loan approval probability of 0.60. After adding credit score, the prediction becomes 0.75. What is the marginal contribution of credit score in this example?",
+ options:["0.05","0.10","0.15","0.75"],correct:[2],
+ exp:"Marginal contribution = 0.75 − 0.60 = 0.15."},
+{part:"p15",topic:"shapformula",type:"single",q:"Which expression represents the core SHAP prediction decomposition?",
+ options:["Prediction = Variance + Mean","Prediction = Base value + Feature contributions","Prediction = Accuracy − Loss","Prediction = Features × Samples"],correct:[1],
+ exp:"The core SHAP decomposition is: Prediction = Base value + sum of feature contributions."},
+{part:"p15",topic:"shapformula",type:"single",q:"What does the SHAP base value (π₀) represent?",
+ options:["The prediction for the best-performing sample","The average model prediction over the training data","The largest feature contribution","The prediction after removing all negative features"],correct:[1],
+ exp:"The SHAP base value represents the average model output over the training/background dataset, before any individual feature contributions are added."},
+{part:"p15",topic:"shapformula",type:"single",q:"A model has a base value of 0.30. Feature contributions are:\nF1 = +0.40\nF2 = +0.25\nF3 = −0.10\nWhat is the final prediction?",
+ options:["0.55","0.75","0.85","0.95"],correct:[2],
+ exp:"0.30 + 0.40 + 0.25 − 0.10 = 0.85."},
+{part:"p15",topic:"shapformula",type:"single",q:"A SHAP value for \"temperature\" is +0.20 for a particular prediction. What does this generally mean?",
+ options:["Temperature pushes the prediction upward relative to the base value.","Temperature has no effect.","Temperature decreases the prediction by 20%.","Temperature is necessarily the real-world cause of the prediction."],correct:[0],
+ exp:"A positive SHAP value of +0.20 means temperature pushed this prediction upward, relative to the base value, by 0.20."},
+{part:"p15",topic:"shapformula",type:"single",q:"A feature has a SHAP value of −0.15 for a particular prediction. What does this indicate?",
+ options:["The feature pushes the prediction downward.","The feature increases the prediction.","The feature is always useless.","The feature must be removed from the dataset."],correct:[0],
+ exp:"A negative SHAP value means the feature pulled the prediction downward relative to the base value."},
+{part:"p15",topic:"shapproperties",type:"multi",q:"Which are properties of Shapley values mentioned in the notes?",
+ options:["Efficiency","Symmetry","Missingness / irrelevance","Additivity","Randomness"],correct:[0,1,2,3],
+ exp:"Efficiency, symmetry, missingness/irrelevance, and additivity are the four core Shapley properties described in the notes; randomness is not one of them."},
+{part:"p15",topic:"shapproperties",type:"single",q:"The SHAP efficiency property means:",
+ options:["Every feature must have the same SHAP value.","The sum of the base value and all feature contributions equals the final prediction.","Only the most important feature receives a contribution.","SHAP must run efficiently in terms of computation time."],correct:[1],
+ exp:"Efficiency means the base value plus all feature SHAP values exactly sum to the final prediction — nothing is left unaccounted for."},
+{part:"p15",topic:"shapproperties",type:"single",q:"Two features contribute equally across every possible subset of features. According to the symmetry property, what should happen?",
+ options:["One feature should receive twice the SHAP value.","Both features should receive the same SHAP value.","Both features should receive zero.","Their values should be ignored."],correct:[1],
+ exp:"By the symmetry property, features that contribute identically across all possible subsets must receive equal SHAP values."},
+{part:"p15",topic:"shapproperties",type:"single",q:"A feature never changes a model's prediction regardless of whether it is present or absent. According to the missingness/irrelevance property, its SHAP value should be:",
+ options:["+1","−1","0","Equal to the base value"],correct:[2],
+ exp:"By the missingness/irrelevance property, a feature that never affects the prediction (present or absent) should receive a SHAP value of exactly 0."},
+{part:"p15",topic:"shapproperties",type:"single",q:"Feature A has a SHAP contribution of +10 and Feature B has +20. According to the additivity property, what is their combined additive contribution?",
+ options:["10","20","30","200"],correct:[2],
+ exp:"By additivity, individual contributions sum directly: 10 + 20 = 30."},
+{part:"p15",topic:"shapproperties",type:"multi",q:"Which statements correctly describe SHAP contributions?",
+ options:["Positive SHAP values push predictions upward.","Negative SHAP values push predictions downward.","SHAP values can be combined to reconstruct the prediction with the base value.","A positive SHAP value automatically proves that the feature causes the real-world outcome."],correct:[0,1,2],
+ exp:"These three correctly describe SHAP value direction and additivity; SHAP values reflect the model's behavior, not proof of real-world causation."},
+{part:"p15",topic:"shapcalc",type:"single",q:"A model has:\nBase value = 0.25\nF1 = +0.30\nF2 = −0.15\nF3 = −0.05\nF4 = +0.10\nF5 = +0.10\nWhat is the final prediction?",
+ options:["0.30","0.45","0.55","0.75"],correct:[2],
+ exp:"0.25 + 0.30 − 0.15 − 0.05 + 0.10 + 0.10 = 0.55."},
+{part:"p15",topic:"shapcalc",type:"single",q:"A student-risk model has:\nBase prediction = 0.47\nLow attendance = +0.25\nPoor quiz performance = +0.18\nFeature A = −0.10\nFeature B = −0.08\nApproximately what is the final prediction?",
+ options:["0.52","0.62","0.72","0.92"],correct:[2],
+ exp:"0.47 + 0.25 + 0.18 − 0.10 − 0.08 = 0.72."},
+{part:"p15",topic:"shapcalc",type:"single",q:"A team calculates the individual contributions of two features as +18 and +14. They then observe that their coalition contribution is 24 rather than 32. What concept from the notes best explains this?",
+ options:["Individual feature contributions must always be summed directly.","Joint feature effects are not necessarily equal to the naive sum of standalone contributions.","SHAP does not support multiple features.","The base value must always be zero."],correct:[1],
+ exp:"When features interact, their joint contribution can differ from the naive sum of their standalone contributions — captured by Shapley values accounting for interaction effects across coalitions."},
+{part:"p15",topic:"shapplots",type:"single",q:"Which SHAP plot is most suitable for explaining one individual prediction by showing how features push the base value toward the final prediction?",
+ options:["Bar plot","Summary plot","Waterfall plot","Histogram"],correct:[2],
+ exp:"A waterfall plot is specifically designed to show how individual feature contributions move one prediction from the base value to the final output."},
+{part:"p15",topic:"shapplots",type:"single",q:"A data scientist wants to rank features according to their overall importance across the dataset using a simple bar chart. Which SHAP plot should they use?",
+ options:["Waterfall plot","Bar plot","Dependence plot","Scatter residual plot"],correct:[1],
+ exp:"A simple bar chart ranking overall feature importance across the dataset is the SHAP bar plot."},
+{part:"p15",topic:"shapplots",type:"single",q:"Which SHAP plot shows how a feature's actual value relates to its SHAP contribution?",
+ options:["Waterfall plot","Bar plot","Dependence plot","Confusion matrix"],correct:[2],
+ exp:"A dependence plot shows the relationship between a feature's actual value and its corresponding SHAP contribution."},
+{part:"p15",topic:"shapplots",type:"multi",q:"Which statements about the SHAP summary plot are correct according to the notes?",
+ options:["It ranks features by importance/impact across the dataset.","Feature values are represented using colors.","Red represents high feature values and blue represents low feature values.","It is designed only to explain one individual prediction."],correct:[0,1,2],
+ exp:"The summary plot ranks features by overall impact and uses color (red=high, blue=low feature value) to show value patterns — it explains dataset-wide behavior, not just one prediction."},
+{part:"p15",topic:"shapplots",type:"single",q:"A data scientist wants to understand whether increasing machine temperature tends to increase its contribution toward predicted failure. Which plot is particularly useful?",
+ options:["Dependence plot","Waterfall plot","Confusion matrix","Bar plot only"],correct:[0],
+ exp:"To see whether increasing temperature tends to increase its SHAP contribution, a dependence plot (feature value vs. SHAP value) is the right tool."},
+{part:"p15",topic:"explainers",type:"single",q:"A random forest classifier has already been trained. Which SHAP explainer from the notes is specifically suited to tree-based models?",
+ options:["LinearExplainer","TreeExplainer","DeepExplainer","KernelExplainer"],correct:[1],
+ exp:"TreeExplainer is specifically optimized for tree-based models like random forests."},
+{part:"p15",topic:"explainers",type:"single",q:"A team wants to explain a linear regression model using SHAP. Which explainer is the appropriate choice?",
+ options:["TreeExplainer","DeepExplainer","LinearExplainer","GradientExplainer"],correct:[2],
+ exp:"LinearExplainer is the appropriate SHAP explainer for linear models."},
+{part:"p15",topic:"explainers",type:"single",q:"A data scientist wants a model-agnostic SHAP approach that can be used with a model such as an SVM. Which explainer should they consider?",
+ options:["KernelExplainer","TreeExplainer","LinearExplainer","DeepExplainer"],correct:[0],
+ exp:"KernelExplainer is the model-agnostic SHAP approach usable with any model type, including SVMs."},
+{part:"p15",topic:"explainers",type:"single",q:"A deep neural network needs to be interpreted using SHAP. Which explainer is specifically associated with deep learning models?",
+ options:["TreeExplainer","LinearExplainer","DeepExplainer","KernelExplainer"],correct:[2],
+ exp:"DeepExplainer is specifically designed for deep neural networks."},
+{part:"p15",topic:"explainers",type:"multi",q:"Match the SHAP explainers with their appropriate model families.",
+ options:["TreeExplainer → Decision tree / Random forest / XGBoost","LinearExplainer → Linear models","KernelExplainer → Model-agnostic models such as SVM","DeepExplainer → Deep neural networks","TreeExplainer → Only linear regression"],correct:[0,1,2,3],
+ exp:"These four correctly match each explainer to its appropriate model family; TreeExplainer is for tree-based models, not linear regression."},
+{part:"p15",topic:"workflow",type:"single",q:"Consider the following workflow:\nexplainer = shap.Explainer(model)\nshap_values = explainer(X)\nWhat is the purpose of this workflow?",
+ options:["Train the machine-learning model from scratch.","Create a SHAP explainer around a trained model and calculate SHAP explanations.","Normalize the input features.","Calculate model accuracy only."],correct:[1],
+ exp:"shap.Explainer(model) wraps an already-trained model, and calling it on X computes SHAP values/explanations for those inputs."},
+{part:"p15",topic:"workflow",type:"single",q:"A team trains a RandomForestClassifier and then wants to apply SHAP. Which sequence is most appropriate?",
+ options:["SHAP → train model → prediction","Train model → create SHAP explainer → calculate SHAP values → visualize","Scale SHAP values → train model → calculate accuracy","Plot SHAP → train model → split data"],correct:[1],
+ exp:"The correct order is: train the model first, then wrap it in a SHAP explainer, calculate SHAP values, and finally visualize them."},
+{part:"p15",topic:"leakage",type:"single",q:"A hospital model uses a feature called \"treatment given\" to predict whether a patient has a disease. Treatment is only decided after diagnosis. SHAP shows that this feature has a very large contribution. What problem could this reveal?",
+ options:["Underfitting","Data leakage","Normalization error","Class imbalance"],correct:[1],
+ exp:"A feature that's only known after the outcome is determined (treatment given after diagnosis) having huge influence signals data leakage — future information leaking into the model."},
+{part:"p15",topic:"leakage",type:"multi",q:"How can SHAP help identify problematic features?",
+ options:["It can reveal unexpectedly high feature importance.","It can surface potential data leakage.","It can reveal potentially sensitive or proxy features influencing predictions.","It automatically proves that a feature is causally responsible for the outcome."],correct:[0,1,2],
+ exp:"SHAP can flag unexpected importance, leakage, and sensitive/proxy features for investigation — but it never proves causation on its own."},
+{part:"p15",topic:"leakage",type:"multi",q:"A model gives \"gender\" a large SHAP contribution when making employee-performance decisions. What can SHAP help the team investigate?",
+ options:["Whether the model is using a potentially sensitive feature.","Whether the model has learned an unwanted association.","Whether the feature should automatically be considered the real-world cause.","Whether the feature's influence deserves further investigation."],correct:[0,1,3],
+ exp:"SHAP prompts investigation into sensitive features and unwanted associations, and flags things worth digging into — it does not automatically establish real-world causation."},
+{part:"p15",topic:"causality",type:"single",q:"A SHAP analysis shows that machine temperature has a very high positive contribution to predicted failure. Which conclusion is not justified by SHAP alone?",
+ options:["Temperature influenced this model's prediction.","Temperature contributed positively to the prediction.","Temperature is necessarily the real-world cause of machine failure.","Temperature deserves investigation by domain experts."],correct:[2],
+ exp:"SHAP only tells you how the model used a feature — it cannot prove that feature is the actual real-world cause of the outcome; that requires domain investigation."},
+{part:"p15",topic:"limitations",type:"multi",q:"Which statements correctly describe limitations of SHAP?",
+ options:["SHAP does not prove causality.","SHAP explanations are tied to the specific trained model.","SHAP can be computationally expensive as the number of features increases.","Correlated features can receive similar SHAP values.","A SHAP explanation guarantees that the underlying model is correct."],correct:[0,1,2,3],
+ exp:"These four are genuine, well-known SHAP limitations; a plausible-looking SHAP explanation never guarantees the underlying model itself is correct."},
+{part:"p15",topic:"limitations",type:"single",q:"Two features are highly correlated and receive very similar SHAP values. What should the data scientist understand?",
+ options:["This necessarily proves both features independently cause the outcome.","Correlated features can receive similar or symmetric Shapley values, so interpretation requires care.","One of the features must have a SHAP value of zero.","SHAP cannot work with correlated features at all."],correct:[1],
+ exp:"Correlated features can 'share' credit and get similar SHAP values, which requires careful, cautious interpretation rather than concluding independent causation."},
+{part:"p15",topic:"limitations",type:"single",q:"Why should SHAP explanations be used together with model validation?",
+ options:["SHAP replaces model validation.","A flawed model can still produce plausible-looking SHAP explanations.","SHAP automatically fixes incorrect predictions.","SHAP guarantees high accuracy."],correct:[1],
+ exp:"Even a poorly performing or flawed model can produce SHAP explanations that look reasonable, so explanations must be paired with proper validation, not used as a substitute."},
+{part:"p15",topic:"bestpractices",type:"multi",q:"Which are recommended best practices when using SHAP?",
+ options:["Compare SHAP explanations with domain knowledge.","Investigate possible data leakage.","Investigate wrong predictions.","Use SHAP as a replacement for proper model validation.","Avoid over-claiming what a SHAP value means."],correct:[0,1,2,4],
+ exp:"Comparing with domain knowledge, investigating leakage/wrong predictions, and avoiding overclaiming are all sound best practices; using SHAP as a substitute for validation is explicitly the wrong approach."},
+{part:"p15",topic:"transparentmodels",type:"single",q:"A company has a simple decision tree where the prediction can already be traced directly through the branches. According to the notes, why might SHAP be less necessary here?",
+ options:["SHAP cannot explain decision trees.","Decision trees are already relatively transparent models.","SHAP only works on neural networks.","Decision trees cannot have feature importance."],correct:[1],
+ exp:"Since a simple decision tree's logic can already be traced directly through its branches, it's inherently more transparent, reducing the extra need for SHAP explanations."},
+{part:"p15",topic:"shapvslime",type:"single",q:"Which statement best describes the difference between SHAP and LIME according to the notes?",
+ options:["LIME is a global-only method while SHAP is local-only.","LIME focuses on local explanations, while SHAP supports both local and global explanations.","SHAP only works on linear models while LIME works on all models.","LIME and SHAP are exactly identical methods."],correct:[1],
+ exp:"LIME is primarily a local explanation method, while SHAP's Shapley-value foundation supports both local (individual prediction) and global (dataset-wide) explanations."},
+{part:"p15",topic:"practical",type:"multi",q:"A team is using SHAP for a fraud-detection model. Which conclusions are appropriate?",
+ options:["SHAP can help identify which features contributed to an individual fraud prediction.","SHAP can help identify overall important features across many predictions.","SHAP can help investigate unexpected feature influence.","SHAP proves that a highly contributing feature is the real-world cause of fraud."],correct:[0,1,2],
+ exp:"SHAP supports local and global explanation and flags unexpected influence for investigation — but it never proves real-world causation, even for a fraud model."},
+{part:"p15",topic:"practical",type:"multi",q:"A data scientist is reviewing the following SHAP workflow for a trained XGBoost model:\nexplainer = shap.Explainer(model)\nshap_values = explainer(X)\nThey then generate a waterfall plot, summary plot, bar plot, and dependence plot. Which statements correctly describe this workflow?",
+ options:["The waterfall plot can explain how individual features move one prediction from the base value to the final prediction.","The summary plot can show feature importance and the direction/magnitude of impact across the dataset.","The bar plot can provide a simpler global ranking of feature importance.","The dependence plot can show the relationship between a feature's actual value and its SHAP value.","SHAP itself retrains the XGBoost model before generating these explanations."],correct:[0,1,2,3],
+ exp:"These four correctly describe what each plot type shows; SHAP explains an already-trained model — it never retrains it as part of generating explanations."}
+);
+
+/* ============================================================
+   STATE
+============================================================ */
+let activePart = "p12";
+let activeTopic = "all";
+const state = {};
+Q.forEach((q,i)=>{ state[i] = {selected:new Set(), checked:false}; });
+
+/* ============================================================
+   RENDER: hero meta + part tabs
+============================================================ */
+const heroMeta = document.getElementById('heroMeta');
+heroMeta.innerHTML = PARTS.map(p=>{
+  const n = Q.filter(q=>q.part===p.id).length;
+  return `<span class="pill" style="border-color:${p.color}55;color:${p.color}">${p.name} · ${n}</span>`;
+}).join('') + `<span class="pill">click an option to check yourself</span>`;
+
+const partTabs = document.getElementById('partTabs');
+function renderPartTabs(){
+  partTabs.innerHTML = '';
+  PARTS.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'part-tab' + (activePart===p.id ? ' active':'');
+    if(activePart===p.id){ btn.style.background = p.color; btn.style.borderColor = p.color; }
+    btn.textContent = p.name;
+    btn.onclick = ()=>{ activePart = p.id; activeTopic='all'; renderPartTabs(); renderCoverage(); renderChips(); renderQuestions(); window.scrollTo({top:0,behavior:'smooth'}); };
+    partTabs.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   RENDER: coverage bars for active part
+============================================================ */
+function renderCoverage(){
+  const p = partMap[activePart];
+  document.getElementById('coverageTitle').textContent = p.name + ' — topic coverage';
+  const grid = document.getElementById('covGrid');
+  grid.innerHTML = '';
+  const total = Q.filter(q=>q.part===activePart).length;
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const pct = Math.round((count/total)*100);
+    const hue = topicColor(activePart, i);
+    const row = document.createElement('div');
+    row.className = 'cov-row';
+    row.innerHTML = `
+      <div class="cov-label">${t.name}</div>
+      <div class="cov-bar-track"><div class="cov-bar-fill" style="width:${pct}%;background:${hue}"></div></div>
+      <div class="cov-count">${count}</div>`;
+    grid.appendChild(row);
+  });
+}
+
+const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8","#F87171","#4ADE80","#22D3EE","#E879F9","#A3E635","#FACC15","#FB923C","#818CF8","#F97316","#F0ABFC","#7DD3FC"];
+function topicColor(partId, idx){ return palette[idx % palette.length]; }
+function colorForTopic(partId, topicId){
+  const p = partMap[partId];
+  const idx = p.topics.findIndex(t=>t.id===topicId);
+  return topicColor(partId, idx);
+}
+
+/* ============================================================
+   RENDER: filter chips
+============================================================ */
+const chipRow = document.getElementById('chipRow');
+function renderChips(){
+  chipRow.innerHTML = '';
+  const p = partMap[activePart];
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (activeTopic==='all' ? ' active':'');
+  const totalCount = Q.filter(q=>q.part===activePart).length;
+  if(activeTopic==='all'){ allChip.style.background=p.color; allChip.style.color='#06121b'; allChip.style.borderColor=p.color; }
+  allChip.textContent = `All (${totalCount})`;
+  allChip.onclick = ()=>{ activeTopic='all'; renderChips(); renderQuestions(); };
+  chipRow.appendChild(allChip);
+
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (activeTopic===t.id ? ' active':'');
+    const c = topicColor(activePart, i);
+    if(activeTopic===t.id){ chip.style.background=c; chip.style.color='#06121b'; chip.style.borderColor=c; }
+    chip.textContent = `${t.name} (${count})`;
+    chip.onclick = ()=>{ activeTopic=t.id; renderChips(); renderQuestions(); };
+    chipRow.appendChild(chip);
+  });
+}
+
+/* ============================================================
+   RENDER: questions
+============================================================ */
+const quizRoot = document.getElementById('quizRoot');
+const letters = ['A','B','C','D','E','F','G','H'];
+
+function updateScore(){
+  let done=0, correct=0;
+  Object.entries(state).forEach(([idx,s])=>{
+    if(!s.checked) return;
+    done++;
+    const q = Q[idx];
+    const sel = [...s.selected].sort().join(',');
+    const cor = [...q.correct].sort().join(',');
+    if(sel===cor) correct++;
+  });
+  document.getElementById('scoreDone').textContent = done;
+  document.getElementById('scoreCorrect').textContent = correct;
+}
+
+function renderQuestions(){
+  quizRoot.innerHTML = '';
+  const p = partMap[activePart];
+
+  const withIdx = Q.map((q,i)=>({...q, gidx:i}));
+  const filtered = withIdx.filter(q=> q.part===activePart && (activeTopic==='all' || q.topic===activeTopic));
+
+  if(activeTopic==='all'){
+    p.topics.forEach((t,ti)=>{
+      const group = filtered.filter(q=>q.topic===t.id);
+      if(group.length===0) return;
+      const c = topicColor(activePart, ti);
+      const section = document.createElement('section');
+      section.className = 'topic-block';
+      section.innerHTML = `<div class="topic-heading">
+        <span class="dot" style="background:${c}"></span>
+        <h3>${t.name}</h3>
+        <span class="count">${group.length} question${group.length>1?'s':''}</span>
+      </div>`;
+      group.forEach(q=> section.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+      quizRoot.appendChild(section);
+    });
+  } else {
+    filtered.forEach(q=> quizRoot.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+  }
+}
+
+function buildCard(q, color){
+  const idx = q.gidx;
+  const t = topicOf(q.part, q.topic);
+  const card = document.createElement('div');
+  card.className = 'qcard';
+  card.id = q.part+'-q'+(idx+1);
+
+  const localNum = Q.slice(0, idx).filter(x=>x.part===q.part).length + 1;
+
+  const top = document.createElement('div');
+  top.className = 'qtop';
+  top.innerHTML = `<div class="qnum" style="background:${color}">Q${localNum}</div>
+    <div style="flex:1">
+      <div class="qmeta">
+        <span class="tag tag-topic" style="border-color:${color}66;color:${color}">${t.name}</span>
+        <span class="tag tag-type" style="border-color:#8B95AC66;color:${q.type==='multi'?'#FBBF24':'#8B95AC'}">${q.type==='multi' ? 'Multiple correct' : 'Single choice'}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+    </div>`;
+  card.appendChild(top);
+
+  const optWrap = document.createElement('div');
+  optWrap.className = 'options';
+  q.options.forEach((optText, i)=>{
+    const opt = document.createElement('div');
+    opt.className = 'opt';
+    opt.innerHTML = `<span class="letter">${letters[i]}.</span><span>${optText}</span>`;
+    opt.onclick = ()=> handleOptionClick(idx, i, card, q);
+    optWrap.appendChild(opt);
+  });
+  card.appendChild(optWrap);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+
+  if(q.type==='multi'){
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'check-btn primary';
+    checkBtn.textContent = 'Check answer';
+    checkBtn.onclick = ()=> checkMulti(idx, card, q);
+    btnRow.appendChild(checkBtn);
+  }
+
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'reveal-btn';
+  revealBtn.textContent = 'Show explanation';
+  const explain = document.createElement('div');
+  explain.className = 'explain';
+  explain.innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  revealBtn.onclick = ()=>{
+    explain.classList.toggle('show');
+    revealBtn.textContent = explain.classList.contains('show') ? 'Hide explanation' : 'Show explanation';
+  };
+  btnRow.appendChild(revealBtn);
+
+  const resultNote = document.createElement('div');
+  resultNote.className = 'result-note';
+  resultNote.id = 'result-'+idx;
+
+  card.appendChild(btnRow);
+  card.appendChild(resultNote);
+  card.appendChild(explain);
+
+  if(state[idx].checked) paintOptions(card, idx, q);
+
+  return card;
+}
+
+function handleOptionClick(idx, optIdx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(q.type==='single'){
+    s.selected = new Set([optIdx]);
+    s.checked = true;
+    paintOptions(card, idx, q);
+    updateScore();
+  } else {
+    if(s.selected.has(optIdx)) s.selected.delete(optIdx);
+    else s.selected.add(optIdx);
+    const opts = card.querySelectorAll('.opt');
+    opts.forEach((el,i)=> el.classList.toggle('selected', s.selected.has(i)));
+  }
+}
+
+function checkMulti(idx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(s.selected.size===0) return;
+  s.checked = true;
+  paintOptions(card, idx, q);
+  updateScore();
+}
+
+function paintOptions(card, idx, q){
+  const s = state[idx];
+  const opts = card.querySelectorAll('.opt');
+  const correctSet = new Set(q.correct);
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    el.classList.remove('selected');
+    if(correctSet.has(i) && s.selected.has(i)) el.classList.add('correct');
+    else if(!correctSet.has(i) && s.selected.has(i)) el.classList.add('incorrect');
+    else if(correctSet.has(i) && !s.selected.has(i)) el.classList.add('missed');
+  });
+  const sel = [...s.selected].sort().join(',');
+  const cor = [...correctSet].sort().join(',');
+  const note = document.getElementById('result-'+idx);
+  if(note){
+    if(sel===cor){ note.textContent = '✓ Correct'; note.className='result-note ok'; }
+    else { note.textContent = '✗ Not quite — correct answer highlighted in green'; note.className='result-note bad'; }
+  }
+  const checkBtn = card.querySelector('.check-btn');
+  if(checkBtn) checkBtn.style.display = 'none';
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPartTabs();
+renderCoverage();
+renderChips();
+renderQuestions();
+updateScore();
+</script>
+</body>
+</html>
