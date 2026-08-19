@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIML Practice — Part 3 (150 Questions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120; --panel:#121B2E; --panel-2:#0F1729; --line:#22304A;
+    --text:#E5E9F0; --muted:#8B95AC;
+    --teal:#2DD4BF; --violet:#A78BFA; --amber:#FBBF24; --rose:#FB7185;
+    --good:#34D399; --bad:#F87171;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(45,212,191,0.10), transparent 40%),
+      radial-gradient(circle at 88% 18%, rgba(167,139,250,0.10), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(251,191,36,0.06), transparent 45%),
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px 100px;}
+
+  .hero{padding:60px 20px 36px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(45,212,191,.18);}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.6vw,46px);line-height:1.1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;}
+  h1 span{color:var(--teal);}
+  .lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:660px;margin:0 0 26px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:var(--panel);color:var(--muted);}
+  .pill-link{text-decoration:none;display:inline-block;}
+
+  .parts-nav{position:sticky;top:0;z-index:30;background:rgba(11,17,32,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .parts-nav-inner{max-width:940px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+  .part-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .part-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 13px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-weight:600;
+    transition:all .15s ease;
+  }
+  .part-tab:hover{color:var(--text);}
+  .part-tab.active{color:#06121b;}
+  .score-box{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:100px;white-space:nowrap;}
+  .score-box b{color:var(--teal);}
+
+  .topic-controls{padding:18px 0 0;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 11px;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s ease;}
+  .chip:hover{color:var(--text);}
+  .chip.active{font-weight:700;}
+
+  .coverage{margin:26px 0 6px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;}
+  .coverage h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 14px;font-weight:600;}
+  .cov-row{display:grid;grid-template-columns:230px 1fr 30px;gap:12px;align-items:center;margin-bottom:9px;}
+  .cov-label{font-size:12px;color:var(--text);}
+  .cov-bar-track{height:7px;border-radius:6px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line);}
+  .cov-bar-fill{height:100%;border-radius:6px;}
+  .cov-count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;}
+
+  section.topic-block{margin-top:44px;}
+  .topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap;}
+  .topic-heading .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .topic-heading h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0;}
+  .topic-heading .count{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-left:auto;}
+
+  .qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin-bottom:14px;}
+  .qtop{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .qnum{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#06121b;min-width:40px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .qmeta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:5px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:100px;letter-spacing:.02em;}
+  .tag-topic{border:1px solid var(--line);color:var(--muted);}
+  .tag-type{border:1px solid var(--line);}
+  .qtext{font-size:15px;line-height:1.6;font-weight:500;margin:2px 0 14px;white-space:pre-line;}
+  .options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:13.5px;line-height:1.5;transition:all .12s ease;background:var(--panel-2);}
+  .opt:hover{border-color:var(--violet);}
+  .opt .letter{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--violet);flex-shrink:0;}
+  .opt.selected{border-color:var(--violet);background:rgba(167,139,250,0.09);}
+  .opt.correct{border-color:var(--good);background:rgba(52,211,153,0.10);}
+  .opt.incorrect{border-color:var(--bad);background:rgba(248,113,113,0.10);}
+  .opt.missed{border-color:var(--good);background:rgba(52,211,153,0.05);border-style:dashed;}
+  .opt.correct .letter,.opt.missed .letter{color:var(--good);}
+  .opt.incorrect .letter{color:var(--bad);}
+  .opt.disabled{cursor:default;}
+  .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .reveal-btn,.check-btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer;}
+  .reveal-btn:hover,.check-btn:hover{color:var(--text);border-color:var(--teal);}
+  .check-btn.primary{background:var(--teal);color:#06251f;border-color:var(--teal);font-weight:700;}
+  .result-note{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 0;}
+  .result-note.ok{color:var(--good);}
+  .result-note.bad{color:var(--bad);}
+  .explain{display:none;margin-top:10px;padding:13px 15px;background:var(--panel-2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:#C9D1E5;}
+  .explain.show{display:block;}
+  .explain b{color:var(--teal);}
+
+  footer{text-align:center;padding:50px 20px 20px;color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace;}
+  footer a{color:var(--teal);text-decoration:none;}
+
+  @media (max-width:640px){
+    .cov-row{grid-template-columns:130px 1fr 26px;}
+    .parts-nav-inner{flex-direction:column;align-items:stretch;}
+    .score-box{align-self:flex-end;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Learn AIML with Nitish</div>
+    <h1>AI &amp; ML Practice Bank<br><span>— Part 3: 150 more questions.</span></h1>
+    <p class="lede">MLOps &amp; CI/CD Pipeline, Production Observability (Prometheus &amp; Grafana), and Recommender Systems. Single-answer and multiple-correct questions are both supported. Click an option to check yourself, then reveal the explanation.</p>
+    <div class="meta-row" id="heroMeta"></div>
+    <div class="meta-row" style="margin-top:10px;">
+      <a href="index.html" class="pill pill-link">← Back to Part 1: Clustering, Anomaly Detection, Dimensionality Reduction, Neural Networks &amp; PyTorch (300 questions)</a>
+      <a href="part2.html" class="pill pill-link">← Part 2: Neural Network Training Dynamics &amp; FastAPI/Docker (100 questions)</a>
+    </div>
+  </div>
+</div>
+
+<div class="parts-nav">
+  <div class="parts-nav-inner">
+    <div class="part-tabs" id="partTabs"></div>
+    <div class="score-box">Checked: <b id="scoreDone">0</b>/150 &nbsp;·&nbsp; Correct: <b id="scoreCorrect">0</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="topic-controls">
+    <div class="coverage" id="coverage">
+      <h2 id="coverageTitle">Topic coverage</h2>
+      <div id="covGrid"></div>
+    </div>
+    <div class="chip-row" id="chipRow" style="margin-top:18px;"></div>
+  </div>
+
+  <div id="quizRoot"></div>
+</div>
+
+<footer>
+  Practice bank — Part 3, compiled from course notes: MLOps &amp; CI/CD Pipeline, Production Observability (Prometheus &amp; Grafana), and Recommender Systems.<br>
+  Companion file to Part 1 (300 questions: Clustering, Anomaly Detection, Dimensionality Reduction, Neural Networks, PyTorch) and Part 2 (100 questions: Training Dynamics, FastAPI &amp; Docker).<br>
+  Self-study only — nothing is pre-revealed. Answer, then use "Show explanation" to check your reasoning.
+</footer>
+
+<script>
+/* ============================================================
+   PARTS + TOPICS
+============================================================ */
+const PARTS = [
+  { id:"p9", name:"MLOps & CI/CD Pipeline", color:"#F97316",
+    topics:[
+      {id:"whatismlops", name:"What is MLOps?"},
+      {id:"cicd", name:"CI vs CD"},
+      {id:"cicdtools", name:"CI/CD Tools & GitHub Actions"},
+      {id:"dataquality", name:"Data Quality Gates"},
+      {id:"modelquality", name:"Model Quality Gates"},
+      {id:"stagingprod", name:"Staging vs Production"},
+      {id:"shadow", name:"Shadow Testing"},
+      {id:"rollback", name:"Rollback & Model History"},
+      {id:"registry", name:"Model Registry"},
+      {id:"promotion", name:"Production Promotion"},
+      {id:"prodmonitor", name:"Production Monitoring"},
+      {id:"drift", name:"Data & Concept Drift"},
+      {id:"kspsi", name:"KS Test & PSI"},
+      {id:"retrain", name:"Performance Degradation & Retraining"},
+      {id:"safedeploy", name:"Safe Deployment & End-to-End Pipeline"},
+    ]
+  },
+  { id:"p10", name:"Prometheus & Grafana", color:"#22D3EE",
+    topics:[
+      {id:"obsfund", name:"Observability Fundamentals"},
+      {id:"structlogs", name:"Structured Logging"},
+      {id:"metrictypes", name:"Metric Types (Counter/Gauge/Histogram)"},
+      {id:"percentiles", name:"Percentiles & Latency"},
+      {id:"slaalert", name:"SLA & Alerting Fundamentals"},
+      {id:"promfund", name:"Prometheus Fundamentals"},
+      {id:"promql", name:"PromQL"},
+      {id:"grafanafund", name:"Grafana Fundamentals"},
+      {id:"targetmon", name:"Target Monitoring (up metric)"},
+      {id:"anomalies", name:"System & Model Anomalies"},
+      {id:"alertrules", name:"Alert Rules"},
+      {id:"e2earch", name:"Incident Detection & End-to-End Architecture"},
+    ]
+  },
+  { id:"p11", name:"Recommender Systems", color:"#E879F9",
+    topics:[
+      {id:"recfund", name:"Fundamentals & User-Item Matrix"},
+      {id:"genperso", name:"Generalization vs Personalization"},
+      {id:"collabfilter", name:"Collaborative Filtering (User/Item-based)"},
+      {id:"cosine", name:"Cosine Similarity"},
+      {id:"meancenter", name:"Rating Bias & Mean Centering"},
+      {id:"contentbased", name:"Content-Based Recommendation"},
+      {id:"hybridintro", name:"Hybrid Approaches"},
+      {id:"matrixfact", name:"Matrix Factorization & Latent Features"},
+      {id:"twotower", name:"Two-Tower Neural CF"},
+      {id:"evalmetrics", name:"Evaluation Metrics (RMSE, Hit Rate, NDCG)"},
+      {id:"coldstart", name:"Cold Start & Hybrid Systems"},
+    ]
+  },
+];
+const partMap = Object.fromEntries(PARTS.map(p=>[p.id,p]));
+function topicOf(partId, topicId){ return partMap[partId].topics.find(t=>t.id===topicId); }
+
+/* ============================================================
+   QUESTION BANK — correct: array of option indices (0=A..3+)
+============================================================ */
+const Q = [];
+
+/* ---------------- PART 9: MLOps & CI/CD Pipeline ---------------- */
+Q.push(
+{part:"p9",topic:"whatismlops",type:"single",q:"A machine learning team has a model that performs well in a notebook but frequently causes problems after deployment because dependencies, data formats, and model versions change over time. What is the primary purpose of MLOps in this situation?",
+ options:["To manage the complete lifecycle of ML models, including deployment, monitoring, and retraining.","To replace machine learning algorithms with software engineering algorithms.","To eliminate the need for model evaluation.","To train every model manually in a notebook."],correct:[0],
+ exp:"MLOps exists to manage the full ML lifecycle — deployment, monitoring, and retraining — addressing exactly the kind of drift-and-dependency problems described."},
+{part:"p9",topic:"whatismlops",type:"single",q:"A developer says, \"We already use DevOps for our backend services, so why do we need MLOps?\" Which answer is most appropriate?",
+ options:["MLOps applies DevOps principles to ML while adding ML-specific concerns such as data quality, model performance, drift, and retraining.","MLOps completely replaces DevOps.","MLOps is only another name for Docker.","MLOps is only used for neural networks."],correct:[0],
+ exp:"MLOps builds on DevOps practices but adds ML-specific concerns like data quality, model performance, and drift that traditional DevOps doesn't address."},
+{part:"p9",topic:"whatismlops",type:"multi",q:"Which problems are specifically important in an ML system after deployment?",
+ options:["Input data can change over time.","The relationship between inputs and outputs can change.","Model performance can decrease.","A model may need retraining.","The model's Python variable automatically changes itself in memory every day.","Dependencies and model versions need to be tracked."],correct:[0,1,2,3,5],
+ exp:"Data drift, concept drift, performance decay, retraining needs, and dependency/version tracking are all real post-deployment concerns; a model's in-memory variable never changes itself automatically."},
+{part:"p9",topic:"cicd",type:"single",q:"A developer commits a change to main. The team's automated system checks the code, installs dependencies, runs tests, and verifies the model before allowing deployment. Which part of the process is primarily CI?",
+ options:["Plan → Code → Build → Test","Release → Deploy → Operate → Monitor","Monitor → Retrain → Deploy → Archive","Staging → Production → Archive → Rollback"],correct:[0],
+ exp:"Checking code, installing dependencies, running tests, and verifying the model before deployment is the CI (Continuous Integration) phase: Plan → Code → Build → Test."},
+{part:"p9",topic:"cicd",type:"single",q:"Which sequence best represents the CD portion described in the notes?",
+ options:["Release → Deploy → Operate → Monitor","Plan → Code → Build → Test","Collect → Clean → Train → Evaluate","Drift → Retrain → Test → Code"],correct:[0],
+ exp:"CD (Continuous Delivery/Deployment) covers Release → Deploy → Operate → Monitor."},
+{part:"p9",topic:"cicd",type:"single",q:"Why does CI normally run before CD?",
+ options:["CD should deploy only changes that have passed the required integration and testing checks.","CD must always train the model before CI begins.","CI is only used after production deployment.","CD cannot run tests."],correct:[0],
+ exp:"CI validates and tests changes first, so only vetted, working code/models proceed to CD for deployment."},
+{part:"p9",topic:"cicdtools",type:"multi",q:"Which tools were identified as examples of CI/CD platforms?",
+ options:["GitHub Actions","GitLab CI","CircleCI","Jenkins","Pandas","NumPy"],correct:[0,1,2,3],
+ exp:"GitHub Actions, GitLab CI, CircleCI, and Jenkins are CI/CD platforms; Pandas and NumPy are data-manipulation libraries, unrelated to CI/CD."},
+{part:"p9",topic:"cicdtools",type:"single",q:"A GitHub repository contains Python code but no automation. The team wants GitHub to automatically run tests whenever code is pushed to main. Where would the workflow normally be defined?",
+ options:[".github/workflows/<name>.yml","requirements/.github","Docker/workflow.py","main/actions.json"],correct:[0],
+ exp:"GitHub Actions workflows are defined as YAML files inside the .github/workflows/ directory."},
+{part:"p9",topic:"cicdtools",type:"single",q:"Which format is used for GitHub Actions workflow configuration?",
+ options:["YAML","JSON only","CSV","Pickle"],correct:[0],
+ exp:"GitHub Actions workflow configuration files are written in YAML."},
+{part:"p9",topic:"cicdtools",type:"multi",q:"A GitHub Actions workflow contains:\non:\n  push:\n    branches: [main]\n  schedule:\n    - cron: \"0 2 * * MON\"\nWhich statements are correct?",
+ options:["A push to main can trigger the workflow.","The workflow can also run on a schedule.","The example schedule represents a recurring Monday execution.","The workflow must be started manually every time.","The workflow runs directly on the developer's laptop."],correct:[0,1,2],
+ exp:"The on: block defines both a push trigger and a cron schedule (Mondays at 2 AM) — it's automatic, not manual, and runs on GitHub's infrastructure, not the developer's laptop."},
+{part:"p9",topic:"cicdtools",type:"single",q:"A developer pushes code to GitHub from a Windows laptop. The GitHub Actions workflow uses:\nruns-on: ubuntu-latest\nWhere does the workflow execute?",
+ options:["On a GitHub-provisioned virtual machine/environment.","Directly inside the developer's Windows laptop.","Inside the developer's VS Code terminal.","Inside the production server automatically."],correct:[0],
+ exp:"runs-on: ubuntu-latest tells GitHub Actions to execute the job on a GitHub-hosted virtual machine, regardless of the developer's own OS."},
+{part:"p9",topic:"cicdtools",type:"single",q:"A developer accidentally writes an AWS password directly inside the workflow YAML:\npassword: \"MySecretPassword123\"\nWhat is the correct MLOps practice?",
+ options:["Store sensitive credentials using encrypted repository secrets.","Commit the password to GitHub because the repository is private.","Put the password into README.md.","Store the password inside the model file."],correct:[0],
+ exp:"Credentials should always be stored as encrypted repository/organization secrets, never hardcoded into workflow files, even in private repos."},
+{part:"p9",topic:"dataquality",type:"single",q:"An ML pipeline receives a dataset containing several NaN values. The team's data-quality gate checks:\nnot np.isnan(X).any()\nWhat should happen if this check fails?",
+ options:["The pipeline should block further processing until the data problem is addressed.","The model should automatically ignore the NaN values.","The model should immediately deploy to production.","The pipeline should delete the affected rows without informing anyone."],correct:[0],
+ exp:"A failed data-quality gate should stop the pipeline so the issue can be investigated and fixed, rather than silently proceeding."},
+{part:"p9",topic:"dataquality",type:"single",q:"A model was trained using exactly five features. A new dataset contains only two features. Which quality check specifically catches this problem?",
+ options:["Expected feature count check","Class balance check","No constant features check","Binary target check"],correct:[0],
+ exp:"A check comparing the number of features present against the expected count directly catches a mismatch like 2 features instead of 5."},
+{part:"p9",topic:"dataquality",type:"multi",q:"Which checks were included in the demonstrated data-quality gate?",
+ options:["No missing values","Expected feature count","No constant features","Class balance","Minimum model AUC","Maximum Docker image size"],correct:[0,1,2,3],
+ exp:"The demonstrated data-quality gate covered missing values, feature count, constant features, and class balance; AUC belongs to the model-quality gate, and Docker image size wasn't part of either gate."},
+{part:"p9",topic:"dataquality",type:"single",q:"A dataset contains a feature whose variance is exactly zero for every observation. Why might the pipeline reject this feature?",
+ options:["It is a constant feature and contains no variation useful for learning.","It automatically causes concept drift.","It means the target is binary.","It means the model has already been deployed."],correct:[0],
+ exp:"A feature with zero variance carries no discriminative information for the model, so it's flagged as a useless constant feature."},
+{part:"p9",topic:"dataquality",type:"single",q:"A binary classification dataset contains 99% class 0 and 1% class 1. Which quality check may identify this issue?",
+ options:["Class balance check","Expected feature count check","No missing values check","No constant features check"],correct:[0],
+ exp:"A 99%/1% class split is exactly what a class balance check is designed to flag."},
+{part:"p9",topic:"modelquality",type:"single",q:"A strong model passes every data check and achieves an AUC of 0.97, above the required 0.95 threshold. What should the model gate do?",
+ options:["Allow the pipeline to continue toward staging.","Automatically archive the model.","Block deployment because AUC is too high.","Skip staging and deploy directly to production."],correct:[0],
+ exp:"Since the model exceeds the minimum AUC threshold, the model gate passes and the pipeline proceeds toward staging (not directly to production)."},
+{part:"p9",topic:"modelquality",type:"single",q:"A model passes data-quality checks but produces an AUC of 0.82 when the minimum required AUC is 0.95. What should happen?",
+ options:["The model gate blocks the pipeline from proceeding to deployment.","The pipeline ignores the AUC because data quality already passed.","The pipeline automatically changes the AUC to 0.95.","The model goes directly to production."],correct:[0],
+ exp:"Falling short of the minimum AUC threshold means the model gate blocks the pipeline, regardless of data quality having passed."},
+{part:"p9",topic:"modelquality",type:"multi",q:"Which could be part of a model-performance gate?",
+ options:["Minimum accuracy","Minimum F1 score","Minimum AUC","No NaN predictions","Valid output classes","Number of GitHub stars"],correct:[0,1,2,3,4],
+ exp:"All of these are legitimate model-performance/sanity checks; GitHub stars are unrelated to model quality."},
+{part:"p9",topic:"stagingprod",type:"single",q:"Why is staging used before production?",
+ options:["To test the candidate model in a production-like environment without exposing it to real users.","To permanently store all training datasets.","To replace model training.","To guarantee that the model will never need monitoring."],correct:[0],
+ exp:"Staging exists to validate a candidate model in conditions similar to production, before it's exposed to real users."},
+{part:"p9",topic:"stagingprod",type:"single",q:"A candidate model passes CI and is deployed to staging. The team performs additional checks and the manager approves the model. What is the next logical step?",
+ options:["Promote the model to production.","Return immediately to data collection.","Delete the model.","Skip production and move directly to archive."],correct:[0],
+ exp:"Once staging checks pass and the manager approves, the natural next step is promoting the model to production."},
+{part:"p9",topic:"stagingprod",type:"multi",q:"Which statements correctly describe staging and production?",
+ options:["Staging is used for final checks before release.","Production serves real users or downstream systems.","A bug found in staging can be fixed before affecting real users.","Production should be monitored continuously.","Staging and production always contain completely unrelated applications."],correct:[0,1,2,3],
+ exp:"These four correctly describe staging and production's roles; staging is meant to closely mirror production, not be an unrelated application."},
+{part:"p9",topic:"shadow",type:"single",q:"A candidate model is placed in staging and its predictions are generated silently while users continue receiving predictions from the current production model. What technique is being described?",
+ options:["Shadow testing","Batch normalization","Data cleaning","Feature scaling"],correct:[0],
+ exp:"Running a candidate model silently alongside the live model, without affecting what users see, is shadow testing."},
+{part:"p9",topic:"shadow",type:"single",q:"What is the primary benefit of shadow testing?",
+ options:["It allows comparison of a candidate model against the live model without replacing the live model for users.","It automatically improves the candidate model's accuracy.","It deletes the current production model.","It eliminates the need for monitoring."],correct:[0],
+ exp:"Shadow testing's key benefit is safely comparing a candidate against the live model with zero user-facing risk."},
+{part:"p9",topic:"rollback",type:"single",q:"A new model performs poorly after being promoted to production. The previous model is still available in an archived state. What is the main benefit?",
+ options:["The team can roll back to the previously working model.","The team must retrain from scratch before serving predictions.","The previous model cannot be recovered.","The archive automatically becomes the new training dataset."],correct:[0],
+ exp:"Keeping the previous model archived means the team can roll back to it quickly if the new model underperforms."},
+{part:"p9",topic:"rollback",type:"multi",q:"Why should previous model versions be retained?",
+ options:["For rollback.","For comparison between versions.","For tracking model history.","To know which model was previously deployed.","To ensure every old model automatically serves production traffic."],correct:[0,1,2,3],
+ exp:"Retaining old versions supports rollback, comparison, and history tracking — it doesn't mean every old model keeps serving live traffic."},
+{part:"p9",topic:"registry",type:"single",q:"A team currently saves models as:\npickle.dump(model, file)\nbut wants centralized versioning, metrics, and environment tracking. What is a better production-oriented approach?",
+ options:["Use a model registry.","Put every model inside the GitHub Actions YAML.","Rename every pickle file manually and stop tracking metrics.","Store models only inside a Python variable."],correct:[0],
+ exp:"A model registry provides centralized versioning, metrics tracking, and environment metadata — exactly what plain pickle files lack."},
+{part:"p9",topic:"registry",type:"multi",q:"Which were given as examples of model registry/platform solutions?",
+ options:["MLflow Registry","AWS SageMaker","GCP Vertex AI","Weights & Biases","pytest","Git"],correct:[0,1,2,3],
+ exp:"MLflow Registry, SageMaker, Vertex AI, and Weights & Biases are all cited as model registry/platform examples; pytest and Git are testing/version-control tools, not model registries."},
+{part:"p9",topic:"registry",type:"single",q:"A model registry contains:\nV1 → archive\nV2 → production\nV3 → staging\nWhat does this tell you?",
+ options:["V2 is currently live, V3 is a candidate being evaluated, and V1 is an older archived version.","All three models are serving production traffic.","V1 is the newest model.","V3 must automatically become production immediately."],correct:[0],
+ exp:"Only V2 is marked production (live); V3 is in staging (being evaluated), and V1 is archived (an older, retired version)."},
+{part:"p9",topic:"registry",type:"single",q:"A model registry's promote(version) function first moves the currently deployed production model to archive, then moves the selected version to production. Why is this useful?",
+ options:["It ensures an older production version is retained while only the selected version becomes live.","It deletes all previous models.","It guarantees that every model remains in production.","It prevents model versioning."],correct:[0],
+ exp:"Moving the old production model to archive before promoting the new one preserves the previous version for rollback while ensuring only one model is live at a time."},
+{part:"p9",topic:"promotion",type:"single",q:"Who ultimately decides whether a staging model should be promoted to production according to the lesson?",
+ options:["The manager/business or product team after evaluating the model.","The Python interpreter.","The Docker daemon.","The model's AUC value alone."],correct:[0],
+ exp:"Final promotion decisions rest with business/product stakeholders reviewing the model, not an automated metric alone."},
+{part:"p9",topic:"prodmonitor",type:"single",q:"A model has been deployed successfully. The CI/CD pipeline has finished, but the team continues checking accuracy, feature distributions, and drift every hour. What activity is this?",
+ options:["Monitoring","CI","Model training","Docker building"],correct:[0],
+ exp:"Continuously checking accuracy, distributions, and drift after deployment is production monitoring, not part of the CI/CD pipeline itself."},
+{part:"p9",topic:"prodmonitor",type:"single",q:"Why is monitoring considered separate from the CI/CD deployment pipeline?",
+ options:["Monitoring runs continuously after the model is live, while CI/CD handles validation and deployment of changes.","Monitoring only runs before training.","Monitoring replaces CI.","Monitoring is only required when using Docker."],correct:[0],
+ exp:"CI/CD is about validating and deploying changes; monitoring is a separate, ongoing activity that runs continuously once the model is live."},
+{part:"p9",topic:"prodmonitor",type:"multi",q:"What can production monitoring track?",
+ options:["Model performance","Feature distributions","Data drift","Concept drift","Logs and anomalies","The developer's keyboard speed"],correct:[0,1,2,3,4],
+ exp:"Production monitoring can track all of these ML-relevant signals; keyboard speed is irrelevant."},
+{part:"p9",topic:"drift",type:"single",q:"A fraud model was trained when online shopping behavior was very different from today's behavior. Current input feature distributions have shifted significantly, but the relationship between inputs and fraud has not necessarily changed. What type of drift is this?",
+ options:["Data drift","Concept drift","Model parameter drift","Docker drift"],correct:[0],
+ exp:"Input feature distributions shifting, while the input-output relationship stays the same, is data drift."},
+{part:"p9",topic:"drift",type:"single",q:"A fraud model learned that a transaction with certain characteristics was usually fraudulent. Years later, the same characteristics are no longer associated with fraud because customer behavior has changed. What type of drift is this?",
+ options:["Concept drift","Data drift only","Feature-count drift","Container drift"],correct:[0],
+ exp:"The relationship between features and the fraud label changing over time is concept drift."},
+{part:"p9",topic:"drift",type:"multi",q:"Which statements correctly distinguish data drift and concept drift?",
+ options:["Data drift involves changes in input feature distributions.","Concept drift involves changes in the input-output relationship.","Data drift can occur even when the underlying relationship has not changed.","Concept drift means the deployed model's weights automatically changed.","Concept drift can make an old model poorly calibrated to the current world."],correct:[0,1,2,4],
+ exp:"These four correctly distinguish data drift from concept drift; concept drift describes a real-world relationship change, not an automatic change to the model's stored weights."},
+{part:"p9",topic:"kspsi",type:"single",q:"A KS test comparing reference and production data produces:\np-value = 0.001\nUsing:\ndrift_detected = p_value < 0.05\nwhat is the conclusion?",
+ options:["Drift is detected.","Drift is definitely absent.","PSI must be exactly 0 before drift can be detected.","The model must immediately be deleted."],correct:[0],
+ exp:"Since p-value (0.001) is less than the 0.05 threshold, the rule concludes drift is detected."},
+{part:"p9",topic:"kspsi",type:"single",q:"What does the KS test primarily tell you in the drift-monitoring setup?",
+ options:["Whether there is statistically significant evidence that the distributions have changed.","Exactly how large the business impact of the drift is.","Which ML algorithm should be trained.","Whether Docker is running."],correct:[0],
+ exp:"The KS test provides statistical evidence for whether a distribution shift occurred — it doesn't quantify business impact or dictate algorithm choice."},
+{part:"p9",topic:"kspsi",type:"single",q:"A feature has:\nPSI = 0.04\nwhile another has:\nPSI = 0.50\nWhich interpretation is most appropriate according to the lesson?",
+ options:["The 0.50 feature has a much more significant distribution shift and requires attention.","Both indicate exactly the same amount of drift.","0.04 is always worse than 0.50.","PSI cannot be used for feature distributions."],correct:[0],
+ exp:"A higher PSI value indicates a larger magnitude of distribution shift, so 0.50 represents much more significant drift than 0.04."},
+{part:"p9",topic:"kspsi",type:"multi",q:"Which statements correctly describe KS and PSI?",
+ options:["KS uses a p-value to help determine whether drift is statistically significant.","PSI measures the magnitude of distribution shift.","A KS p-value below 0.05 indicates statistically significant drift under the stated rule.","PSI around or above 0.2 is a practical warning/action threshold in the example.","KS and PSI answer exactly the same question."],correct:[0,1,2,3],
+ exp:"KS answers 'is this shift statistically significant?' while PSI answers 'how large is the shift?' — they are complementary, not identical, questions."},
+{part:"p9",topic:"retrain",type:"single",q:"A production model's accuracy drops by 7%, but the model itself has not been modified. What should the team do first?",
+ options:["Investigate whether data drift, concept drift, or another production issue explains the degradation.","Immediately retrain without investigation.","Delete the model.","Assume the model's internal weights changed automatically."],correct:[0],
+ exp:"Before acting, the team should diagnose the root cause of the accuracy drop rather than jumping straight to retraining."},
+{part:"p9",topic:"retrain",type:"single",q:"Why should retraining not automatically be the first response to every performance drop?",
+ options:["The team should first identify the root cause, such as data drift or concept drift, before deciding how to respond.","Retraining can never improve a model.","Retraining is only allowed once every year.","Retraining permanently deletes production data."],correct:[0],
+ exp:"Diagnosing the cause first ensures retraining (if needed) actually addresses the real problem, rather than being a reflexive response."},
+{part:"p9",topic:"retrain",type:"multi",q:"Which events can trigger retraining according to the lesson?",
+ options:["Manual decision after monitoring reveals deterioration.","Automated performance threshold being crossed.","PSI/KS drift thresholds being crossed.","A scheduled recurring retraining process.","Only a Docker image changing."],correct:[0,1,2,3],
+ exp:"Manual decisions, automated performance/drift thresholds, and scheduled retraining are all legitimate triggers; a Docker image change alone isn't a retraining trigger."},
+{part:"p9",topic:"retrain",type:"single",q:"A scheduled workflow retrains the model every Monday at 2 AM even when no drift or performance problem has been detected. What type of retraining trigger is this?",
+ options:["Scheduled retraining","Data-quality failure","Shadow testing","Rollback"],correct:[0],
+ exp:"Retraining on a fixed recurring schedule (every Monday at 2 AM), independent of detected problems, is scheduled retraining."},
+{part:"p9",topic:"retrain",type:"single",q:"A production model's performance has dropped significantly. Monitoring shows both very high PSI and extremely small KS p-values. What is the most reasonable conclusion?",
+ options:["Multiple independent signals indicate that the production data has changed significantly, so investigation and possible retraining are justified.","The model is definitely perfect because PSI is high.","The KS test proves that the model architecture is wrong.","The team should ignore the monitoring results because only accuracy matters."],correct:[0],
+ exp:"High PSI plus a very small KS p-value are two independent, corroborating signals of significant data change, justifying further investigation and possible retraining."},
+{part:"p9",topic:"safedeploy",type:"multi",q:"A team wants a safe MLOps deployment process. Which practices help reduce production risk?",
+ options:["Automated data-quality gates","Automated model-performance gates","Staging before production","Shadow testing","Human approval before production promotion","Keeping previous model versions for rollback","Deploying every model directly to production without testing"],correct:[0,1,2,3,4,5],
+ exp:"All six safety practices reduce deployment risk; skipping testing and deploying directly to production is the opposite of a safe practice."},
+{part:"p9",topic:"safedeploy",type:"single",q:"A company wants the following flow:\nCode change → Automated tests → Train model → Evaluate model → Deploy to staging → Staging evaluation → Human approval → Production → Continuous monitoring\nWhat does this represent?",
+ options:["An end-to-end MLOps/CI-CD lifecycle.","Only a model-training pipeline.","Only a Docker workflow.","Only a data-cleaning workflow."],correct:[0],
+ exp:"This flow — from code change through tests, training, evaluation, staging, approval, production, and monitoring — represents the complete end-to-end MLOps/CI-CD lifecycle."},
+{part:"p9",topic:"safedeploy",type:"multi",q:"A production ML system has just detected significant data drift. Which sequence best represents a sensible MLOps response?",
+ options:["Investigate which features changed.","Check whether model performance has degraded.","Determine whether the issue is data drift, concept drift, or another cause.","Decide whether retraining is appropriate.","If retraining occurs, run the model through the validation and deployment pipeline again.","Promote the new model directly to production without staging because drift was detected.","Keep monitoring after the new model is deployed."],correct:[0,1,2,3,4,6],
+ exp:"A sensible response investigates, diagnoses, decides on retraining, re-runs the full pipeline, and keeps monitoring afterward — but it never skips staging just because drift was detected."}
+);
+
+/* ---------------- PART 10: Production Observability — Prometheus & Grafana ---------------- */
+Q.push(
+{part:"p10",topic:"obsfund",type:"single",q:"A production ML API is running successfully, but the engineering team wants to continuously understand what is happening inside the system. Which concept describes this ability?",
+ options:["Observability","Data preprocessing","Model compression","Batch training"],correct:[0],
+ exp:"The ability to continuously understand what's happening inside a running system is observability."},
+{part:"p10",topic:"obsfund",type:"single",q:"Which three pillars are commonly associated with observability?",
+ options:["Logs, metrics, traces","Accuracy, precision, recall","Training, validation, testing","CPU, RAM, storage"],correct:[0],
+ exp:"The three commonly cited pillars of observability are logs, metrics, and traces."},
+{part:"p10",topic:"obsfund",type:"multi",q:"Which statements correctly describe the three observability pillars?",
+ options:["Logs describe events and what happened.","Metrics represent numerical measurements over time.","Traces describe the path of a request through a system.","Metrics always contain the complete raw request body.","Logs and metrics are exactly the same thing."],correct:[0,1,2],
+ exp:"These three correctly define logs, metrics, and traces; metrics are numerical summaries (not raw payloads), and logs and metrics are distinct concepts."},
+{part:"p10",topic:"structlogs",type:"single",q:"A developer writes:\n2026-08-06 14:32:01 ERROR Model prediction failed\nWhat is the main weakness of this logging format at large scale?",
+ options:["It is difficult to reliably search, filter, and aggregate because it is free text.","It cannot be displayed on a terminal.","It uses too many structured fields.","It automatically exposes Prometheus metrics."],correct:[0],
+ exp:"Free-text log lines are hard to search, filter, and aggregate reliably at scale, which is why structured logging is preferred in production."},
+{part:"p10",topic:"structlogs",type:"single",q:"Which format is an example of structured logging?\n{\n  \"timestamp\": \"14:32\",\n  \"model_version\": \"v3.2\",\n  \"prediction\": 0,\n  \"latency\": 12.3\n}",
+ options:["Structured logging","Unstructured logging","PromQL","Histogram data"],correct:[0],
+ exp:"A JSON object with clearly named fields is a classic example of structured logging."},
+{part:"p10",topic:"structlogs",type:"multi",q:"Which fields are useful in a structured prediction log?",
+ options:["Timestamp","Model version","Prediction","Prediction confidence","Latency","API password","Full credit-card number"],correct:[0,1,2,3,4],
+ exp:"Timestamp, model version, prediction, confidence, and latency are all useful, safe fields to log; passwords and credit-card numbers should never be logged."},
+{part:"p10",topic:"structlogs",type:"single",q:"Why should a production ML service avoid logging the complete raw request payload?",
+ options:["It can become expensive at scale and may contain sensitive or personally identifiable information.","Prometheus cannot process JSON.","Grafana requires raw payloads to create dashboards.","Raw payloads automatically cause model drift."],correct:[0],
+ exp:"Logging full raw payloads is costly at scale and risks exposing sensitive/PII data, which is why structured, selective logging is preferred."},
+{part:"p10",topic:"structlogs",type:"single",q:"A service uses request_id in every log generated while processing one request. What is the main benefit?",
+ options:["All logs associated with that request can be found and correlated.","Prometheus automatically retrains the model.","It converts a gauge into a counter.","It removes the need for timestamps."],correct:[0],
+ exp:"A shared request_id lets engineers trace and correlate every log line generated while processing a single request."},
+{part:"p10",topic:"structlogs",type:"multi",q:"Which practices improve structured logging?",
+ options:["Consistent field names","Severity/level field such as INFO, WARNING, ERROR","Request ID or trace ID","Avoiding sensitive information","Randomly changing field names between services","Logging API tokens for debugging"],correct:[0,1,2,3],
+ exp:"Consistent naming, severity levels, request IDs, and avoiding sensitive data all improve structured logging; randomly changing field names and logging tokens are anti-patterns."},
+{part:"p10",topic:"structlogs",type:"single",q:"What is the main difference between a log and a metric?",
+ options:["A log records an event, while a metric is a numerical value measured over time.","A metric contains every raw event while a log contains only averages.","Logs can only contain numbers.","Metrics can never change over time."],correct:[0],
+ exp:"Logs capture discrete events; metrics are numerical measurements tracked over time — the fundamental distinction between the two."},
+{part:"p10",topic:"metrictypes",type:"single",q:"A production service tracks the total number of predictions served since startup. Which metric type is most appropriate?",
+ options:["Counter","Gauge","Histogram","Trace"],correct:[0],
+ exp:"A total that only ever increases (predictions served since startup) is a classic counter metric."},
+{part:"p10",topic:"metrictypes",type:"single",q:"A service tracks its current queue length. The value can increase from 10 to 20 and later decrease to 3. Which metric type is appropriate?",
+ options:["Gauge","Counter","Histogram","Trace"],correct:[0],
+ exp:"A value that can go both up and down (queue length) is best represented as a gauge."},
+{part:"p10",topic:"metrictypes",type:"single",q:"A model-serving service records every prediction latency into buckets so that P50, P95, and P99 can later be calculated. Which metric type should be used?",
+ options:["Histogram","Counter","Gauge","Log level"],correct:[0],
+ exp:"Recording values into buckets to later compute percentiles like P50/P95/P99 is exactly what a histogram metric is for."},
+{part:"p10",topic:"metrictypes",type:"multi",q:"Which statements about metric types are correct?",
+ options:["A counter increases over time and resets when the application restarts.","A gauge can increase or decrease.","A histogram represents a distribution of observed values.","Histograms are useful for percentile calculations.","A counter is designed to fluctuate up and down continuously."],correct:[0,1,2,3],
+ exp:"These four correctly describe counter, gauge, and histogram behavior; a counter is designed to only increase, not fluctuate up and down."},
+{part:"p10",topic:"metrictypes",type:"single",q:"A prediction counter has reached 50,000. No new predictions arrive for the next hour and the service does not restart. What happens to the counter?",
+ options:["It remains at 50,000.","It becomes zero.","It decreases toward zero.","It behaves like a gauge."],correct:[0],
+ exp:"With no new predictions and no restart, a counter simply holds its current value — it doesn't decay or reset on its own."},
+{part:"p10",topic:"percentiles",type:"single",q:"Why can P99 latency be more useful than average latency?",
+ options:["P99 reveals the experience of the slowest portion of users that an average can hide.","P99 always produces a smaller number than average latency.","Average latency cannot be calculated from production systems.","P99 measures model accuracy instead of latency."],correct:[0],
+ exp:"Averages can be dominated by the bulk of fast requests, hiding how badly the slowest 1% of users are affected — which is exactly what P99 exposes."},
+{part:"p10",topic:"percentiles",type:"single",q:"A system has P99 latency of 200 ms. What does this approximately mean?",
+ options:["99% of requests are completed within 200 ms.","99% of requests take exactly 200 ms.","Only 1% of requests are completed within 200 ms.","Every request takes at least 200 ms."],correct:[0],
+ exp:"A P99 latency of 200ms means 99% of requests finish within that time (the remaining 1% may take longer)."},
+{part:"p10",topic:"percentiles",type:"single",q:"Suppose 99 requests take about 100 ms and one request takes 5,000 ms. The average may still appear acceptable. What metric would better expose the poor tail experience?",
+ options:["P99 latency","Average accuracy","Prediction confidence","Class balance"],correct:[0],
+ exp:"With one extreme outlier among mostly fast requests, the average can look fine, but P99 latency would clearly expose the poor tail experience."},
+{part:"p10",topic:"slaalert",type:"single",q:"A bank defines the requirement \"P99 prediction latency must remain below 200 ms.\" What type of requirement is this?",
+ options:["Latency SLA","Data-quality gate","Model architecture","Training parameter"],correct:[0],
+ exp:"A stated performance commitment like 'P99 latency must remain below 200ms' is a Service Level Agreement (SLA)."},
+{part:"p10",topic:"slaalert",type:"multi",q:"Which could be examples of an SLA?",
+ options:["Availability ≥ 99.9%","P99 latency < 200 ms","Accuracy > 90%","Error rate < 1%","Number of model layers = 5","Python version = 3.12"],correct:[0,1,2,3],
+ exp:"Availability, latency, accuracy, and error-rate targets are all typical SLA examples; number of layers and Python version are implementation details, not business commitments."},
+{part:"p10",topic:"slaalert",type:"single",q:"Who generally decides the acceptable business SLA for an ML product?",
+ options:["Product/business stakeholders who understand user requirements.","The Python interpreter.","Prometheus automatically.","Grafana dashboard designers only."],correct:[0],
+ exp:"Business/product stakeholders, who understand what users actually need, are the ones who define acceptable SLAs."},
+{part:"p10",topic:"slaalert",type:"single",q:"A model's accuracy drops below 90%. The team wants to be notified automatically instead of continuously watching the dashboard. What mechanism should be used?",
+ options:["Alerting","Flattening","PCA","Model serialization"],correct:[0],
+ exp:"Automatically notifying the team when a condition (like accuracy dropping below 90%) is met is the role of alerting."},
+{part:"p10",topic:"slaalert",type:"multi",q:"Which are reasonable alert severity levels?",
+ options:["Informational","Warning","Critical","Random","Unclassified-only"],correct:[0,1,2],
+ exp:"Informational, Warning, and Critical are standard, meaningful alert severity levels; 'Random' and 'Unclassified-only' are not real severity categories."},
+{part:"p10",topic:"slaalert",type:"single",q:"Why should an alert usually have a threshold?",
+ options:["To notify the team when a meaningful condition crosses a defined boundary rather than for every normal fluctuation.","To ensure an alert fires every second.","To eliminate monitoring dashboards.","To prevent metrics from being stored."],correct:[0],
+ exp:"Thresholds ensure alerts fire only for meaningful, actionable conditions rather than constant, noisy notifications on normal fluctuations."},
+{part:"p10",topic:"promfund",type:"single",q:"What is Prometheus primarily used for?",
+ options:["Collecting, storing, querying, and alerting on time-series metrics.","Creating machine learning models.","Building HTML websites.","Replacing GitHub."],correct:[0],
+ exp:"Prometheus's core role is collecting, storing, querying, and alerting on time-series metrics."},
+{part:"p10",topic:"promfund",type:"single",q:"An ML API exposes:\n/metrics\nPrometheus periodically sends an HTTP request to this endpoint and collects the metrics. What collection method is being used?",
+ options:["Pull/scrape","Push","Batch training","Streaming inference"],correct:[0],
+ exp:"Prometheus periodically requesting data from an app's /metrics endpoint is the pull/scrape model."},
+{part:"p10",topic:"promfund",type:"multi",q:"Which statements about Prometheus are correct?",
+ options:["Prometheus uses a pull-based scraping model.","Applications commonly expose a /metrics endpoint.","Prometheus stores time-series metrics.","Prometheus provides PromQL for querying metrics.","Prometheus's main role is to create polished visualization dashboards.","Prometheus cannot store timestamps with metrics."],correct:[0,1,2,3],
+ exp:"These four correctly describe Prometheus; polished dashboard visualization is Grafana's job, and Prometheus does store timestamped time-series data."},
+{part:"p10",topic:"promfund",type:"single",q:"A Prometheus configuration contains:\nglobal:\n  scrape_interval: 15s\nWhat does this mean?",
+ options:["Prometheus attempts to scrape configured targets every 15 seconds.","The application must restart every 15 seconds.","Grafana refreshes every 15 seconds regardless of its configuration.","Alerts automatically fire every 15 seconds."],correct:[0],
+ exp:"scrape_interval: 15s sets how often Prometheus polls its configured targets for metrics."},
+{part:"p10",topic:"promfund",type:"single",q:"A Prometheus target exposes:\nmodel_predictions_total\nmodel_prediction_latency\nmodel_accuracy\nWhat happens during a scrape?",
+ options:["Prometheus pulls the current metric values and stores them as time-series data.","Grafana permanently stores the raw application logs.","Prometheus modifies the model weights.","The application downloads data from Prometheus."],correct:[0],
+ exp:"During a scrape, Prometheus pulls the current values of exposed metrics and appends them as time-series data points."},
+{part:"p10",topic:"promql",type:"single",q:"Which component is responsible for querying Prometheus time-series data using a specialized query language?",
+ options:["PromQL","SQL Server","Python pandas","Docker Compose"],correct:[0],
+ exp:"PromQL is Prometheus's specialized query language for querying and computing over its time-series data."},
+{part:"p10",topic:"promql",type:"single",q:"What is the primary purpose of PromQL?",
+ options:["Querying and calculating information from Prometheus time-series metrics.","Training machine learning models.","Creating Docker images.","Writing application logs."],correct:[0],
+ exp:"PromQL's primary purpose is querying and computing derived values from Prometheus metrics."},
+{part:"p10",topic:"promql",type:"single",q:"Consider:\nrate(model_predictions_total[5m])\nWhat does this query conceptually calculate?",
+ options:["The rate of predictions per second over the recent 5-minute window.","The total number of predictions ever made.","Model accuracy.","P99 latency."],correct:[0],
+ exp:"rate(model_predictions_total[5m]) computes the per-second average rate of increase of that counter over the trailing 5-minute window."},
+{part:"p10",topic:"promql",type:"single",q:"Suppose:\nsum(rate(model_predictions_total{status=\"error\"}[5m]))\n/\nsum(rate(model_predictions_total[5m]))\n* 100\nWhat does this calculate?",
+ options:["Error rate as a percentage of total predictions.","Prediction accuracy.","P99 latency.","CPU utilization."],correct:[0],
+ exp:"Dividing the rate of error-status predictions by the rate of total predictions, times 100, computes the error rate as a percentage."},
+{part:"p10",topic:"grafanafund",type:"multi",q:"A production dashboard needs to show model-serving health. Which panels would be useful?",
+ options:["Requests per second","P95/P99 latency","Error rate","Model accuracy","Queue length","CPU/memory usage","Git commit message length"],correct:[0,1,2,3,4,5],
+ exp:"All six are genuinely useful panels for a model-serving health dashboard; commit message length has no bearing on serving health."},
+{part:"p10",topic:"grafanafund",type:"single",q:"What is Grafana's primary role in the Prometheus + Grafana architecture?",
+ options:["Visualization and dashboarding of data from Prometheus and other data sources.","Scraping application metrics.","Replacing the model-serving API.","Acting as the model registry."],correct:[0],
+ exp:"Grafana's role in this architecture is visualizing and building dashboards from Prometheus (and other) data sources."},
+{part:"p10",topic:"grafanafund",type:"multi",q:"Which statements correctly describe Grafana?",
+ options:["It can connect to Prometheus.","It creates dashboards and visualization panels.","It can visualize time-series data.","It can connect to multiple types of data sources.","It is the component that performs Prometheus scraping.","It must store all Prometheus metrics itself."],correct:[0,1,2,3],
+ exp:"These four correctly describe Grafana; scraping is Prometheus's job, and Grafana queries data rather than storing a full copy of Prometheus's metrics itself."},
+{part:"p10",topic:"grafanafund",type:"single",q:"A team has Prometheus successfully collecting metrics but wants line charts, gauges, and tables showing those metrics. Which tool should they add?",
+ options:["Grafana","NumPy","scikit-learn","Git"],correct:[0],
+ exp:"Grafana is the tool designed to turn Prometheus metrics into charts, gauges, and tables."},
+{part:"p10",topic:"grafanafund",type:"single",q:"A Grafana dashboard contains separate charts for latency, accuracy, error rate, and throughput. What is each individual chart generally called?",
+ options:["Panel","Target","Scraper","Counter"],correct:[0],
+ exp:"Each individual chart within a Grafana dashboard is called a panel."},
+{part:"p10",topic:"grafanafund",type:"single",q:"A Grafana panel uses Prometheus as its data source and executes:\nrate(model_predictions_total[5m])\nWhat is the relationship between the two tools?",
+ options:["Prometheus supplies the queried data and Grafana visualizes the result.","Grafana scrapes the API and Prometheus draws the chart.","Both independently train the model.","Prometheus only stores dashboard JSON."],correct:[0],
+ exp:"Grafana sends the PromQL query to Prometheus, which returns the computed data; Grafana then renders that data visually."},
+{part:"p10",topic:"grafanafund",type:"single",q:"A team imports a dashboard.json file into Grafana. What is the main advantage of storing dashboards as JSON?",
+ options:["Dashboards can be shared, reused, and version-controlled.","JSON automatically improves model accuracy.","Prometheus requires JSON to calculate metrics.","JSON replaces PromQL."],correct:[0],
+ exp:"Representing dashboards as JSON files makes them easy to share, reuse across environments, and track in version control."},
+{part:"p10",topic:"targetmon",type:"single",q:"A Prometheus target completely goes down. Because Prometheus uses a pull model, it stops successfully scraping that target. Which built-in metric can help detect this condition?",
+ options:["up","accuracy","latency","prediction_confidence"],correct:[0],
+ exp:"Prometheus's built-in 'up' metric reports whether a scrape target was successfully reached, making it the standard way to detect a down target."},
+{part:"p10",topic:"targetmon",type:"single",q:"Why is an explicit \"target is unreachable\" alert useful?",
+ options:["A completely down target cannot send a metric saying that it is down, so Prometheus needs monitoring of its scrape status.","Grafana cannot display metrics.","Counters automatically become negative.","Prometheus automatically restarts every application."],correct:[0],
+ exp:"A dead service can't self-report its own downtime, so Prometheus tracks scrape success/failure itself via the 'up' metric, enabling an explicit unreachable-target alert."},
+{part:"p10",topic:"anomalies",type:"multi",q:"Which are examples of system anomalies?",
+ options:["High latency","High error rate","High CPU usage","High memory usage","Disk becoming full","Prediction confidence dropping","PSI increasing"],correct:[0,1,2,3,4],
+ exp:"Latency, error rate, CPU, memory, and disk issues are classic system-level anomalies; confidence dropping and PSI rising are model-specific anomalies, not system anomalies."},
+{part:"p10",topic:"anomalies",type:"multi",q:"Which are examples of model-specific anomalies?",
+ options:["Accuracy falling","Prediction confidence dropping","Predicted-class distribution changing unexpectedly","PSI crossing its threshold","KS drift signal crossing its threshold","CPU reaching 95%"],correct:[0,1,2,3,4],
+ exp:"Accuracy, confidence, prediction-distribution shifts, and PSI/KS signals are all model-specific anomalies; CPU usage is a system-level concern, not a model anomaly."},
+{part:"p10",topic:"alertrules",type:"single",q:"A Prometheus alert rule contains:\nexpr: error_rate > 0.05\nfor: 5m\nThe error rate crosses 5% for only 20 seconds and then returns below the threshold. What should happen?",
+ options:["The alert should not fire because the condition did not remain true for the required 5 minutes.","The alert must fire immediately.","Prometheus deletes the metric.","Grafana shuts down the application."],correct:[0],
+ exp:"The for: 5m clause requires the condition to hold continuously for 5 minutes before firing; a 20-second spike that resolves doesn't meet that requirement."},
+{part:"p10",topic:"alertrules",type:"single",q:"Why is the for duration important in an alert rule?",
+ options:["It prevents short-lived spikes from creating unnecessary alerts and reducing alert fatigue.","It makes Prometheus scrape faster.","It converts counters into gauges.","It increases model accuracy."],correct:[0],
+ exp:"Requiring a condition to persist for a set duration filters out noisy, transient blips, reducing false alarms and alert fatigue."},
+{part:"p10",topic:"alertrules",type:"multi",q:"An alert has:\nlabels:\n  severity: critical\nand Alertmanager is configured to route critical alerts to the on-call engineer. Which statements are correct?",
+ options:["The severity label can help determine how the alert is routed.","Critical alerts can receive more urgent treatment than warnings.","Alert routing can send notifications to appropriate teams or people.","Every alert must always be treated identically regardless of severity."],correct:[0,1,2],
+ exp:"Severity labels drive differentiated routing and urgency — the opposite of treating every alert identically."},
+{part:"p10",topic:"alertrules",type:"single",q:"A Grafana alert rule has a valid condition but no contact point such as Slack, email, or PagerDuty. What happens when the condition fires?",
+ options:["The alert can enter a firing state internally, but no external recipient is notified.","The alert cannot evaluate at all.","Grafana automatically calls the on-call engineer.","Prometheus deletes the alert."],correct:[0],
+ exp:"Without a configured contact point, the alert condition can still be internally evaluated and marked as firing, but nobody actually gets notified."},
+{part:"p10",topic:"e2earch",type:"single",q:"A production ML service suddenly shows:\nLatency: 45 ms → 350 ms\nAccuracy: 96% → 82%\nError rate: 1% → 9%\nThe team creates a degradation flag in the demo and observes the dashboard reacting. What does this demonstrate?",
+ options:["End-to-end observability detecting a production degradation through metrics, dashboards, and alerts.","PCA-based dimensionality reduction.","Model training from scratch.","Data preprocessing."],correct:[0],
+ exp:"Simulating a degradation and watching metrics, dashboards, and alerts react demonstrates the full observability pipeline working end-to-end."},
+{part:"p10",topic:"e2earch",type:"multi",q:"A production ML observability system contains the following flow:\nML Service → Structured Logs + /metrics → Prometheus → PromQL → Grafana Dashboard → Alerting → Alertmanager → On-call Engineer\nWhich statements correctly describe this architecture?",
+ options:["The ML service exposes metrics through /metrics.","Prometheus scrapes and stores time-series metrics.","PromQL queries and calculates information from those metrics.","Grafana visualizes the queried data.","Alerting rules detect defined problematic conditions.","Alertmanager can route and group alerts.","Grafana replaces Prometheus as the metrics database.","Prometheus itself is primarily the dashboard visualization layer."],correct:[0,1,2,3,4,5],
+ exp:"This correctly describes the full pipeline: service → /metrics → Prometheus → PromQL → Grafana → Alerting → Alertmanager. Grafana does not replace Prometheus as a database, and Prometheus's core role is metrics storage/querying, not dashboard visualization."}
+);
+
+/* ---------------- PART 11: Recommender Systems ---------------- */
+Q.push(
+{part:"p11",topic:"recfund",type:"single",q:"A streaming platform wants to predict which movie a user is most likely to watch next instead of requiring the user to search through the entire catalog. What is the primary purpose of a recommender system?",
+ options:["Predict what a user is likely to want next and recommend relevant items.","Reduce the number of features in the dataset using PCA.","Automatically train every available ML model.","Replace the database storing movie information."],correct:[0],
+ exp:"The core purpose of a recommender system is predicting what a user is likely to want next and surfacing relevant items."},
+{part:"p11",topic:"recfund",type:"single",q:"A movie platform has 943 users and 1,682 movies. It creates a matrix where rows represent users, columns represent movies, and each cell contains the user's rating for that movie. What is this matrix called?",
+ options:["User-item interaction/rating matrix","Confusion matrix","Covariance matrix","Feature matrix"],correct:[0],
+ exp:"A matrix with users as rows, items as columns, and ratings as cell values is the user-item interaction/rating matrix."},
+{part:"p11",topic:"recfund",type:"multi",q:"Which statements correctly describe a user-item interaction matrix?",
+ options:["Each row can represent a user.","Each column can represent an item.","A cell can contain a user's rating or interaction with an item.","Most cells may be empty in a real recommendation system.","Every user must rate every item before the matrix can be used.","Empty cells automatically mean the user disliked the item."],correct:[0,1,2,3],
+ exp:"These four correctly describe the matrix structure and its typical sparsity; users don't need to rate every item, and an empty cell just means no interaction was recorded, not necessarily dislike."},
+{part:"p11",topic:"recfund",type:"single",q:"A platform has 100 million users and 50,000 movies, but an average user interacts with only 100–200 movies. Most cells of the user-item matrix are therefore empty. What property does this describe?",
+ options:["Sparsity","Overfitting","Normalization","Cold start"],correct:[0],
+ exp:"A matrix that is mostly empty because each user only interacts with a small fraction of all items is described as sparse — this property is sparsity."},
+{part:"p11",topic:"recfund",type:"single",q:"A recommender has predicted ratings for previously unseen movies:\nMovie A → 2.4\nMovie B → 4.8\nMovie C → 3.1\nMovie D → 4.5\nWhat should the system generally do if it wants to recommend the highest-rated items?",
+ options:["Rank Movie B above Movie D, Movie C, and Movie A.","Recommend Movie A because it has the lowest predicted rating.","Randomly select one movie.","Recommend only the movie with the lowest prediction."],correct:[0],
+ exp:"To recommend the highest-rated items, the system should rank by predicted rating in descending order — Movie B (4.8) first."},
+{part:"p11",topic:"recfund",type:"single",q:"Which statement best describes the main goal of a recommender system working with a sparse user-item matrix?",
+ options:["Predict missing interactions/ratings and recommend items with high predicted values.","Delete all missing values before training.","Replace every missing value with zero and treat it as dislike.","Remove users who have interacted with fewer than 50 items."],correct:[0],
+ exp:"The core goal is predicting the unknown ratings/interactions in the sparse matrix and recommending items with the highest predicted values."},
+{part:"p11",topic:"genperso",type:"multi",q:"A recommendation system can provide both general and personalized recommendations. Which are examples of generalization?",
+ options:["Trending movies shown to many users.","Latest popular releases.","Highest-rated products shown broadly.","A movie selected specifically because one particular user likes science fiction.","A recommendation based entirely on one user's history."],correct:[0,1,2],
+ exp:"Trending, popular, and broadly highest-rated recommendations are generalized (shown widely); recommendations tailored to one user's specific taste are personalized, not generalized."},
+{part:"p11",topic:"genperso",type:"single",q:"A streaming service notices that a user frequently watches science-fiction and documentary content. It recommends more movies matching that individual's interests. What concept does this represent?",
+ options:["Personalization","Generalization","Random sampling","Data normalization"],correct:[0],
+ exp:"Tailoring recommendations to one specific user's individual viewing habits is personalization."},
+{part:"p11",topic:"collabfilter",type:"single",q:"A shopping platform recommends products based on what users with similar purchasing behavior bought previously. Which general technique is this?",
+ options:["Collaborative filtering","PCA","Decision tree","Linear regression"],correct:[0],
+ exp:"Recommending based on what similar users purchased is the defining idea behind collaborative filtering."},
+{part:"p11",topic:"collabfilter",type:"multi",q:"Which statements correctly describe collaborative filtering?",
+ options:["It uses patterns in user-item interactions.","It can recommend items without understanding their actual content.","User-based CF finds users with similar behavior.","Item-based CF finds items that behave similarly according to user interactions.","It always requires detailed descriptions of every item.","It cannot work with rating data."],correct:[0,1,2,3],
+ exp:"Collaborative filtering relies on interaction patterns rather than item content, and includes both user-based and item-based variants; it doesn't require detailed item descriptions, and it works directly with rating data."},
+{part:"p11",topic:"collabfilter",type:"single",q:"A streaming service asks: \"Which users have tastes most similar to User A?\" and then recommends movies those similar users liked. Which method is being used?",
+ options:["User-based collaborative filtering","Item-based collaborative filtering","Content-based filtering","Matrix compression"],correct:[0],
+ exp:"Finding users with similar tastes to a target user, then recommending what those similar users liked, is user-based collaborative filtering."},
+{part:"p11",topic:"collabfilter",type:"single",q:"Netflix has a row called:\n\"Because you watched Movie X\"\nThe system looks for other movies that tend to be liked by people who liked Movie X. Which approach best describes this?",
+ options:["Item-based collaborative filtering","User-based collaborative filtering","PCA","Content-based filtering only"],correct:[0],
+ exp:"'Because you watched Movie X' finds other movies liked by people who liked Movie X — comparing items based on interaction patterns, which is item-based collaborative filtering."},
+{part:"p11",topic:"collabfilter",type:"single",q:"What is the main difference between user-based and item-based collaborative filtering?",
+ options:["User-based compares users; item-based compares items.","User-based compares items; item-based compares users.","Both always compare item descriptions.","User-based uses neural networks while item-based always uses PCA."],correct:[0],
+ exp:"The core distinction: user-based CF finds similar users, while item-based CF finds similar items, both from interaction patterns."},
+{part:"p11",topic:"cosine",type:"single",q:"A movie is represented as:\nMovie X = [1, 1, 0]\nMovie Y = [1, 1, 1]\nMovie Z = [0, 0, 1]\nwhere 1 means a user liked the movie. Which movie is most similar to Movie X using cosine similarity?",
+ options:["Movie Y","Movie Z","Both are exactly equally similar.","Neither can be compared."],correct:[0],
+ exp:"Movie Y = [1,1,1] shares both 1s with Movie X = [1,1,0], giving a high cosine similarity; Movie Z = [0,0,1] shares nothing, giving zero similarity."},
+{part:"p11",topic:"cosine",type:"single",q:"For vectors:\nA = [1, 1, 0]\nB = [1, 1, 1]\nwhat is the dot product A · B?",
+ options:["2","1","3","0"],correct:[0],
+ exp:"A·B = (1×1)+(1×1)+(0×1) = 1+1+0 = 2."},
+{part:"p11",topic:"cosine",type:"single",q:"Cosine similarity between two vectors is calculated as:\ncosine_similarity(A,B) = (A · B) / (||A|| × ||B||)\nWhat does cosine similarity primarily measure?",
+ options:["How similarly two vectors point relative to each other.","The total number of rows in the dataset.","The number of missing values.","The average rating of all users."],correct:[0],
+ exp:"Cosine similarity measures the angle/orientation between two vectors, capturing how similarly they 'point,' regardless of magnitude."},
+{part:"p11",topic:"cosine",type:"multi",q:"Which statements about cosine similarity are correct?",
+ options:["It can be used to compare user or item vectors.","It focuses on the orientation/direction of vectors.","sklearn.metrics.pairwise.cosine_similarity can calculate it directly.","It requires every movie to have a textual description.","It can be useful in collaborative filtering."],correct:[0,1,2,4],
+ exp:"Cosine similarity applies to user or item vectors, focuses on direction, is directly computable via sklearn, and is useful in collaborative filtering — it does not require textual descriptions of items."},
+{part:"p11",topic:"meancenter",type:"single",q:"User A gives almost every movie a rating between 4 and 5, while User B rarely gives anything above 3.5. Why could directly comparing their raw ratings be misleading?",
+ options:["Their personal rating tendencies are different.","Their movies necessarily have different genres.","Cosine similarity cannot work with ratings.","Sparse matrices cannot contain ratings above 3."],correct:[0],
+ exp:"Some users rate generously while others rate strictly, so raw ratings reflect personal bias as much as actual preference, making direct comparison misleading."},
+{part:"p11",topic:"meancenter",type:"single",q:"Before calculating user similarity, an engineer subtracts each user's average rating from their ratings. What is this process called?",
+ options:["Mean centering","One-hot encoding","PCA","Feature selection"],correct:[0],
+ exp:"Subtracting each user's average rating from their individual ratings is called mean centering."},
+{part:"p11",topic:"meancenter",type:"single",q:"After mean centering, User A gives a movie a centered rating of +1.2. What does this mean?",
+ options:["The user rated the movie 1.2 points above their own average.","The movie has a global rating of 1.2.","The user disliked the movie.","The movie's predicted rating is exactly 1.2."],correct:[0],
+ exp:"After mean centering, a value represents how far above (positive) or below (negative) that user's own average the rating fell — +1.2 means 1.2 points above their personal average."},
+{part:"p11",topic:"meancenter",type:"multi",q:"Why is mean centering useful before comparing users?",
+ options:["It reduces individual rating bias.","It makes ratings relative to each user's own average.","A positive centered value means above that user's average.","A negative centered value means below that user's average.","It completely removes sparsity from the matrix.","It converts ratings into five classification classes."],correct:[0,1,2,3],
+ exp:"Mean centering addresses individual bias by making ratings relative to each user's own average; it does not address sparsity or convert ratings into classes."},
+{part:"p11",topic:"collabfilter",type:"single",q:"A user-based collaborative filtering system finds the top-K most similar users. What is the next logical step for making a recommendation?",
+ options:["Use the similar users' ratings/interactions to estimate what the target user may like.","Delete the similar users.","Run PCA on the movie titles.","Replace all ratings with the global average."],correct:[0],
+ exp:"Once similar users are found, their ratings are used to estimate/predict what the target user would rate unseen items."},
+{part:"p11",topic:"contentbased",type:"single",q:"A content-based recommender represents a movie using:\ngenre, duration, release year, director, cast\nWhat makes this different from collaborative filtering?",
+ options:["It uses the item's own attributes rather than primarily relying on user-rating patterns.","It requires users with identical tastes.","It ignores all item information.","It can only recommend movies with previous ratings."],correct:[0],
+ exp:"Content-based recommendation relies on an item's own attributes (genre, cast, etc.), unlike collaborative filtering which relies primarily on rating patterns."},
+{part:"p11",topic:"contentbased",type:"multi",q:"Which could be useful content-based features for a movie?",
+ options:["Genre","Duration","Release year","Director","Cast","Other users' rating similarity","User-to-user cosine similarity"],correct:[0,1,2,3],
+ exp:"Genre, duration, release year, and director are content-based item features describing the movie itself; user-similarity signals belong to collaborative filtering, not content-based features."},
+{part:"p11",topic:"contentbased",type:"single",q:"A movie has just been released. It has genre, cast, director, and duration information, but nobody has watched or rated it yet. Which approach can immediately use the available information?",
+ options:["Content-based recommendation","User-based collaborative filtering","Item-based collaborative filtering based on ratings","Rating-based matrix factorization requiring historical ratings"],correct:[0],
+ exp:"With zero ratings but known metadata, only content-based recommendation can use the available information immediately; the CF approaches all require historical interaction data."},
+{part:"p11",topic:"contentbased",type:"single",q:"What is a major disadvantage of purely content-based recommendation?",
+ options:["Building useful item/user features can require substantial external data and feature engineering.","It can never work with movie metadata.","It requires every user to rate every item.","It always produces random recommendations."],correct:[0],
+ exp:"A key disadvantage of content-based recommendation is the effort needed to build good, informative features, which can require significant external data and engineering."},
+{part:"p11",topic:"hybridintro",type:"single",q:"A recommender uses:\nCollaborative filtering + Content-based features + Matrix factorization/neural models\nWhy would a production system combine these approaches?",
+ options:["Different methods have different strengths, especially for cold-start and established users.","Combining models guarantees 100% accuracy.","Collaborative filtering cannot work unless PCA is used.","Content-based filtering always performs worse than every other technique."],correct:[0],
+ exp:"Combining approaches lets a system leverage each method's strengths — content-based for cold-start items, collaborative/factorization for established users with rich interaction data."},
+{part:"p11",topic:"matrixfact",type:"single",q:"A rating matrix is represented conceptually as:\nR ≈ U × V\nWhat is the main idea behind this matrix factorization?",
+ options:["Represent users and items using smaller latent-factor vectors whose interaction can predict ratings.","Remove all users from the dataset.","Convert ratings into images.","Calculate cosine similarity between raw movie titles."],correct:[0],
+ exp:"Matrix factorization approximates the large rating matrix as the product of two smaller matrices representing users and items in a shared latent space."},
+{part:"p11",topic:"matrixfact",type:"single",q:"In matrix factorization, what do latent factors/features represent?",
+ options:["Learned hidden dimensions used to describe users and items.","Manually assigned movie genres only.","The number of missing cells.","The total number of users."],correct:[0],
+ exp:"Latent factors are hidden dimensions learned automatically from the data, not manually assigned labels like genre."},
+{part:"p11",topic:"matrixfact",type:"single",q:"A matrix factorization model learns that a particular user has a high value for one latent dimension, while a movie also has a high value for that same dimension. What could this suggest?",
+ options:["The model may predict a stronger user-item match.","The user must explicitly like that exact named genre.","The latent dimension must definitely mean \"action.\"","The movie should automatically be removed."],correct:[0],
+ exp:"When user and item vectors align on the same latent dimension, the resulting dot product tends to be higher, suggesting a stronger predicted match — without that dimension needing a specific human-readable label."},
+{part:"p11",topic:"matrixfact",type:"multi",q:"Which statements correctly describe latent factors?",
+ options:["They are learned from the data.","They are not necessarily human-labeled.","They can capture hidden patterns in user preferences and item characteristics.","They help reconstruct/predict missing ratings.","Every latent factor must have an obvious human-readable meaning.","They are the same thing as the original movie genre column."],correct:[0,1,2,3],
+ exp:"Latent factors are learned, not necessarily interpretable, and capture hidden patterns to predict ratings; they do not need obvious human meaning and are not simply the original genre column."},
+{part:"p11",topic:"matrixfact",type:"single",q:"Suppose:\nUser vector = [2, 3]\nItem vector = [4, 5]\nUsing a simple dot product, what predicted interaction score is produced?",
+ options:["23","14","20","9"],correct:[0],
+ exp:"Dot product = (2×4)+(3×5) = 8+15 = 23."},
+{part:"p11",topic:"matrixfact",type:"single",q:"In SVD-style factorization:\nR ≈ U × Σ × Vᵀ\nIf there are 943 users, 1,682 movies, and k = 50 latent dimensions, what is the shape of U?",
+ options:["943 × 50","50 × 943","1,682 × 50","50 × 1,682"],correct:[0],
+ exp:"U represents users × latent dimensions, so with 943 users and k=50, U has shape 943 × 50."},
+{part:"p11",topic:"matrixfact",type:"single",q:"For the same factorization with 1,682 movies and k = 50, what is the shape of Vᵀ?",
+ options:["50 × 1,682","1,682 × 50","943 × 50","50 × 943"],correct:[0],
+ exp:"Vᵀ represents latent dimensions × items, so with k=50 and 1,682 movies, Vᵀ has shape 50 × 1,682."},
+{part:"p11",topic:"matrixfact",type:"multi",q:"Which statements correctly describe matrix factorization?",
+ options:["A large rating matrix is approximated using smaller matrices.","Users and items are represented through latent factors.","A user's latent vector can be combined with an item's latent vector to predict a rating.","The latent dimensions must always correspond directly to named features like \"comedy\" or \"action.\"","Increasing latent dimensions automatically guarantees better test performance."],correct:[0,1,2],
+ exp:"These three correctly describe matrix factorization; latent dimensions don't need named meanings, and more dimensions can lead to overfitting rather than guaranteed better test performance."},
+{part:"p11",topic:"matrixfact",type:"single",q:"An engineer increases the number of latent dimensions from 50 to 500. Training error decreases, but test RMSE becomes worse. What is the most likely explanation?",
+ options:["Overfitting","Underfitting","Cold start","Sparsity disappearing"],correct:[0],
+ exp:"Training error dropping while test error worsens as model complexity (latent dimensions) increases is the classic signature of overfitting."},
+{part:"p11",topic:"twotower",type:"single",q:"A two-tower neural recommender receives a user and an item separately. What is the basic architecture?",
+ options:["One tower learns a user representation and another learns an item representation.","Both inputs must always go through the exact same network.","Only the item is passed through a neural network.","Only the user is passed through a neural network."],correct:[0],
+ exp:"A two-tower architecture uses separate neural networks (towers) to independently learn user and item representations."},
+{part:"p11",topic:"twotower",type:"multi",q:"Which statements about a two-tower neural collaborative filtering system are correct?",
+ options:["The user tower produces a user representation/vector.","The item tower produces an item representation/vector.","The two representations can be combined using a dot product or similarity score.","The towers must share identical weights.","Item vectors can potentially be precomputed for efficient retrieval.","The model cannot use information beyond user and item IDs."],correct:[0,1,2,4],
+ exp:"Each tower produces its own embedding, combined via similarity/dot product, and item embeddings can be precomputed for fast retrieval; the towers don't need to share weights, and two-tower models can incorporate rich features beyond just IDs."},
+{part:"p11",topic:"twotower",type:"single",q:"Why is precomputing item embeddings useful in a large recommendation system?",
+ options:["Item vectors can be calculated once and reused, making real-time matching with a user's vector faster.","It eliminates the need for a user representation.","It guarantees perfect recommendations.","It converts all recommendations into content-based filtering."],correct:[0],
+ exp:"Since item embeddings don't depend on the current user, they can be computed once and reused, making retrieval at request time much faster."},
+{part:"p11",topic:"twotower",type:"single",q:"A two-tower model receives:\nUser → recent watches, device, time of day\nItem → genre, popularity, release year\nWhat advantage does this have over a basic ID-only matrix factorization approach?",
+ options:["The towers can learn from richer user and item information.","It can only work with movie IDs.","It removes the need for training.","It cannot produce embeddings."],correct:[0],
+ exp:"Feeding richer features (recent watches, device, genre, popularity) into the towers lets the model learn from far more signal than plain ID-based matrix factorization."},
+{part:"p11",topic:"evalmetrics",type:"single",q:"A recommender predicts:\nActual rating = 5\nPredicted rating = 4\nWhat does RMSE measure across many such predictions?",
+ options:["The typical magnitude of prediction error between predicted and actual ratings.","Whether the correct item appears in the top K.","Whether the correct item is ranked first.","The percentage of empty cells."],correct:[0],
+ exp:"RMSE summarizes the typical size of the gap between predicted and actual ratings across many predictions."},
+{part:"p11",topic:"evalmetrics",type:"single",q:"A recommender returns the following list:\n1. Movie A\n2. Movie D\n3. Movie B\n4. Movie C\nThe evaluation system knows Movie B is the item the user should have watched. What does Hit Rate at K ask?",
+ options:["Whether Movie B appears anywhere in the top-K list.","Whether Movie B is ranked first.","How far Movie B is from the bottom.","Whether Movie B has the highest global rating."],correct:[0],
+ exp:"Hit Rate@K simply checks whether the relevant item shows up anywhere within the top-K recommendations."},
+{part:"p11",topic:"evalmetrics",type:"single",q:"Two recommendation systems both have the same Hit Rate@10:\nSystem A → correct item at position 1\nSystem B → correct item at position 10\nWhich metric is better suited to distinguish these rankings?",
+ options:["NDCG","RMSE only","Accuracy","Mean centering"],correct:[0],
+ exp:"NDCG rewards relevant items appearing higher in the ranking, so it can distinguish System A (item at position 1) as better than System B (item at position 10), unlike Hit Rate@K which treats both as equal hits."},
+{part:"p11",topic:"evalmetrics",type:"multi",q:"Which statements about recommendation metrics are correct?",
+ options:["Hit Rate@K checks whether a relevant item appears within the top K.","Precision@K measures how many of the recommended K items are relevant.","Recall@K measures how many relevant items were retrieved in the top K.","NDCG accounts for the position of relevant items.","RMSE and NDCG measure exactly the same property.","NDCG does not care where a relevant item appears."],correct:[0,1,2,3],
+ exp:"These four correctly define Hit Rate@K, Precision@K, Recall@K, and NDCG; RMSE (rating error) and NDCG (ranking quality) measure fundamentally different things, and NDCG specifically does care about position."},
+{part:"p11",topic:"evalmetrics",type:"single",q:"A recommender places the correct movie at position 1 in one version and position 50 in another. Both versions technically contain the movie in their recommendation list. Which metric particularly rewards the first version?",
+ options:["NDCG","Sparsity","RMSE","Cosine similarity"],correct:[0],
+ exp:"NDCG discounts relevance by rank position, so it specifically rewards placing the correct item near the top (position 1) over burying it lower (position 50)."},
+{part:"p11",topic:"evalmetrics",type:"single",q:"A recommendation model achieves a good offline Hit Rate and NDCG. The team wants to know whether real users actually engage more with the recommendations after deployment. What should they use?",
+ options:["A/B testing","PCA","Mean centering","SVD decomposition"],correct:[0],
+ exp:"To measure real user engagement after deployment (beyond offline metrics), the team should run an A/B test comparing live user behavior."},
+{part:"p11",topic:"coldstart",type:"single",q:"A brand-new user has never rated, watched, or purchased anything. What is this situation called?",
+ options:["User cold start","Item cold start","Overfitting","Sparsity normalization"],correct:[0],
+ exp:"A brand-new user with no history at all is the user cold-start problem."},
+{part:"p11",topic:"coldstart",type:"single",q:"A new movie has just been added to Netflix. It has zero ratings and zero viewing history, but its genre, cast, duration, director, and release language are known. What is the standard approach for this situation?",
+ options:["Use content-based signals until enough interaction data becomes available.","Wait until every user rates the movie.","Delete the movie from the catalog.","Use only user-based collaborative filtering."],correct:[0],
+ exp:"For a new item with metadata but no ratings, content-based signals are the standard way to make recommendations until enough interaction data accumulates — this is the item cold-start solution."},
+{part:"p11",topic:"coldstart",type:"multi",q:"Which situations represent the cold-start problem?",
+ options:["A brand-new user with no interaction history.","A brand-new movie with no ratings.","A user with thousands of previous interactions.","A popular movie with millions of ratings.","A new product that nobody has interacted with yet."],correct:[0,1,4],
+ exp:"New users, new items, and new products with zero interaction history all represent cold-start scenarios; users or items with abundant history are the opposite — well-established cases, not cold start."},
+{part:"p11",topic:"coldstart",type:"multi",q:"A production recommendation platform wants to handle both new users and established users effectively. Which statements describe a sensible hybrid strategy?",
+ options:["Use content features when a new item has no interaction history.","Ask a new user for initial preferences during onboarding.","Gradually use collaborative filtering as interaction history grows.","Combine collaborative filtering, content-based signals, and factorization/neural approaches.","Use only collaborative filtering for every user and item.","Ignore ranking metrics because RMSE alone guarantees good recommendations."],correct:[0,1,2,3],
+ exp:"A sensible hybrid strategy blends content-based signals for cold start with growing collaborative/factorization signals as data accumulates — relying solely on collaborative filtering, or ignoring ranking metrics, defeats the purpose of a hybrid system."}
+);
+
+/* ============================================================
+   STATE
+============================================================ */
+let activePart = "p9";
+let activeTopic = "all";
+const state = {};
+Q.forEach((q,i)=>{ state[i] = {selected:new Set(), checked:false}; });
+
+/* ============================================================
+   RENDER: hero meta + part tabs
+============================================================ */
+const heroMeta = document.getElementById('heroMeta');
+heroMeta.innerHTML = PARTS.map(p=>{
+  const n = Q.filter(q=>q.part===p.id).length;
+  return `<span class="pill" style="border-color:${p.color}55;color:${p.color}">${p.name} · ${n}</span>`;
+}).join('') + `<span class="pill">click an option to check yourself</span>`;
+
+const partTabs = document.getElementById('partTabs');
+function renderPartTabs(){
+  partTabs.innerHTML = '';
+  PARTS.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'part-tab' + (activePart===p.id ? ' active':'');
+    if(activePart===p.id){ btn.style.background = p.color; btn.style.borderColor = p.color; }
+    btn.textContent = p.name;
+    btn.onclick = ()=>{ activePart = p.id; activeTopic='all'; renderPartTabs(); renderCoverage(); renderChips(); renderQuestions(); window.scrollTo({top:0,behavior:'smooth'}); };
+    partTabs.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   RENDER: coverage bars for active part
+============================================================ */
+function renderCoverage(){
+  const p = partMap[activePart];
+  document.getElementById('coverageTitle').textContent = p.name + ' — topic coverage';
+  const grid = document.getElementById('covGrid');
+  grid.innerHTML = '';
+  const total = Q.filter(q=>q.part===activePart).length;
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const pct = Math.round((count/total)*100);
+    const hue = topicColor(activePart, i);
+    const row = document.createElement('div');
+    row.className = 'cov-row';
+    row.innerHTML = `
+      <div class="cov-label">${t.name}</div>
+      <div class="cov-bar-track"><div class="cov-bar-fill" style="width:${pct}%;background:${hue}"></div></div>
+      <div class="cov-count">${count}</div>`;
+    grid.appendChild(row);
+  });
+}
+
+const palette = ["#2DD4BF","#A78BFA","#FBBF24","#FB7185","#60A5FA","#F472B6","#34D399","#FDBA74","#C084FC","#38BDF8","#F87171","#4ADE80","#22D3EE","#E879F9","#A3E635","#FACC15","#FB923C","#818CF8","#F97316","#F0ABFC","#7DD3FC"];
+function topicColor(partId, idx){ return palette[idx % palette.length]; }
+function colorForTopic(partId, topicId){
+  const p = partMap[partId];
+  const idx = p.topics.findIndex(t=>t.id===topicId);
+  return topicColor(partId, idx);
+}
+
+/* ============================================================
+   RENDER: filter chips
+============================================================ */
+const chipRow = document.getElementById('chipRow');
+function renderChips(){
+  chipRow.innerHTML = '';
+  const p = partMap[activePart];
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (activeTopic==='all' ? ' active':'');
+  const totalCount = Q.filter(q=>q.part===activePart).length;
+  if(activeTopic==='all'){ allChip.style.background=p.color; allChip.style.color='#06121b'; allChip.style.borderColor=p.color; }
+  allChip.textContent = `All (${totalCount})`;
+  allChip.onclick = ()=>{ activeTopic='all'; renderChips(); renderQuestions(); };
+  chipRow.appendChild(allChip);
+
+  p.topics.forEach((t,i)=>{
+    const count = Q.filter(q=>q.part===activePart && q.topic===t.id).length;
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (activeTopic===t.id ? ' active':'');
+    const c = topicColor(activePart, i);
+    if(activeTopic===t.id){ chip.style.background=c; chip.style.color='#06121b'; chip.style.borderColor=c; }
+    chip.textContent = `${t.name} (${count})`;
+    chip.onclick = ()=>{ activeTopic=t.id; renderChips(); renderQuestions(); };
+    chipRow.appendChild(chip);
+  });
+}
+
+/* ============================================================
+   RENDER: questions
+============================================================ */
+const quizRoot = document.getElementById('quizRoot');
+const letters = ['A','B','C','D','E','F','G','H'];
+
+function updateScore(){
+  let done=0, correct=0;
+  Object.entries(state).forEach(([idx,s])=>{
+    if(!s.checked) return;
+    done++;
+    const q = Q[idx];
+    const sel = [...s.selected].sort().join(',');
+    const cor = [...q.correct].sort().join(',');
+    if(sel===cor) correct++;
+  });
+  document.getElementById('scoreDone').textContent = done;
+  document.getElementById('scoreCorrect').textContent = correct;
+}
+
+function renderQuestions(){
+  quizRoot.innerHTML = '';
+  const p = partMap[activePart];
+
+  const withIdx = Q.map((q,i)=>({...q, gidx:i}));
+  const filtered = withIdx.filter(q=> q.part===activePart && (activeTopic==='all' || q.topic===activeTopic));
+
+  if(activeTopic==='all'){
+    p.topics.forEach((t,ti)=>{
+      const group = filtered.filter(q=>q.topic===t.id);
+      if(group.length===0) return;
+      const c = topicColor(activePart, ti);
+      const section = document.createElement('section');
+      section.className = 'topic-block';
+      section.innerHTML = `<div class="topic-heading">
+        <span class="dot" style="background:${c}"></span>
+        <h3>${t.name}</h3>
+        <span class="count">${group.length} question${group.length>1?'s':''}</span>
+      </div>`;
+      group.forEach(q=> section.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+      quizRoot.appendChild(section);
+    });
+  } else {
+    filtered.forEach(q=> quizRoot.appendChild(buildCard(q, colorForTopic(activePart,q.topic))));
+  }
+}
+
+function buildCard(q, color){
+  const idx = q.gidx;
+  const t = topicOf(q.part, q.topic);
+  const card = document.createElement('div');
+  card.className = 'qcard';
+  card.id = q.part+'-q'+(idx+1);
+
+  const localNum = Q.slice(0, idx).filter(x=>x.part===q.part).length + 1;
+
+  const top = document.createElement('div');
+  top.className = 'qtop';
+  top.innerHTML = `<div class="qnum" style="background:${color}">Q${localNum}</div>
+    <div style="flex:1">
+      <div class="qmeta">
+        <span class="tag tag-topic" style="border-color:${color}66;color:${color}">${t.name}</span>
+        <span class="tag tag-type" style="border-color:#8B95AC66;color:${q.type==='multi'?'#FBBF24':'#8B95AC'}">${q.type==='multi' ? 'Multiple correct' : 'Single choice'}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+    </div>`;
+  card.appendChild(top);
+
+  const optWrap = document.createElement('div');
+  optWrap.className = 'options';
+  q.options.forEach((optText, i)=>{
+    const opt = document.createElement('div');
+    opt.className = 'opt';
+    opt.innerHTML = `<span class="letter">${letters[i]}.</span><span>${optText}</span>`;
+    opt.onclick = ()=> handleOptionClick(idx, i, card, q);
+    optWrap.appendChild(opt);
+  });
+  card.appendChild(optWrap);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+
+  if(q.type==='multi'){
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'check-btn primary';
+    checkBtn.textContent = 'Check answer';
+    checkBtn.onclick = ()=> checkMulti(idx, card, q);
+    btnRow.appendChild(checkBtn);
+  }
+
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'reveal-btn';
+  revealBtn.textContent = 'Show explanation';
+  const explain = document.createElement('div');
+  explain.className = 'explain';
+  explain.innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  revealBtn.onclick = ()=>{
+    explain.classList.toggle('show');
+    revealBtn.textContent = explain.classList.contains('show') ? 'Hide explanation' : 'Show explanation';
+  };
+  btnRow.appendChild(revealBtn);
+
+  const resultNote = document.createElement('div');
+  resultNote.className = 'result-note';
+  resultNote.id = 'result-'+idx;
+
+  card.appendChild(btnRow);
+  card.appendChild(resultNote);
+  card.appendChild(explain);
+
+  if(state[idx].checked) paintOptions(card, idx, q);
+
+  return card;
+}
+
+function handleOptionClick(idx, optIdx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(q.type==='single'){
+    s.selected = new Set([optIdx]);
+    s.checked = true;
+    paintOptions(card, idx, q);
+    updateScore();
+  } else {
+    if(s.selected.has(optIdx)) s.selected.delete(optIdx);
+    else s.selected.add(optIdx);
+    const opts = card.querySelectorAll('.opt');
+    opts.forEach((el,i)=> el.classList.toggle('selected', s.selected.has(i)));
+  }
+}
+
+function checkMulti(idx, card, q){
+  const s = state[idx];
+  if(s.checked) return;
+  if(s.selected.size===0) return;
+  s.checked = true;
+  paintOptions(card, idx, q);
+  updateScore();
+}
+
+function paintOptions(card, idx, q){
+  const s = state[idx];
+  const opts = card.querySelectorAll('.opt');
+  const correctSet = new Set(q.correct);
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    el.classList.remove('selected');
+    if(correctSet.has(i) && s.selected.has(i)) el.classList.add('correct');
+    else if(!correctSet.has(i) && s.selected.has(i)) el.classList.add('incorrect');
+    else if(correctSet.has(i) && !s.selected.has(i)) el.classList.add('missed');
+  });
+  const sel = [...s.selected].sort().join(',');
+  const cor = [...correctSet].sort().join(',');
+  const note = document.getElementById('result-'+idx);
+  if(note){
+    if(sel===cor){ note.textContent = '✓ Correct'; note.className='result-note ok'; }
+    else { note.textContent = '✗ Not quite — correct answer highlighted in green'; note.className='result-note bad'; }
+  }
+  const checkBtn = card.querySelector('.check-btn');
+  if(checkBtn) checkBtn.style.display = 'none';
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPartTabs();
+renderCoverage();
+renderChips();
+renderQuestions();
+updateScore();
+</script>
+</body>
+</html>
